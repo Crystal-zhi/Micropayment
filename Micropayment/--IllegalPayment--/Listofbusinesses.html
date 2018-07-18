@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>代办商家</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./Listofbusinesses.css">
+</head>
+<body>
+	<section id="Listofbusinesses" class="Listofbusinesses" v-cloak>
+   <!-- <div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>代办商家</div>
+		</div> -->
+		<div class="list">
+			<ul>
+				<li>
+					<div class="listleft listdiv1">
+						<img src="./../public/img/Alipay.png" alt="">
+					</div>
+					<div class="listright listdiv2">
+						<p class="listp1">帝壹车辆代办</p>
+						<div class="listrightdiv">
+							<p class="listleft listp2">浙江省杭州市滨江区滨康路101号</p>
+							<p class="listright">1km</p>
+						</div>						
+					</div>
+					<div class="cle"></div>
+					<div class="listbor"></div>
+					<div style="overflow: hidden;padding: 0.2rem 0px 0.1rem 0px;line-height: .5rem;">
+						<div class="listleft">违章代办</div>
+						<div class="listright">
+							<div class="listbtn" @click="zixun">咨询报价</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>		
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+         var vm = new Vue({
+         	el:'#Listofbusinesses',
+         	data:{
+
+         	},
+         	filters: {
+
+         	},
+         	methods: {
+              goBackToTheLastPage: function() {
+                window.history.go(-1)
+              },
+              zixun: function() {
+                window.location.href="./ServiceDetails.html"
+              }
+         	},
+			mounted: function () {
+			  this.$nextTick(function () {
+                 
+			  })
+			}         	
+         })	
+	</script>	
+</body>
+</html>

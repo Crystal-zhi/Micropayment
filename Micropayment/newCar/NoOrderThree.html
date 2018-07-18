@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>提交成功</title>
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./NoOrder.css">
+</head>
+<body>
+<section id="NoOrder" class="NoOrder">
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>驾驶证查分</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="title">提交成功</div>
+    <div class="icon-noorder">
+        <img src="./../public/img/newCar/yesorder.png" alt="">
+    </div>
+    <div class="tishi">您已提交成功</div>
+    <div class="tishi" style="margin-top: .1rem;">请耐心等待结果</div>
+    <div class="mywant_order" @click="yes">完成</div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#NoOrder',
+        data:{
+
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                console.log(YDUI.device)
+            },
+            yes: function () {
+                 window.location.href='./Inquire.html?LOGIN_ID='+_location.LOGIN_ID+'&ORG_ID='+_location.ORG_ID; 
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

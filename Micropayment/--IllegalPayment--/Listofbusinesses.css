@@ -1,0 +1,64 @@
+body {
+	background-color: #ffffff;
+}
+.Listofbusinesses {
+	width: 100%;
+}
+[v-cloak] {
+    display: none !important;
+}
+.cle {
+	clear: both;
+}
+.Listofbusinesses .list{
+    padding: 0 .1rem;
+}
+.Listofbusinesses .list ul>li{
+    color: #2b2b2b;
+    overflow: hidden;
+    margin: .2rem 0;
+    box-shadow: 0px 5px 15px rgba(21,182,164,0.21);
+    -webkit-box-shadow: 0px 5px 15px rgba(21,182,164,0.21);
+    padding: .1rem;   
+}
+.Listofbusinesses .list .listdiv1 {
+    width: 14.5%;
+    padding: .05rem;    
+}
+.Listofbusinesses .list .listdiv1 img{
+    width: 100%;
+}
+.Listofbusinesses .list .listdiv2 {
+    width: 82%;
+}
+.Listofbusinesses .list .listleft{
+    float: left;
+}
+.Listofbusinesses .list .listright{
+    float: right;
+}
+.Listofbusinesses .list .listright .listrightdiv {
+    overflow: hidden;
+    line-height: .88rem;    
+}
+.Listofbusinesses .list .listp1 {
+    line-height: .4rem;
+}
+.Listofbusinesses .list .listp2 {
+    width: 4.4rem;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;	
+}
+.Listofbusinesses .list .listbor {
+    border-top: 1px solid #cccccc;
+}
+.Listofbusinesses .list .listbtn {
+    background-color: #71d5c7;
+    color: #ffffff;
+    width: 1.5rem;
+    text-align: center;
+    height: .5rem;
+    line-height: .5rem;
+    border-radius: .066rem;
+}

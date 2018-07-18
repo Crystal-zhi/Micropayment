@@ -1,0 +1,32 @@
+body {
+    background-color: RGB(243,243,243);
+}
+[v-cloak] {
+    display: none !important;
+}
+#Usethetutorial{
+    width: 100%;
+}
+#Usethetutorial .content {
+    padding: 0 .12rem;
+}
+#Usethetutorial .usevideo{
+    margin-top: .15rem;	
+}
+#Usethetutorial .uselist {
+    width: 100%;
+}
+#Usethetutorial .uselist .title_p {
+    width: 100%;
+    padding: .2rem 0;
+    letter-spacing: .05rem;
+    font-size: .29rem;
+    margin-top: .05rem;
+    margin-bottom: .05rem;    
+}
+#Usethetutorial .uselist .divimg {
+    width: 100%;
+}
+#Usethetutorial .uselist .divimg .img {
+    width: 100%;
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>违章查询</title>
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./Inquire.css">
+</head>
+<body>
+<!-- 查上游数据 -->
+<section id="Inquire" class="Inquire" v-cloak>
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>驾驶证查分</div>
+            </div> -->
+    <!-- 头部end -->
+        <div class="pad">
+            <!-- 通知 Start-->
+            <div class="tongzhi">
+                <span>请选择需要查询的车辆</span>
+            </div>
+            <!-- 通知 End-->
+            <!-- 车牌列表 Start-->
+            <div class="cp_list">
+                <ul>
+                    <li class="cp_list_li opacity" v-for="(item,index) in items" @click="go_chaxun($event)" :data-cp="item.HPHM">
+                        <div class="cp_list_li_clxtop">
+                            <span class="cp_list_li_chepai">{{ item.HPHM }}</span>
+                        </div>
+                        <div class="cp_list_li_clximg">
+                            <span>扣分:</span> <span style="color: #02AD9A;">{{ item.TOTALSCORE }}</span> <span>分</span>
+                            <span>罚款:</span> <span style="color: #02AD9A;">{{ (item.TOTALPRICE-0)/100 }}</span> <span>元</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 车牌列表 End-->
+
+            <!-- 按钮 Start -->
+            <!--<div class="c">-->
+                <!--<div class="bc">查询</div>-->
+            <!--</div>-->
+            <!-- 按钮 End -->
+        </div>
+
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#Inquire',
+        data:{
+            items:[]
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                var that = this;
+                console.log(YDUI.device)
+                HttpServer(wfc_findCustCars,HttpParams).then(function(data){
+                         // console.log(data);
+                    for(var i=0; i<data.CARS.length; i++){
+                        if(data.CARS[i].TOTALSCORE==null||data.CARS[i].TOTALSCORE==''||data.CARS[i].TOTALSCORE==undefined){
+                            data.CARS[i].TOTALSCORE = '无数据'
+                        }
+                        if(data.CARS[i].TOTALPRICE==null||data.CARS[i].TOTALPRICE==''||data.CARS[i].TOTALPRICE==undefined){
+                            data.CARS[i].TOTALPRICE = '无数据'
+                        }
+                    }
+                    that.items = data.CARS
+
+                })
+            },
+            go_chaxun: function(e) {
+                dialog.loading.open();
+                setStore('Inq_weizhangchepai',e.currentTarget.getAttribute('data-cp'));
+                setStore('checkUpstreamOrCheckTheDatabase','1'); //查上游
+                setStore('ORG_ID',ORG_ID);
+                setStore('LOGIN_ID',LOGIN_ID);
+                RPeccancy.RealtimeQuotesOne()
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

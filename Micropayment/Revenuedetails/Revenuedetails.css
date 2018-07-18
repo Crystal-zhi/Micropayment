@@ -1,0 +1,210 @@
+.Revenuedetails{
+  width: 100%;
+  font-size: .25rem;
+}
+.Revenuedetails .Revenuedetailsinquire{
+    background-color: #0E426c;
+    height: .6rem;
+    line-height: .6rem;
+    color: #ffffff;
+    width: 100%;
+    text-align: center;
+    font-size: .3rem;
+    position: relative;
+}
+.Revenuedetails .inquire{ 
+    position: absolute;
+    top: 0;
+    right: 3%;
+    color: #ffffff;
+}
+.Revenuedetails .Dateselection {
+    width: 100%;
+    height: 2.5rem;
+    background-color: #59d7c9;
+    color: #ffffff;    
+}
+.Revenuedetails .Dateselection .DateselectionS{
+    width: 50%;
+    float: left;
+    padding-top: .4rem;
+}
+.Revenuedetails .datepaddingleft{
+    padding-left: .5rem;
+}
+.Revenuedetails .datepaddinglef{
+    padding-left: .66rem;
+}
+.Revenuedetails .datepaddingle{
+    margin-top: .25rem;
+    display: block;
+    font-size: .24rem;    
+}
+.Revenuedetails .xiabianxian{
+    width: 96%;
+    margin: 0 auto;
+    border-top: 1px solid #ffffff;
+    margin-top: .35rem;  
+}
+.Revenuedetails .jiaoyibishujine{
+    width: 100%;
+    overflow: hidden;
+    padding-top: .039rem;    
+}
+.Revenuedetails .jiaoyibishujine .jiaoyibishu{
+   width: 50%;
+   float:left;
+   height: .98rem;  
+   text-align: center; 
+}
+.Revenuedetails .jiaoyibishujine .jiaoyibishu .jybsp{
+  width: 100%;
+  height:.49rem;
+  line-height: .49rem;
+}
+/*
+ 选项框
+ */
+.Revenuedetails .picker-center-highlight:before, .picker-center-highlight:after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background-color: #eaeaea;
+    display: block;
+    z-index: 15;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+.Revenuedetails .picker-item.picker-selected {
+    color: #0E5F9F;
+    -webkit-transform: translate3d(0, 0, 0) rotateX(0);
+    transform: translate3d(0, 0, 0) rotateX(0);
+}
+.Revenuedetails .picker-slot{
+    border-top: 1px solid #eaeaea;
+    margin-top: 8px;
+}
+.Revenuedetails .picker_1{
+    background: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    -webkit-transition: all .5s;
+    transition: all .3s;
+    overflow: hidden;
+    height: 0px;
+}  
+.Revenuedetails .slot1{
+
+}
+.Revenuedetails .quedingquxiao{
+    padding: 10px 10px;
+    display: inline-block;
+    position: relative;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    background: #0E5F9F;
+    color: #fff;
+    font-size: 14px;
+    transform: translate(5.35rem,0px);    
+}
+.Revenuedetails .Typesoforstatus {
+   width: 100%;
+   overflow: hidden;
+   padding-top: .15rem;
+   padding-bottom: .15rem;      
+}
+.Revenuedetails .Typesof {
+    color: #000000;
+    float: left;
+    width: 50%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: .25rem;
+    text-align: center;
+}
+.Revenuedetails .Typesof .typeofspan1 {
+    color: #aaa;
+}
+.Revenuedetails .Typesof .typeofspan2 {
+    width: .81rem;
+    display: inline-block;
+}
+.Revenuedetails .Typesof_height1 {
+    height: 217px;
+    border-top: 1px solid #eaeaea; 
+    padding-top: 8px;     
+}
+.Revenuedetails .Typesof_height2 {
+    height: 0px;  
+}
+.Revenuedetails .status_height1 {
+    height: 217px;
+    border-top: 1px solid #eaeaea;
+    padding-top: 8px;
+}
+.Revenuedetails .status_height2 {
+    height: 0px;
+}
+.Revenuedetails .colorkadu {
+    width: 100%;
+    height: .08rem;
+    background-color: #eaeaea;
+
+}
+.Revenuedetails .daodi{
+   width: 100%;
+   height: 1.3rem;
+   text-align: center;
+   color:#cccccc;
+   font-size: .2rem;
+   padding-top: .05rem;   
+}
+.Revenuedetails .table {
+    width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.Revenuedetails .table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #ddd;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+    text-align: center;
+}
+.Revenuedetails .zhezhao{
+  background-color: rgba(0,0,0,.5);
+  position:fixed;
+  left: 0;
+  right: 0;
+  top:0;
+  bottom: 0;
+  display: none;
+  z-index: 1999;
+}

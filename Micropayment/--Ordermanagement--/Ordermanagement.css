@@ -1,0 +1,193 @@
+body {
+    background-color: RGB(243,243,243);
+}
+[v-cloak] {
+    display: none !important;
+}
+#Ordermanagement {
+	width: 100%;
+}
+#Ordermanagement .he {
+    width: 100%;
+    height: .05rem;
+}
+#Ordermanagement .tab-nav:after {
+    content: '';
+    position: absolute;
+    z-index: 3;
+    height: 2px;
+    border-bottom: 1px solid #B2B2B2;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+}
+#Ordermanagement .tab-panel .guessyouul {
+    width: 100%;
+}
+#Ordermanagement .tab-panel .Guessyouli {
+    width: 95%;
+    margin: 0 auto;
+    background-image: url(./../public/img/Ordermanagement.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 2.1rem;
+    color: #555555;
+    overflow: hidden;
+}
+#Ordermanagement .tab-panel-item {
+    background-color: RGB(243,243,243);
+    padding: 0;
+    padding-top: .1rem;    
+}
+#Ordermanagement .tab-nav-item.tab-active{
+    color: #5ECABB;
+}
+#Ordermanagement .tab-nav-item a {
+    display: inherit;
+    color: inherit;
+    width: 98%;
+}
+#Ordermanagement .tab-nav {
+    box-shadow: 0px 1px 10px rgba(21,182,164,0.21);
+    -webkit-box-shadow: 0px 1px 10px rgba(21,182,164,0.21);
+}
+#Ordermanagement .Globalnavstyle {
+    background-color: #ffffff;
+    color: #000000;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: .935rem;
+    line-height: .935rem;
+    font-size: .29rem;
+    box-shadow: 0px 1px 10px rgba(21,182,164,0); 
+    -webkit-box-shadow: 0px 1px 10px rgba(21,182,164,0); 
+    border-bottom: 1px solid #E6F0EF;
+    z-index: 999;
+}
+#Ordermanagement .lil {
+    float: left;
+}
+#Ordermanagement .lir {
+    float: right;
+    transform: translate(-0.2rem,1.13rem);
+	-ms-transform: translate(-0.2rem,1.13rem);		/* IE 9 */
+	-webkit-transform: translate(-0.2rem,1.13rem);	/* Safari and Chrome */
+	-o-transform: translate(-0.2rem,1.13rem);		/* Opera */
+	-moz-transform: translate(-0.2rem,1.13rem);		/* Firefox */        
+}
+#Ordermanagement .tab-panel .p1 {
+    font-size: .3rem;
+    color: #2B2B2B;
+    padding-left: .38rem;
+    padding-top: .22rem;
+}
+#Ordermanagement .tab-panel .p2 {
+    font-size: .26rem;
+    color: #A4A4A4;
+    padding-top: .25rem;
+}
+
+.btn1 {
+    display: inline-block;
+    background-color: #FF9A9A;
+    color: #fff;
+    font-size: .26rem;
+    border-radius: 3px;
+    width: 1.22rem;
+    height: .42rem;
+    text-align: center;
+    line-height: .42rem;
+    float: left;
+    margin-left: .1rem;    
+}
+.btn2 {
+    background-color: #15B6A4;
+}
+.btn3 {
+	background-color: #9AD3FF;
+}
+
+.opacity{
+   -webkit-animation: opacity 0.5s linear;
+   animation: opacity 0.5s linear;
+}
+@-webkit-keyframes opacity {
+0% {
+     opacity:0;
+}
+  100% {
+     opacity:1;
+}
+}
+@keyframes opacity {
+0% {
+    opacity:0;
+}
+100% {
+    opacity:1;
+}
+}
+#Ordermanagement .dropload-load {
+    color: #15B6A4;
+    font-size: .28rem;    
+    background-color: RGB(243,243,243);    
+}
+#Ordermanagement .cuibandiv {
+    width: 2.44rem;
+    height: .42rem;
+}
+#Ordermanagement .cuiban {
+    width: 1.22rem;
+    height: .42rem;
+    box-sizing: border-box;
+    float: left;
+    background-color: #15B6A4;
+}
+#Ordermanagement .yicuiban {
+    width: 1.22rem;
+    height: .42rem;
+    box-sizing: border-box;
+    float: left;
+    background-color: #cccccc;    
+}
+#Ordermanagement .cuibananim{
+    transform: translateX(-1.23rem);
+    -moz-transform: translateX(-1.23rem);
+    -webkit-transform: translateX(-1.23rem);
+    -o-transform: translateX(-1.23rem);
+    transition: all .3s;
+    -moz-transition: all .3s; /* Firefox 4 */
+    -webkit-transition: all .3s; /* Safari 和 Chrome */
+    -o-transition: all .3s; /* Opera */    
+}
+/*.fadeInRight {
+    animation: fadeInRight .5s
+}
+@-webkit-keyframes fadeInRight {
+
+    0% {
+
+        background-color: #cccccc;
+
+        -webkit-transform: translateX(1rem);
+
+    }   
+
+    100% {
+
+        background-color: #cccccc;
+
+        -webkit-transform: translateX(0);
+
+    }
+
+}*/
+.m-confirm .confirm-hd{
+   text-align: center;
+}
+.m-confirm .confirm-bd{
+    color: #555555;
+}

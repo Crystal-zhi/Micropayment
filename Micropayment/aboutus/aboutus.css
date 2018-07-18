@@ -1,0 +1,52 @@
+body {
+    background-color: rgb(255,255,255);
+}
+p {
+	    margin: 0 0 10px;
+}
+#aboutus .aboutus_word{
+    /*margin-top: -.1rem;*/
+}
+#aboutus .logo {
+    width: 100%;
+    background-color: #ffffff;
+    padding-top: .3rem;
+    padding-bottom: .3rem;     
+}
+#aboutus .logoi {
+    width: 34%;
+    height: 2rem;
+    background-image: url(./../public/img/logo.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0 auto;    
+}
+#aboutus .bor {
+	width: 95%;
+	margin: 0 auto;
+	border-top: 1px solid #efefef; 
+}
+/*#aboutus .logotext {
+    text-align: center;
+    padding-top: .26rem;
+    padding-bottom: .2rem;
+    font-size: .33rem;
+}*/
+#aboutus .text_div {
+    padding: .2rem .19rem;
+    background: #ffffff;   
+    overflow-y:  auto;
+    height: 9.79rem;
+}
+#aboutus .text_p {
+    text-indent: 0.6rem;
+    letter-spacing: 0.02rem;
+    line-height: .4rem;  
+}
+#aboutus .con_back {
+    width: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 2.9rem;
+    margin-bottom: 10px;    
+}

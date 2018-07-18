@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>安全设置</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./SecuritySettings.css">
+</head>
+<body>
+	<section id="SecuritySettings" class="SecuritySettings">
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>安全设置</div>
+		</div> -->
+		<div class="content">
+			<div class="list">
+				<ul>
+					<li class="listli" @click="changePassword">
+						<div class="text1">修改密码</div>
+						<div class="img1">
+							<img id="img" src="./../public/img/right.png" alt="">
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- 弹框 -->
+		<!-- :class="{'disy':!dis,'disn':dis}" -->
+		<div class="mask-black-dialog1" id=""  v-if="!dis" v-cloak>   
+			<div class="m-confirm1">       
+				<div class="confirm-hd1">
+					<p style="text-align: center;">为保障你的数据安全,修改密码前请填写原密码</p>
+				</div>       
+				<div class="confirm-bd1">
+					<input id="ymm" type="password" v-model="value" ref="input" autofocus="autofocus" placeholder="请填写原密码">
+				</div>   
+				<div class="confirm-ft1">
+					<a href="javascript:;" class="confirm-btn default" @click="ale_cancel">取消</a>
+					<a href="javascript:;" class="confirm-btn primary" style="color: #20bda9;" @click="ale_determine">确定</a>
+				</div>
+			</div>
+		</div>
+	   <!-- 弹框End -->
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/md5.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#SecuritySettings',
+			data:{
+                value: '',
+                dis: true
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              yd: function() {
+                 console.log(YDUI.device)
+                 // console.log(md5('123'))
+              },
+              changePassword: function () {
+                 this.dis = !this.dis
+              },
+              ale_cancel: function () {
+                 this.dis = !this.dis
+                 var dialog = YDUI.dialog;
+		         // dialog.toast('密码错误', 'none', 1000);
+              },
+              ale_determine: function () {
+                 this.dis = !this.dis
+                  var dialog = YDUI.dialog;
+                  var pw = md5(this.value)
+                 console.log(md5(this.value))
+				  if(this.value == ''){
+                      dialog.toast('请输入原密码', 'none', 1000);
+                     return
+				  }
+				  window.location.href = './newpassword.html?PWD='+md5(this.value)
+              }              
+			},		
+			mounted: function () {
+               this.yd()
+			}
+		})		
+	</script>	
+</body>
+</html>

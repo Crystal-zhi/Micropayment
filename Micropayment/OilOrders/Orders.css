@@ -1,0 +1,131 @@
+* {
+    color: #555555;
+}
+.toast-content {
+    /*设置弹框颜色*/
+    color: #ffffff;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.ove {
+    overflow: hidden;
+}
+.ce-pa {
+    padding-left: .15rem;
+}
+.anniu {
+    background: #fff;
+    height: 1.1rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    align-items: center;
+    -webkit-align-items: center;
+    box-shadow: 0px 1px 10px rgba(21,182,164,0.21);
+    -webkit-box-shadow: 0px 1px 10px rgba(21,182,164,0.21);
+}
+/*.anniuabacka {
+    background: #51A999;
+}
+.anniuabackb {
+    background: #C3C3C3;
+}*/
+.ssbj{
+    color: #51A999;
+}
+.anniua {
+    width: 1.6rem;
+    text-align: center;
+    color: #fff;
+    height: 1.1rem;
+    line-height: 1.1rem;
+    border-radius: .03rem;
+    /* transition: all .5s ease; */
+    /* -webkit-transition: all .5s ease; */
+}
+.list {
+    margin-top: .2rem;
+}
+.list-a-div {
+    padding: 0 .188rem;
+    font-size: .27rem;
+    height: 1rem;
+    line-height: 1rem;
+    border-bottom: 1px solid #efefef;
+}
+/*.list-b-div {*/
+    /*padding: 0 .188rem;*/
+    /*font-size: .27rem;*/
+    /*height: 1rem;*/
+    /*line-height: 1rem;*/
+    /*border-bottom: 1px solid #efefef;*/
+/*}*/
+.Guessyouli{
+    width: 95%;
+    margin: 0 auto;
+    /*height: 3rem;*/
+    background-color: #ffffff;
+    color: #555555;
+    overflow: hidden;
+    border-radius: .13rem;
+    margin-top: .2rem;
+}
+
+
+
+.btn-width {
+    width: 1.22rem;
+    border-radius: 3px;
+    transform: translateY(calc(50% + .05rem));
+    -webkit-transform: translateY(calc(50% + .05rem));
+}
+.cuibananim {
+    transform: translateX(-1.23rem);
+    -moz-transform: translateX(-1.23rem);
+    -webkit-transform: translateX(-1.23rem);
+    -o-transform: translateX(-1.23rem);
+    transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+}
+.cuibandiv {
+    width: 2.44rem;
+    height: .42rem;
+    line-height: .45rem;
+    text-align: center;
+    color: #ffffff;
+}
+.cuiban {
+    width: 1.22rem;
+    height: .42rem;
+    box-sizing: border-box;
+    float: left;
+    background-color: #15B6A4;
+    color: #ffffff;
+}
+.yicuiban {
+    width: 1.22rem;
+    height: .42rem;
+    box-sizing: border-box;
+    float: left;
+    background-color: #cccccc;
+}
+.opacity {
+    -webkit-animation: opacity 0.5s linear;
+    animation: opacity 0.5s linear;
+}
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

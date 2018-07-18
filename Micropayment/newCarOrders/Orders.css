@@ -1,0 +1,244 @@
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.ove {
+    overflow: hidden;
+}
+.ce-pa {
+    padding-left: .15rem;
+}
+.anniu {
+    background: #fff;
+    height: 1.1rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    align-items: center;
+    -webkit-align-items: center;
+    box-shadow: 0px 1px 10px rgba(21,182,164,0.21);
+    -webkit-box-shadow: 0px 1px 10px rgba(21,182,164,0.21);
+}
+/*.anniuabacka {
+    background: #51A999;
+}
+.anniuabackb {
+    background: #C3C3C3;
+}*/
+.anniua {
+    width: 1.6rem;
+    text-align: center;
+    color: #fff;
+    height: 1.1rem;
+    line-height: 1.1rem;
+    border-radius: .03rem;
+    /* transition: all .5s ease; */
+    /* -webkit-transition: all .5s ease; */
+}
+.ssbj{
+    color: #51A999;
+}
+.content {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 .2rem;
+}
+.content .title {
+    width: 100%;
+    height: .8rem;
+    line-height: .8rem;
+    background: #51A999;
+    color: #fff;
+    text-align: center;
+    font-size: .3rem;
+}
+.content .anniu {
+    background: #fff;
+    height: 1.1rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    align-items: center;
+    -webkit-align-items: center;
+}
+.content .anniua {
+    width: 1.82rem;
+    text-align: center;
+    color: #fff;
+    height: .5rem;
+    line-height: .5rem;
+    border-radius: .03rem;
+    /*transition: all .5s ease;*/
+    /*-webkit-transition: all .5s ease;*/
+}
+.content .pad {
+    padding: 0 .2rem;
+}
+.content .anniuabacka {
+    background: #51A999;
+}
+.content .anniuabackb {
+    background: #C3C3C3;
+}
+.content .tongzhi img {
+    display: inline-block;
+    vertical-align: top;
+}
+.content .tongzhi {
+    color: #686868;
+    font-size: 12px;
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+}
+.content .rtq-list {
+
+}
+.content .rtq-back {
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    height: 3.74rem;
+    position: relative;
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+}
+.content .rtq-list-top{
+    width: 100%;
+    padding: 0 .4rem;
+}
+.content .a_div {
+    width: 100%;
+    overflow: hidden;
+    height: .66rem;
+    line-height: .66rem;
+}
+.content .a_l {
+    float: left;
+}
+.content .a_span1 {
+    color: #2B2B2B;
+    font-size: .29rem;
+}
+.content .a_span2 {
+    color: #959595;
+    font-size: .28rem;
+}
+.content .xingweitaichang {
+    width: 48%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.content .a_r {
+    float: right;
+    color: #02AD9A;
+    font-size: .28rem;
+}
+.content .rtq-list-bottom {
+    width: 100%;
+}
+.content .rtq-dotted {
+    width: 100%;
+    height: 1px;
+    border-top: 1px dotted #E5E5E5;
+    margin-top: .15rem;
+}
+.content .rtq-f-f {
+    overflow: hidden;
+    padding-top: .25rem;
+    overflow: initial;
+}
+.content .rtq-f {
+    box-sizing: border-box;
+    width: 25%;
+    height: .44rem;
+    text-align: center;
+    float: left;
+    overflow: initial;
+}
+.content .rtq-leftdotted {
+    border-left: 1px dotted #E5E5E5;
+}
+.content .rtq-f .rtq-p1 {
+    margin-bottom: .02rem;
+    transform: translateY(-19%);
+    -webkit-transform: translateY(-19%);
+    color: #2B2B2B;
+}
+.content .rtq-f .rtq-p2 {
+    padding-top: .04rem;
+    color: #02AD9A;
+}
+
+.content .rtq-inputche {
+    width: .32rem;
+    height: .32rem;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(./../public/img/OilCard_chno.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.02rem;
+    background-size: 99%;
+    border: none;
+    transform: translateY(-9%);
+    -ms-transform: translateY(-9%);
+    -webkit-transform: translateY(-9%);
+    -o-transform: translateY(-9%);
+    -moz-transform: translateY(-9%);
+    position: absolute;
+    left: .05rem;
+    top: .18rem;
+}
+.content .rtq-inputche:checked {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-image: url(./../public/img/OilCard_chyes.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.02rem;
+    background-size: 99%;
+    border: none;
+    background-color: #fff;
+}
+.content .bjce {
+    position: absolute;
+    top: 39%;
+    right: 4%;
+    background-color: #EE5B5B;
+    color: #fff;
+    padding: 0.05rem 0.1rem;
+    font-size: .27rem;
+    border-radius: .06rem;
+    width: 1.28rem;
+}
+.content .rtq-image {
+    width: 1.84rem;
+    position: absolute;
+    top: 39%;
+    right: 2%;
+}
+.content .chaexianshi {
+    position: absolute;
+    top: 58.9%;
+    right: 2%;
+}
+.opacity {
+    -webkit-animation: opacity 0.5s linear;
+    animation: opacity 0.5s linear;
+}
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

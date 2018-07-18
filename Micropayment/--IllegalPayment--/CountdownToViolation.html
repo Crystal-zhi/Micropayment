@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>违章倒计时</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./CountdownToViolation.css">
+</head>
+<body>
+	<section id="CountdownToViolation" class="CountdownToViolation" v-cloak>
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>违章倒计时</div>
+		</div> -->
+		<div class="tab-padding">
+			<div class="top_back">
+				<div class="Overviewtop">
+					<span class="Il-floatl Il-spano">当前车辆：</span>
+					<span class="Il-floatl Il-spant">苏D-N305C</span>
+					<span class="Il-floatr Il-spans">违章清单</span>
+				</div>
+				<div style="border-bottom: 1px dashed #e5e5e5;margin: 0px auto;width: 86%;transform: translate(0,.1rem);"></div>
+				<div class="Overviewbottom" style="color: #2b2b2b;font-size: 0.27rem;">
+                    即将产生滞纳金待处理违章 <span style="color:#FF6363;">2</span> 笔														
+				</div>				
+				<div class="Overviewbottom" style="height: .6rem;line-height: .6rem;">
+					<div class="Il-floatl Il-spano Il-widthdiv">
+						<span class="Il-spano">待处理：</span>
+						<span class="Il-spant">3条</span>
+					</div>	
+					<div class="Il-floatl Il-spano Il-widthdiv" style="text-align: center;">
+						<span class="Il-spano">待扣分：</span>
+						<span class="Il-spant">9分</span>
+					</div>														
+				</div>				
+			</div>
+			<div class="Ol-List">
+				<div class="List" v-for="(item,index) in items">
+					<div class="Listxian"></div>
+					<ul>
+						<li>
+							<div class="listdiv1 Il-floatl">
+								<img src="./../public/img/Ol-loaction.png" alt="">
+							</div>
+							<div class="Il-floatl">
+								<p class="listp" style="padding-left: .3rem;">{{ item.l }}</p>
+							</div>
+						</li>
+						<li>
+							<div class="listdiv2 Il-floatl">
+								<img src="./../public/img/Ol-rl.png" alt="">
+							</div>
+							<div class="Il-floatl">
+								<p class="listp" style="padding-left: .23rem;">{{ item.t }}</p>
+							</div>							
+						</li>
+						<li>
+							<div class="listdiv3 Il-floatl">
+								<img src="./../public/img/Ol-t.png" alt="">
+							</div>
+							<div class="Il-floatr" style="width: 93%;float:  right;">
+								<p class="listp">{{ item.g }}</p>
+							</div>							
+						</li>
+						<li>
+							<div class="listdiv4 Il-floatl">
+								<img src="./../public/img/Ol-huo.png" alt="">
+							</div>
+							<div class="Il-floatl">
+								<p class="listp" style="padding-left: .35rem;">{{ item.k }}</p>
+							</div>	
+							<div class="listdiv4 Il-floatl" style="margin-left: .3rem;">
+								<img src="./../public/img/Ol-huo.png" alt="">
+							</div>
+							<div class="Il-floatl">
+								<p class="listp">{{ item.f }}</p>
+							</div>													
+						</li>
+						<li style="margin-top: .35rem;">
+							<div v-if="item.z"></div>
+							<div style="overflow: hidden;" v-if="!item.z">
+								<div class="listdiv3 Il-floatl">
+									<img src="./../public/img/Ol-th.png" alt="">
+								</div>
+								<div class="Il-floatr" style="width: 93%;float:  right;">
+									<div style="padding-left: 0.2rem;" v-html="item.y"></div>
+								</div>									
+							</div>														
+						</li>
+					</ul>
+				</div>				
+			</div>
+		</div>		
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+         var vm = new Vue({
+         	el:'#CountdownToViolation',
+         	data:{
+              items:[
+                  {
+                  	l:'杭州滨江区滨康路与西兴路',
+                  	t:'2018-03-20 18 ：00',
+                  	g:'机动车通过有灯控路口时，不按所需行进方向驶入导向车道',
+                  	k:'扣3分',
+                  	f:'罚款100元',
+                  	z:true
+                  },
+                  {
+                  	l:'杭州滨江区滨康路与西兴路',
+                  	t:'2018-03-20 18 ：00',
+                  	g:'机动车通过有灯控路口时，不按所需行进方向驶入导向车道',
+                  	k:'扣3分',
+                  	f:'罚款100元',
+                  	z:false,
+                  	y:'<span style="color:#FF6363;line-height: .46rem;">提示：当前仅剩余2元处理时间，逾期将产生滞纳金</span>'
+                  },
+                  {
+                  	l:'杭州滨江区滨康路与西兴路',
+                  	t:'2018-03-20 18 ：00',
+                  	g:'机动车通过有灯控路口时，不按所需行进方向驶入导向车道',
+                  	k:'扣3分',
+                  	f:'罚款100元',
+                  	z:false,
+                  	y:'<span style="color:#FF6363;line-height: .46rem;">提示：当前仅剩余2元处理时间，逾期将产生滞纳金</span>'
+                  }                  
+              ]
+         	},
+         	filters: {
+
+         	},
+         	methods: {
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              }
+         	},
+			mounted: function () {
+			  this.$nextTick(function () {
+                 
+			  })
+			}         	
+         })	
+	</script>	
+</body>
+</html>

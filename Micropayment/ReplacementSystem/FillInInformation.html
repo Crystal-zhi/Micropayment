@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>计划还款</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./pub.css">
+    <style>
+        html,body {
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<section id="cardTwo" class="cardTwo planrepayment2" v-cloak>
+    <div class="planrepayment2_top_back" v-for="(item,index) in items" :class="{Bankcardlistb1:item.BANKNAME
+=='平安银行',Bankcardlistb2:item.BANKNAME
+=='中国银行',Bankcardlistb6:item.BANKNAME
+=='农业银行', Bankcardlistb3:item.BANKNAME
+=='工商银行', Bankcardlistb4:item.BANKNAME
+=='交通银行', Bankcardlistb5:item.BANKNAME
+=='建设银行',Bankcardlistb1:item.BANKNAME
+=='中国平安银行',Bankcardlistb2:item.BANKNAME
+=='中国银行',Bankcardlistb6:item.BANKNAME
+=='中国农业银行', Bankcardlistb3:item.BANKNAME
+=='中国工商银行', Bankcardlistb4:item.BANKNAME
+=='中国交通银行',Bankcardlistb5:item.BANKNAME=='中国建设银行',onlinerepaymentb5:item.BANKNAME=='浦东发展银行'}">
+        <div class="planrepayment2__top_back_top">
+            <div class="planrepayment2__top_back_topa planrepayment2__top_back_topaimg">
+                <img :src="item.BANK_IMG" style="width:100%;">
+            </div>
+            <div class="planrepayment2__top_back_topa planrepayment2__top_back_topafont">
+                <div>
+                    <span class="planrepayment2__top_back_topafontspan1">{{ item.BANKNAME }}</span>
+                    <sup class="planrepayment2__top_back_topafontspan2">{{ item.CARDNAME }}</sup>
+                </div>
+                <p class="planrepayment2__top_back_topafontp">{{ item.BANK_ID }}信用卡</p>
+            </div>
+        </div>
+        <div class="planrepayment2__top_back_top">
+            <span class="planrepayment2__top_back_topcardnumber">{{ item.ACT_NO }}</span>
+        </div>
+    </div>
+    <div class="planrepayment2_top_back_form">
+         <div class="planrepayment2_ba">
+             <div class="planrepayment2_ba_m">
+                 <span class="planrepayment2_ba_ms">还款总金额:</span>
+                 <input class="planrepayment2_ba_mi" type="number" placeholder="请输入还款总金额" v-model="PLAN_REPAY_AMT">
+             </div>
+             <div class="planrepayment2_ba_m">
+                 <span class="planrepayment2_ba_ms">还款基数:</span>
+                 <input class="planrepayment2_ba_mi" type="number" placeholder="请输入还款基数" v-model="REPAY_RATIO">
+             </div>
+             <div class="planrepayment2_ba_m"  @click="_hk">
+                 <span class="planrepayment2_ba_ms">还款开始日期:</span>
+                 <input class="planrepayment2_ba_mi" style="color: #757575;" v-model="hk" placeholder="还款开始日期" disabled="disabled">
+             </div>
+             <div class="planrepayment2_ba_m"  @click="_hj">
+                 <span class="planrepayment2_ba_ms">还款结束日期:</span>
+                 <input class="planrepayment2_ba_mi" style="color: #757575;" v-model="hj" placeholder="还款结束日期" disabled>
+             </div>
+             <div class="planrepayment2_ba_m" style="border:none;">
+                 <span class="planrepayment2_ba_ms">连续月数:</span>
+                 <select name="" id="planrepaymentContinuousmonths" v-model="planrepaymentsmonths">
+                     <option value="1">1个月</option>
+                     <option value="2">2个月</option>
+                     <option value="3">3个月</option>
+                     <option value="4">4个月</option>
+                     <option value="5">5个月</option>
+                     <option value="6">6个月</option>
+                 </select>
+                 <!-- <div>{{ planrepaymentsmonths }}</div> -->
+                 <div style="font-size: .2rem;padding-left: .3rem;margin: 0.1rem 0;border-bottom: 1px solid #ededed;padding-bottom: .1rem;">*温馨提示: 连续月数就是当前计划需要连续几个月都执行</div>
+             </div>
+
+             <div class="planrepayment2_ba_m" style="height: 1.5rem;line-height: 1.5rem;">
+                 <span class="planrepayment2_ba_ms">支付方式</span>
+             </div>
+             <div class="planrepayment2_ba_m" style="height:auto">
+                 <div class="planrepayment2_radioxuanze" v-for="(item,index) in items1">
+                     <span class="planrepayment2_ba_mss" style="width:50%;">{{ item.BANKNAME }}</span>
+                     <span class="planrepayment2_ba_mss">{{ item.ACT_NO }}</span>
+                     <span class="planrepayment2_ba_mss" v-if="item.CARDTYPE=='CC'">信用卡</span>
+                     <span class="planrepayment2_ba_mss" v-else>储蓄卡</span>
+                     <input class="planrepayment2_xuazeradio" type="radio" name="planrepayment2_xuazeradio" :value="[item.BANKNAME,item.ACT_NO1,item.CARDTYPE]" :checked="index==0" @click="changeInput($event)">
+                 </div>
+             </div>
+
+             <div class="planrepayment2_nx" v-on:click="_goplanrepayment3">预览计划</div>
+         </div>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#cardTwo',
+        data:{
+            items:[],
+            items1:[],
+            PLAN_REPAY_AMT:'', // 金额
+            REPAY_RATIO:'', //基数
+            hk:'', //还款开始日期 展示
+            hj:'', //还款结束日期 展示
+            c_hk:'',//还款开始日期 传后台
+            c_hj:'',//还款结束日期 传后台
+            planrepaymentsmonths:'1', //连续月数
+            chValue:'' // 付款卡号
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            yd: function() {
+                var that = this;
+                console.log(YDUI.device);
+                that.items.push(JSON.parse(getStore('CardInformation')));
+                HttpServer(getCustBankCard,HttpParams).then(function(res){
+                    that.items1=res.CC;
+                    for(var i=0; i<that.items1.length; i++){
+                        that.items1[i].ACT_NO1 = that.items1[i].ACT_NO
+                        that.items1[i].ACT_NO = that.items1[i].ACT_NO.substr(-4,4)
+                    }
+                    that.chValue =  that.items1[0].ACT_NO1 //付款卡号
+                })
+            },
+            //时间格式化
+            FormatTime: function (time) {
+                if(!time) {return }
+                var y = time.getFullYear().toString(); // 年
+                var m = (time.getMonth()+1).toString().length < 2 ? '0'+(time.getMonth()+1).toString() : (time.getMonth()+1).toString();   // 月
+                var d = time.getDate().toString().length < 2 ? '0'+time.getDate().toString() : time.getDate().toString();    // 日
+                return y+'-'+m+'-'+d;
+            },
+            //删除 时间'-' 传后台
+            DeleteTime:function(time){
+                var re = new RegExp("-","g");
+                var t = time.replace(re,"");
+                return t;
+            },
+            _hk: function() {
+                var that = this;
+                weui.datePicker({
+                    start: 2017,
+                    end: 2030,
+                    defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
+                    onChange: function (result) {
+                        // console.log(result);
+                    },
+                    onConfirm: function (result) {
+                        // console.log(result);
+                        var m = result[1].toString().length < 2 ? '0'+result[1].toString() : result[1].toString();
+                        var d = result[2].toString().length < 2 ? '0'+result[2].toString() : result[2].toString();
+                        that.hk = result[0]+'-'+m+'-'+d;
+                        that.c_hk = result[0]+m+d;
+                        console.log(that.c_hk);
+                    }
+                });
+            },
+            _hj: function() {
+                var that = this;
+                weui.datePicker({
+                    start: 2017,
+                    end: 2030,
+                    defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
+                    onChange: function (result) {
+                        // console.log(result);
+                    },
+                    onConfirm: function (result) {
+                        // console.log(result);
+                        var m = result[1].toString().length < 2 ? '0'+result[1].toString() : result[1].toString();
+                        var d = result[2].toString().length < 2 ? '0'+result[2].toString() : result[2].toString();
+                        that.hj = result[0]+'-'+m+'-'+d;
+                        that.c_hj = result[0]+m+d;
+                        console.log(that.c_hj);
+                    }
+                });
+            },
+            changeInput(e){
+                // e.target 是你当前点击的元素
+                // e.currentTarget 是你绑定事件的元素
+                var _res = new Object();
+                var _len = e.target.value.split(",");
+                // this._res.BANKNAME = _len[0];
+                _res.ACT_NO_OUT = _len[1]; //付款卡号
+                // this._res.CARDTYPE = _len[2];
+                this.chValue = _res.ACT_NO_OUT;// 赋值 付款卡号
+            },
+            _goplanrepayment3: function() {
+                var that = this;
+                if (this.PLAN_REPAY_AMT=='') {
+                    dialog.toast('请输入还款总金额', 'none', 1000);
+                    return false
+                }
+                if (this.REPAY_RATIO=='') {
+                    dialog.toast('请输入还款基数', 'none', 1000);
+                    return false
+                }
+                if (this.c_hk=='') {
+                    dialog.toast('请选择还款开始日期', 'none', 1000);
+                    return false
+                }
+                if (this.c_hj=='') {
+                    dialog.toast('请选择还款结束日期', 'none', 1000);
+                    return false
+                }
+                dialog.loading.open('正在处理...');
+                // 计划还款预览[PLAN_CARD_NO_A付款卡号,PLAN_CARD_NO_B还款卡号,PLAN_REPAY_AMT还款总金额,REPAY_RATIO还款基数// ,REPAY_START_DATE开始日期,REPAY_END_DATE结束日期]
+                var obj = {
+                    WX: 'wx',
+                    ORG_ID: _location.ORG_ID,
+                    LOGIN_ID: _location.LOGIN_ID,
+                    PLAN_CARD_NO_A: that.chValue,
+                    PLAN_CARD_NO_B: that.items[0].ACT_NO,
+                    PLAN_REPAY_AMT: that.PLAN_REPAY_AMT*100,
+                    REPAY_RATIO: that.REPAY_RATIO*100,
+                    REPAY_START_DATE: that.c_hk,
+                    REPAY_END_DATE: that.c_hj,
+                    RETIME: that.planrepaymentsmonths //连续月数
+                };
+                HttpServer(planRepayPreview,obj).then(function(data){
+                    dialog.loading.close();
+                    if(data.RSPCODE=="SUCCESS"){
+                        setStore('PreviewPlan',data);
+                        that.go_PreviewPlan();
+                    }else{
+                       dialog.toast(data.RSPMSG, 'none', 1000);
+                    }
+                });
+            },
+            go_PreviewPlan: function () {
+                dialog.loading.open('正在处理...');
+                window.location.href = './PreviewPlan.html?LOGIN_ID='+_location.LOGIN_ID+'&ORG_ID='+_location.ORG_ID+'&RETIME='+this.planrepaymentsmonths;
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

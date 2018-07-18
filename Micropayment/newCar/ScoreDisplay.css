@@ -1,0 +1,206 @@
+@font-face {
+   font-family: Farrington7B;
+   src: url("./../public/font/Farrington7B_Qiqi.ttf");
+}
+html,body {
+    background-color: #FFFFFF;
+}
+#ScoreDisplay {
+    width: 100%;
+    overflow: hidden;
+}
+.content {
+
+}
+.content .a_top {
+    margin-top: .2rem;
+    background-color: #F5F5F5;
+    width: 100%;
+    height: .9rem;
+    border-top: 1px solid #EDEDED;
+    border-bottom: 1px solid #EDEDED;
+    position: relative;
+}
+.content .a_top .a-top-span {
+    display: inline-block;
+    height: 100%;
+    line-height: .8rem;
+    color: #0CC93A;
+    font-size: .33rem;
+    position: absolute;
+    border-bottom: .06rem solid;
+    width: .6rem;
+    text-align: center;
+    left: .66rem;
+}
+.content .b_top {
+    background-color: #F5F5F5;
+    width: 100%;
+    height: .7rem;
+    line-height: .7rem;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+.content .b_top .b-top-div1 {
+    color:#5D5D5D;
+}
+.content .b_top .b-top-div1 .b-top-img{
+    width: 1rem;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin-right: .1rem;
+}
+.content .c_top {
+    background-color: #FEFAE7;
+    width: 100%;
+    height: 0rem;
+    line-height: .7rem;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    transition: all .5s ease;
+    -webkit-transition: all .5s ease;
+}
+.content .c_top .c-top-div {
+    color:#5D5D5D;
+    font-size: .28rem;
+}
+.content .CheckPoints {
+    display: flex;
+    display: -webkit-flex;
+    position: relative;
+}
+.content .CheckPoints .checkpoints-back{
+    background: url(../public/img/newCar/fs.png) no-repeat 0/100%;
+    width: 3.34rem;
+    height: 3.4rem;
+    margin: .4rem auto;
+    text-align: center;
+    color: #0CC93A;
+}
+.content .CheckPoints .checkpoints-back-p1 {
+    font-family: Farrington7B;
+    font-size: .94rem;
+    padding-top: 1rem;
+    text-align: center;
+    color: #0CC93A;
+}
+.content .CheckPoints .checkpoints-back-p2 {
+    padding-top: .3rem;
+    text-align: center;
+    color: #0CC93A;
+}
+.content .CheckPointstitle{
+    text-align: center;
+    font-size: .4rem;
+    color: #404040;
+}
+.content .CheckPointsbtn {
+    background: url("../public/img/newCar/xy.png") no-repeat 0/100%;
+    width: 3.18rem;
+    height: .82rem;
+    margin: .4rem auto;
+    text-align: center;
+    line-height: .82rem;
+    color: #62BB94;
+    font-size: .4rem;
+
+}
+.content .edit {
+    color: #BBBBBB;
+    font-size: .32rem;
+    position: absolute;
+    right: .24rem;
+    top: .28rem;
+}
+.content .edit img{
+    display: inline-block;
+    width: 13px;
+    vertical-align: middle;
+}
+.content .edit .editspan {
+    padding-left: .1rem;
+}
+.content .che-list {
+    width: 100%;
+}
+.content .che-list .che-li{
+    width: 95%;
+    height: 1.34rem;
+    border-top: 1px solid #F5F5F5;
+    margin: 0 auto;
+}
+.content .che-list .che-bor-bot {
+    border-bottom: 1px solid #F5F5F5;
+}
+.content .che-l {
+    float: left;
+    height: 1.34rem;
+}
+.content .che-r {
+    float: right;
+    height: 1.34rem;
+    line-height: 1.34rem;
+    color: #484848;
+}
+.content .che-list-title {
+    color: #787878;
+    font-size: .345rem;
+    line-height: 1.34rem;
+}
+.content .che-list-zq {
+    color: #B9B9B9;
+}
+.content .che-list-title1 {
+    height: .67rem;
+    line-height: .67rem;
+    padding-top: .1rem;
+}
+.content .che-list-zq1 {
+    padding-top: .15rem;
+}
+.content .che-list-sz {
+    color: #39AC7E;
+    font-size: .5rem;
+}
+.content .che-anniu {
+    transform: translateY(.356rem);
+    -webkit-transform: translateY(.356rem);
+}
+/*请求中*/
+.content .animation-zhuanone {
+    animation: mymove 1s linear infinite;
+    -webkit-animation: mymove 1s linear infinite; /* Safari 和 Chrome */
+}
+/*请求完成*/
+.content .animation-zhuantwo {
+    animation: mymove 1s linear;
+    -webkit-animation: mymove 1s linear; /* Safari 和 Chrome */
+}
+@keyframes mymove {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes mymove {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

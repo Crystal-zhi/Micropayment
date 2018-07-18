@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>微付车钱包</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./Payment.css">
+</head>
+<body>
+	<section id="Payment" class="Payment">
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>微付车钱包</div>
+		</div> --> 
+		<div class="content" v-cloak>
+			<div class="content_top">
+
+        <div class="cardnumber">
+          <span>加油充值单号：</span>
+          <span>{{ cardnumber }}</span>
+        </div>
+
+				<div class="money" :class="{'moneyColorWechart':wx,'moneyColorAlipay':zfb,'moneyColorUnionPay':yl}">
+					<span>&yen;</span>
+					<span>{{ money }}</span>
+				</div>
+               
+			</div>
+			<div class="content_body" style="margin-top: .22rem;background: #fff;">
+<!-- 				<div class="thirdparty">
+					第三方支付
+				</div> -->
+                <ul>
+                	<li class="alepublic" @click="Wechart">
+                		<div class="aleimgdiv alefl">
+                			<img class="aleimg" src="./../public/img/wechart.png">
+                		</div>
+                		<div class="aletextdiv alefl">
+                			微信支付
+                		</div>
+                		<div class="aleradiodiv alefl">
+                			<img class="rightimg" src="./../public/img/right.png">
+                		</div>
+                	</li>
+                	<li class="alepublic" @click="Alipay">
+                		<div class="aleimgdiv alefl">
+                			<img class="aleimg" src="./../public/img/Alipay.png">
+                		</div>
+                		<div class="aletextdiv alefl">
+                			支付宝支付
+                		</div>
+                		<div class="aleradiodiv alefl">
+                			<img class="rightimg" src="./../public/img/right.png">
+                		</div>                		
+                	</li>
+                	<li class="alepublic" @click="UnionPay">
+                		<div class="aleimgdiv alefl">
+                			<img class="aleimg" src="./../public/img/UnionPay.png">
+                		</div>
+                		<div class="aletextdiv alefl">
+                			银联支付
+                		</div>
+                		<div class="aleradiodiv alefl">
+                			<img class="rightimg" src="./../public/img/right.png">
+                		</div>                		
+                	</li>
+                </ul>
+
+			</div>
+      <div class="btndetermine">确认支付</div>
+		</div>       
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#Payment',
+			data:{
+               money:'500.00',
+               cardnumber:'88888888888888888',
+               wx:true,
+               zfb:false,
+               yl:false
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              yd: function() {
+                 console.log(YDUI.device)
+                 // console.log(md5('123'))
+              },
+              Wechart: function () {
+                 this.wx = true;
+                 this.zfb = !this.wx
+                 this.yl = !this.wx
+              },
+              Alipay: function() {
+                 this.zfb = true;
+                 this.wx  = !this.zfb
+                 this.yl = !this.zfb
+              },
+              UnionPay: function () {
+                 this.yl = true;
+                 this.wx  = !this.yl
+                 this.zfb = !this.yl
+              }            
+			},		
+			mounted: function () {
+               this.yd()
+			}
+		})		
+	</script>	
+</body>
+</html>

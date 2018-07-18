@@ -1,0 +1,91 @@
+body {
+    background-color: RGB(243,243,243);
+}
+[v-cloak] {
+    display: none !important;
+}
+#Payment{
+    width: 100%;
+}
+#Payment .content {
+    width: 100%;
+}
+#Payment .content .content_top {
+    text-align: center;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    background-color: #fff;      
+}
+#Payment .content .content_top .money {
+    font-size: .5rem;
+    margin-top: .35rem;   
+}
+.moneyColorWechart{
+    color: #3FD500;	
+}
+.moneyColorAlipay{
+	color: #05ABDD;
+}
+.moneyColorUnionPay{
+	color: #FE5C36;
+}
+#Payment .content .content_top .cardnumber {
+   font-size: .3rem;
+   color: #6B6B6B;
+}
+#Payment .content .content_body .thirdparty {
+    width: 95%;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: .12rem 0;
+    font-size: .31rem; 
+    padding-top: .4rem;  
+    color: #6B6B6B;     
+}
+#Payment .content .content_body .alepublic {
+    width: 95%;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: .18rem 0;
+    border-bottom: 1px solid #F7F7F7;
+    height: 1.175rem;
+    line-height: .86rem;
+    font-size: .31rem;   
+}
+#Payment .content .content_body .alepublic .alefl {
+   float: left;
+}
+#Payment .content .content_body .alepublic .aleimgdiv {
+    width: 12%;
+}
+#Payment .content .content_body .alepublic .aletextdiv {
+    width: 75%;
+    padding-left: .15rem;
+    color: #6B6B6B;
+}
+#Payment .content .content_body .alepublic .aleradiodiv {
+    width: 13%;
+    padding-top: .2rem;
+    height: .86rem;    
+}
+#Payment .content .content_body .alepublic .aleradiodiv .rightimg{
+    width: 22%; 
+    margin: 0 auto;       
+}
+#Payment .content .content_body .alepublic .aleimgdiv .aleimg {
+    width: 100%;
+}
+
+#Payment .btndetermine {
+    width: 95%;
+    height: .79rem;
+    margin: 0 auto;
+    line-height: 0.79rem;
+    color: #ffffff;
+    background-image: url(./../public/img/btn1.png);
+    background-size: 100%;
+    background-repeat: no-repeat;  
+    text-align: center;  
+    font-size: .31rem;
+    margin-top: 2rem;
+}

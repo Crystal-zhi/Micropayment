@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>我的油卡</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./Addoiluser.css">
+</head>
+<body>
+	<section id="OilCard" class="OilCard" v-cloak>
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>我的油卡</div>
+        </div> -->
+        <div class="content">
+            <!-- 油卡信息start -->
+            <div class="card opacity" v-for="(item,index) in list" @click="Selectoilcard(index)">
+                <div class="detailed">
+                    <img v-if="item.OILCARD_TYPE=='Sinopec'" src='../public/img/zsh@2x.png' alt="">
+                    <img v-if="item.OILCARD_TYPE=='PetroChina'" src='../public/img/zsy@2x.png' alt="">
+                    <span>
+                        <em v-if="item.OILCARD_TYPE=='PetroChina'">中国石油</em>
+                        <em v-if="item.OILCARD_TYPE=='Sinopec'">中国石化</em>
+                        <b>{{item.OILCARD_NO}}</b>
+                    </span>
+                    <i>{{item.AREA}}</i>
+                </div>
+                <h3>
+                    <em>手机号：{{item.PHONE}}</em>
+                    <!--<input type="button" value="删除" @click='deletecard'>-->
+                </h3>
+            </div>
+            <!-- 油卡信息end -->
+            <!-- 确认按钮 -->
+            <input type="button" value="添加油卡" class="btn" @click="addcard">
+        </div>
+        <!-- 弹框start -->
+        <div class="popup_bg" v-show="popup_bgalert">
+            <div class="popup">
+                <h2>删除油卡</h2>
+                <div class="customer_kh customer">
+                    <span>卡号：</span>
+                    <p>1000-1133-0000-0632-378</p>
+                </div>
+                <div class="customer_sj customer">
+                    <span>手机：</span>
+                    <p>13053062888</p>
+                </div>
+                <div class="customer_ckr customer">
+                    <span>持卡人：</span>
+                    <p>浙江*贝贝</p>
+                </div>
+                <div class="confirm">
+                    <input type="button" value="取消" id="back" @click="backbtn">
+                    <input type="button" value="确认" id="forward">
+                </div>
+            </div>
+        </div>
+        <!-- 弹框end -->
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#OilCard',
+			data:{
+                url:base+'RGasoil/app/findCustOilCard',
+                popup_bgalert:false,
+                list:[
+                        // {
+                        // img: '../public/img/zsh@2x.png',
+                        // address: '浙江杭州',
+                        // cardId: '1000 1143 0000 6979 231',
+                        // tel: '13053062170',
+                        // title: '中石化加油卡'
+                        // },
+                        // {
+                        // img: '../public/img/zsh@2x.png',
+                        // address: '浙江杭州',
+                        // cardId: '1000 1143 0000 6979 231',
+                        // tel: '13053062170',
+                        // title: '中石化加油卡'
+                        // },
+                        // {
+                        // img: '../public/img/zsh@2x.png',
+                        // address: '浙江杭州',
+                        // cardId: '1000 1143 0000 6979 231',
+                        // tel: '13053062170',
+                        // title: '中石化加油卡'
+                        // }
+                    ]
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+		      parseStrObjByRegExp:function(strDes) {  
+		          var obj = {};  
+		         strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {  
+		            obj[key] = value;  
+		        });  
+		        return obj;
+		      },            
+              yd: function() {
+                  var that = this;
+                 console.log(YDUI.device);
+                  HttpServer(this.url,HttpParams).then(function(data){
+                      that.list = data.OILCARDS
+                  })
+              },
+              deletecard:function() {
+                // this.popup_bgalert=true;
+                  dialog.toast('暂未开通', 'none', 1000);
+              },
+              addcard:function() {
+                  OilCard.OlAddoilcard()
+              },
+              backbtn: function(){
+                // this.popup_bgalert=false;
+              },
+              Selectoilcard:function(index) {
+                  var that = this;
+                  setStore('SelectOilCardInformation',that.list[index]);
+                  OilCard.OlOilCard()
+              }
+			},		
+			mounted: function () {
+               this.yd()
+			}
+		})
+	</script>	
+</body>
+</html>

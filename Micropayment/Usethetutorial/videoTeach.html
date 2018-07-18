@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>视频教程</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./Usethetutorial.css">
+	<style type="text/css">
+		body {
+	    	background-color: #fff;
+		}
+		p{
+			background-color: #51A999;
+		    margin: 15px 0 0 15px;
+		    height: 2em;
+		    width: 18em;
+		    line-height: 2em;
+		    padding-left: 15px;
+		}
+		a{
+			color:#ffffff;
+		}
+		.title_p{
+			background-color: #fff;
+		}
+		.play{
+			position: relative;
+		    left: 15em;
+		    height: 1.4em;
+		    top: -1.7em;
+		}
+	</style>
+</head>
+<body>
+	<section id="Usethetutorial" class="Usethetutorial">
+		<div class="content">
+			<div class="uselist">
+				<div class="divimg">
+					<img class="img" src="./../public/img/video.png">
+				</div>
+				<div>
+					<p class="title_p"><span>视频教程列表</span></p>
+					<p><a href="http://www.baidu.com">1、实名认证视频</a><img class="play" src="./../public/img/play.png"></p>
+					<p><a href="http://www.baidu.com">2、车主服务视频</a><img class="play" src="./../public/img/play.png"></p>
+					<p><a href="http://www.baidu.com">3、分享赚钱视频</a><img class="play" src="./../public/img/play.png"></p>
+					<p><a href="http://www.baidu.com">4、产品介绍视频</a><img class="play" src="./../public/img/play.png"></p>
+					<p><a href="http://www.baidu.com">5、企业宣传片</a><img class="play" src="./../public/img/play.png"></p>
+					<p><a href="http://www.baidu.com">6、微付车管家企业歌曲</a><img class="play" src="./../public/img/play.png"></p>
+					<p><a href="http://www.baidu.com">7、微付车管家语音教程</a><img class="play" src="./../public/img/play.png"></p>
+				</div>
+				<div style="margin: 1em">
+					<span>本公司拥有以上所有视频最终解释权</span>
+				</div>
+			</div> 					
+		</div>		   
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#Usethetutorial',
+			data:{
+
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              yd: function() {
+                 console.log(YDUI.device)
+              }            
+			},		
+			mounted: function () {
+               this.yd()
+			}
+		})		
+	</script>	
+</body>
+</html>

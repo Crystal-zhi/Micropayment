@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>银行卡列表</title>
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./pub.css">
+</head>
+<body>
+<section id="cardOne" class="cardOne planrepayment1" v-cloak>
+    <div class="addcreditcard_back">
+        <span class="addcreditcard_til" style="color: #000;">银行卡</span>
+    </div>
+    <div class="onlinerepayment_top_back" v-for="(item,index) in items" :class="{onlinerepaymentb1:item.bank=='平安银行',onlinerepaymentb2:item.bank=='中国银行',onlinerepaymentb6:item.bank=='农业银行', onlinerepaymentb3:item.bank=='工商银行', onlinerepaymentb4:item.bank=='交通银行', onlinerepaymentb5:item.bank=='建设银行', onlinerepaymentb1:item.BANKNAME=='中国平安银行',onlinerepaymentb2:item.BANKNAME=='中国银行',onlinerepaymentb6:item.BANKNAME=='中国农业银行', onlinerepaymentb3:item.BANKNAME=='中国工商银行', onlinerepaymentb4:item.BANKNAME=='中国交通银行', onlinerepaymentb5:item.BANKNAME=='中国建设银行', onlinerepaymentb5:item.BANKNAME=='浦东发展银行'}">
+        <div class="onlinerepayment__top_back_top">
+            <div class="onlinerepayment__top_back_topa onlinerepayment__top_back_topaimg">
+                <img :src="item.BANK_IMG" style="width:100%;">
+            </div>
+            <div class="onlinerepayment__top_back_topa onlinerepayment__top_back_topafont">
+                <div>
+                    <span class="onlinerepayment__top_back_topafontspan1">{{ item.BANKNAME }}</span>
+                    <sup class="onlinerepayment__top_back_topafontspan2">{{ item.BANK_ID }}</sup>
+                </div>
+                <p class="onlinerepayment__top_back_topafontp">{{ item.CARDNAME }}</p>
+            </div>
+        </div>
+        <div class="onlinerepayment__top_back_top">
+            <span class="onlinerepayment__top_back_topcardnumber">{{ item.ACT_NO }}</span>
+        </div>
+        <input class="planrepayment1_xuazeradio planrepayment1_radio" type="radio"
+               name="planrepayment1_radio"  :value="[item.BANKNAME,item.BANK_ID,item.CARDNAME,item.ACT_NO,item.BANK_IMG]" :checked="index==0" @click="changeInput($event)"/>
+    </div>
+    <div class="onlinerepayment_jhhk_btn" @click="_goplanrepayment2">下一步</div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#cardOne',
+        data:{
+            items:[],
+            chValue: null
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            yd: function() {
+                var that = this;
+                console.log(YDUI.device)
+                HttpServer(getCustBankCard,HttpParams).then(function(res){
+                    for(var i = 0; i<res.CC.length; i++){
+                        res.CC[i].BANK_IMG = banklogo+res.CC[i].BANK_ID+'.png'
+                    }
+                    that.items = res.CC;
+                    that.chValue = that.items[0]
+                })
+            },
+            changeInput(e){
+                // e.target 是你当前点击的元素
+                // e.currentTarget 是你绑定事件的元素
+                var _res = new Object();
+                var _len = e.target.value.split(",");
+                _res.BANKNAME = _len[0];
+                _res.BANK_ID = _len[1];
+                _res.CARDNAME = _len[2];
+                _res.ACT_NO = _len[3];
+                _res.BANK_IMG = _len[4];
+                this.chValue = _res;//选中的值 数组
+            },
+            _goplanrepayment2(){
+                dialog.loading.open('正在处理...');
+                var data = this.chValue;
+                if (data.ACT_NO!='') {
+                    setStore('CardInformation',data);
+                    Replacement.go_FillInInformation();
+                }
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

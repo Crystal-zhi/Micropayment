@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>服务详情</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./ServiceDetails.css">
+</head>
+<body>
+	<section id="ServiceDetails" class="ServiceDetails" v-cloak>
+   <!-- <div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>代办商家</div>
+		</div> -->
+			<!-- banner Start -->
+				<div class="m-slider" id="J_Slider">
+				    <div class="slider-wrapper">
+				        <div class="slider-item">
+				            <a href="javascript:void(0);">
+				                <img src="./../public/img/S_ban2.png">
+				            </a>
+				        </div>
+				        <div class="slider-item">
+				            <a href="javascript:void(0);">
+				                <img src="./../public/img/S_ban2.png">
+				            </a>
+				        </div>
+				    </div>
+				    <div class="slider-pagination"></div><!-- 分页标识 -->
+				</div>
+			<!-- banner End -->
+		<div class="tabpadding">			
+			<div class="con_top" style="margin-top: .2rem;">
+				<p class="con_tit">帝壹代办</p>
+				<div class="con_ov">
+					<div class="fl_l">
+						浙江省杭州市滨江区滨康路101号
+					</div>
+					<div class="fl_r">
+						<a href="javascript:void(0);">打电话</a>
+						<a href="javascript:void(0);">发短信</a>
+					</div>
+				</div>
+			</div>
+			<div class="con_top">
+				<p class="con_tit">可提供服务项目</p>
+				<div class="con_ov">
+					<div class="fl_l">
+						违章代办
+					</div>
+					<div class="fl_r"></div>
+				</div>
+			</div>
+			<div class="con_top">
+				<p class="con_tit">服务流程</p>
+				<div class="con_ov">
+					<img src="./../public/img/liucheng.png" alt="" style="width: 100%;">
+					<!-- <div class="fl_l"></div>
+					<div class="fl_r"></div> -->
+				</div>
+			</div>
+			<div class="con_top">
+				<p class="con_tit">可提供服务项目</p>
+				<div class="con_ov">
+					<div class="fl_l">
+						<ul>
+							<li>1.其味无穷二</li>
+							<li>2.其味无穷二群翁</li>
+							<li>3.去问问多</li>
+							<li>4.期维权翁</li>
+						</ul>
+					</div>
+					<div class="fl_r"></div>
+				</div>
+			</div>										
+		</div>
+		<div class="se-btn">申请代办</div>	
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+         var vm = new Vue({
+         	el:'#ServiceDetails',
+         	data:{
+
+         	},
+         	filters: {
+
+         	},
+         	methods: {
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              banner: function() {
+			    $('#J_Slider').slider({
+			        speed: 1000,
+			        autoplay: 3000,
+			        lazyLoad: true
+			    });              	
+              }
+         	},
+			mounted: function () {
+			  this.$nextTick(function () {
+                 this.banner()
+			  })
+			}         	
+         })	
+	</script>	
+</body>
+</html>

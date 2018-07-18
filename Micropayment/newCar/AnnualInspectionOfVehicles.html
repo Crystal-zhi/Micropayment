@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>车辆年检</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./AnnualInspectionOfVehicles.css">
+    <link rel="stylesheet" href="./../public/css/layui.css">
+</head>
+
+<body>
+    <section id="AnnualInspectionOfVehicles" class="AnnualInspectionOfVehicles">
+
+
+        <div class="title content"  v-cloak>{{ title }}</div>
+        <div class="liucheng content">
+            <div class="pubdiv img-div">
+                <img src="./../public/img/newCar/nj-lc.png" alt="">
+            </div>
+            <div class="pubdiv liuchenglist">
+                <ul>
+                    <li>
+                        <span>支付订单</span>
+                        <span class="spantwo">( 提交年检订单并支付 )</span>
+                    </li>
+                    <li>
+                        <span>出门寄件</span>
+                        <span class="spantwo">( 支付后出门寄件出资料 )</span>
+                    </li>
+                    <li>
+                        <span>证件年审</span>
+                        <span class="spantwo">( 资料审核无误后交由车管所办理年审 )</span>
+                    </li>
+                    <li>
+                        <span>确定收件</span>
+                        <span class="spantwo">( 收到资料后对资料进行审核 )</span>
+                    </li>
+                    <li>
+                        <span>处理完成</span>
+                        <span class="spantwo">( 年审完成, 寄回年审资料、年检和环保标志 )</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="sixnian">
+            <div class="sixtitle">六年内车辆年检业务代办</div>
+            <ul>
+                <li>*车辆符合6年免检条件</li>
+                <li style="padding-bottom: .3rem;">*车辆必须是七座以下 ( 不含七座 ) 的非运营车辆</li>
+            </ul>
+        </div>
+        <div class="forms"  v-cloak>
+            <ul>
+                <li class="li">
+                    <div class="li-l">车牌号码 : </div>
+                    <div class="li-r">
+                        <div class="li-r-diva" @click="selchepai">
+                            <span>{{ LicensePlateOne }}{{ LicensePlateTwo }}</span>
+                            <img src="./../public/img/newCar/nj-jt.png" alt="">
+                        </div>
+                        <div class="li-r-divb">
+                            <input type="text" placeholder="车牌号" v-model="LicensePlateThree">
+                        </div>
+                        <img src="./../public/img/newCar/nj-pz.png" class="paizhao">
+                        <input type="file" class="paizhao file_upload" name="file_upload" type="file" accept="image/*" @change="getFile" style="opacity: 0;"/>
+                    </div>
+                </li>
+                <li class="li">
+                    <div class="li-l">车身架号 : </div>
+                    <div class="li-r">
+                        <div class="li-r-divc"></div>
+                        <div class="li-r-divb">
+                            <input type="text" placeholder="请输入车身架号后6位" v-model="BodyFrameNumber">
+                        </div>
+                    </div>
+                </li>
+                <li class="li">
+                    <div class="li-l">发动机号 : </div>
+                    <div class="li-r">
+                        <div class="li-r-divc"></div>
+                        <div class="li-r-divb">
+                            <input type="text" placeholder="请输入发动机号后8位" v-model="EngineNumber">
+                        </div>
+                    </div>
+                </li>
+                <li class="li">
+                    <div class="li-l">年审日期 : </div>
+                    <div class="li-r">
+                        <div class="li-r-divc"></div>
+                        <div class="li-r-divb" @click="nianshenriqi">
+                            <input type="text" placeholder="请选择年审日期" disabled="disabled" v-model="AnnualReviewDate">
+                        </div>
+                    </div>
+                </li>
+                <li class="li">
+                    <div class="li-l">联系电话 : </div>
+                    <div class="li-r">
+                        <div class="li-r-divc"></div>
+                        <div class="li-r-divb">
+                            <input type="text" placeholder="请输入您的电话" v-model="Phone">
+                        </div>
+                    </div>
+                </li>
+                <li class="li">
+                    <div class="li-l">姓名 : </div>
+                    <div class="li-r">
+                        <div class="li-r-divc"></div>
+                        <div class="li-r-divb">
+                            <input type="text" placeholder="请输入您的姓名" v-model="Name">
+                        </div>
+                    </div>
+                </li>
+                <li class="li">
+                    <div class="li-l">价格 : </div>
+                    <div class="li-r">
+                        <div class="li-r-divc"></div>
+                        <div class="li-r-divb">
+                            <input type="text" disabled="disabled" value="166.00元">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="jiange"></div>
+        <div class="banliqian">
+            <div class="blq-title">办理年检前，需准备以下资料并交给收件员：</div>
+            <ul>
+                <li>
+                    <div class="blq-div1"></div>
+                    <div class="blq-div2">行驶证原件</div>
+                </li>
+                <li>
+                    <div class="blq-div1"></div>
+                    <div class="blq-div2">有效交强险副单元件</div>
+                </li>
+                <li>
+                    <div class="blq-div1"></div>
+                    <div class="blq-div2">有效车船税原件</div>
+                </li>
+                <li>
+                    <div class="blq-div1"></div>
+                    <div class="blq-div2">身份证复印件</div>
+                </li>
+                <li>
+                    <div class="blq-div1"></div>
+                    <div class="blq-div2">车辆登记复印件</div>
+                </li>
+            </ul>
+        </div>
+        <div class="ruoyin">
+            <span style="color: #02AD9A;padding-right: .1rem;">*</span>若因证件有误。需退回证件，寄回费用自费
+        </div>
+
+
+        <div style="width: 100%; height: 1rem;"></div>
+
+
+        <div class="taoqianle">
+            <div class="tql-divone">
+                <input class="rtq-inputche" type="checkbox" name="rtq-radio" :checked="xieyi" @click="tongyixieyi">
+                <span>
+                    已同意
+                </span>
+                <a href="javascript:void(0);" @click="getxieyi">《车辆服务协议》</a>
+            </div>
+            <div class="tql-divtwo" @click="quwancheng">
+                去完成
+            </div>
+        </div>
+
+        <canvas id="ocrcanimg" style="display: none;"></canvas>
+        <div id="zfb_zf" style="display: none;"></div>
+    </section>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/md5.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/layer.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#AnnualInspectionOfVehicles',
+            data: {
+                title: '年检办理流程',
+                LicensePlateOne: '浙',   //车牌 省简称部分
+                LicensePlateTwo: 'A',     //车牌 字母部分
+                LicensePlateThree: '',     //车牌 后面部分
+                BodyFrameNumber: '',    //车身架号
+                EngineNumber: '',      //发动机号
+                AnnualReviewDate: '', //年审日期
+                AnnualReviewDateHT: '', //传后台年审日期
+                Phone: '',             //电话
+                Name: '',            //姓名
+                Price: 166,         //价格
+                xieyi: false,      //同意协议勾选
+                chepaiQ: [{ label: '京', value: 0 }, { label: '津', value: 1 }, { label: '沪', value: 2 }, { label: '渝', value: 3 }, { label: '蒙', value: 4 }, { label: '新', value: 5 }, { label: '藏', value: 6 }, { label: '宁', value: 7 }, { label: '桂', value: 8 }, { label: '港', value: 9 }, { label: '澳', value: 10 }, { label: '黑', value: 11 }, { label: '吉', value: 12 }, { label: '辽', value: 13 }, { label: '晋', value: 14 }, { label: '冀', value: 15 }, { label: '青', value: 16 }, { label: '鲁', value: 17 }, { label: '豫', value: 18 }, { label: '苏', value: 19 }, { label: '皖', value: 20 }, { label: '浙', value: 21 }, { label: '闽', value: 22 }, { label: '赣', value: 23 }, { label: '湘', value: 24 }, { label: '鄂', value: 25 }, { label: '粤', value: 26 }, { label: '琼', value: 27 }, { label: '甘', value: 28 }, { label: '陕', value: 29 }, { label: '黔', value: 30 }, { label: '川', value: 31 }],
+                chepaiH: [{ label: 'A', value: 'A' }, { label: 'B', value: 'B' }, { label: 'C', value: 'C' }, { label: 'D', value: 'D' }, { label: 'E', value: 'E' }, { label: 'F', value: 'F' }, { label: 'G', value: 'G' }, { label: 'H', value: 'H' }, { label: 'I', value: 'I' }, { label: 'J', value: 'J' }, { label: 'K', value: 'K' }, { label: 'L', value: 'L' }, { label: 'M', value: 'M' }, { label: 'N', value: 'N' }, { label: 'O', value: 'O' }, { label: 'P', value: 'P' }, { label: 'Q', value: 'Q' }, { label: 'R', value: 'R' }, { label: 'S', value: 'S' }, { label: 'T', value: 'T' }, { label: 'U', value: 'U' }, { label: 'V', value: 'V' }, { label: 'W', value: 'W' }, { label: 'X', value: 'X' }, { label: 'Y', value: 'Y' }, { label: 'Z', value: 'Z' }],
+                zm_img: ''
+
+            },
+            methods: {
+                goBackToTheLastPage: function () {
+                    window.history.go(-1)
+                },
+                parseStrObjByRegExp: function (strDes) {
+                    var obj = {};
+                    strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                        obj[key] = value;
+                        // console.log(str,key,value)
+                    });
+                    return obj;
+                },
+                yd: function () {
+                    console.log(YDUI.device)
+                },
+                getxieyi: function () {//点击弹用户协议
+                    layer.open({
+                        type: 2,
+                        title: '车辆服务协议',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['90%', '90%'],
+                        content: 'agreement.html',//iframe的url
+                        btn: ['确定'],
+                    });
+                },
+                selchepai: function () {
+                    var that = this;
+                    weui.picker(vm.$data.chepaiQ, vm.$data.chepaiH, {
+                        defaultValue: [0, 'A'],
+                        onChange: function (result) {
+                            // console.log(result);
+                            // try{
+                            //     that.LicensePlateOne = that.chepaiQ[result[0]].label;
+                            //     that.LicensePlateTwo = result[1];
+                            // }catch(e){}
+                        },
+                        onConfirm: function (result) {
+                            // console.log(result);
+                            try {
+                                that.LicensePlateOne = that.chepaiQ[result[0]].label;
+                                that.LicensePlateTwo = result[1];
+                            } catch (e) { }
+                        }
+                    });
+                },
+                nianshenriqi: function () {
+                    var that = this;
+                    weui.datePicker({
+                        start: 2000,
+                        end: 2050,
+                        defaultValue: [2008, 1, 1],
+                        onChange: function (result) {
+                            // console.log(result);
+                        },
+                        onConfirm: function (result) {
+                            console.log(result);
+                            result[1] = result[1].toString().length < 2 ? '0' + result[1] : result[1];
+                            result[2] = result[2].toString().length < 2 ? '0' + result[2] : result[2];
+                            that.AnnualReviewDate = result[0] + '年' + result[1] + '月' + result[2] + '日';  //展示
+                            that.AnnualReviewDateHT = result[0].toString() + result[1].toString() + result[2].toString(); //传后台
+                        },
+                        id: 'datePicker'
+                    });
+                },
+                tongyixieyi: function () {
+                    this.xieyi = !this.xieyi
+                },
+
+
+                quwancheng: function () {
+                    var that = this;
+                    if (this.LicensePlateThree == '') {
+                        dialog.toast('请输入车牌!', 'none', 1000);
+                        return
+                    }
+                    if (this.BodyFrameNumber == '') {
+                        dialog.toast('请输入车身架号!', 'none', 1000);
+                        return
+                    }
+                    if (this.BodyFrameNumber == '') {
+                        dialog.toast('请输入车身架号!', 'none', 1000);
+                        return
+                    }
+                    if (this.EngineNumber == '') {
+                        dialog.toast('请输入发动机号!', 'none', 1000);
+                        return
+                    }
+                    if (this.AnnualReviewDate == '') {
+                        dialog.toast('请选择年审日期!', 'none', 1000);
+                        return
+                    }
+                    if (this.Phone == '') {
+                        dialog.toast('请输入联系电话!', 'none', 1000);
+                        return
+                    }
+                    if (this.Name == '') {
+                        dialog.toast('请输入姓名!', 'none', 1000);
+                        return
+                    }
+                    if (!this.xieyi) {
+                        dialog.toast('请同意服务协议!', 'none', 1000);
+                        return
+                    }
+                    dialog.loading.open('正在处理...');
+                    var obj = {};
+                    obj.WX = WX;
+                    obj.ORG_ID = ORG_ID;
+                    obj.LOGIN_ID = LOGIN_ID;
+                    obj.HPHM = this.LicensePlateOne + this.LicensePlateTwo + this.LicensePlateThree; //车牌
+                    obj.VIN = this.BodyFrameNumber; //车架号
+                    obj.ENGION = this.EngineNumber; //发动机
+                    obj.INSPECT_DAT = this.AnnualReviewDateHT; //年审日期
+                    obj.INSPECT_PRICE = this.Price * 100; // 价格
+                    obj.CONTACT_TEL = this.Phone; // 电话
+                    obj.CONTACT_NAME = this.Name; //名字
+                    HttpServer(wfc_carInspect, obj).then(function (data) {
+                        if (data.RSPCODE == 'SUCCESS') {
+                            dialog.loading.close();
+                            toPayment(data.ORDERNO,'Inspect',obj.INSPECT_PRICE);
+                            // var wfc_obj = {};
+                            // wfc_obj.WX = WX;
+                            // wfc_obj.ORG_ID = ORG_ID;
+                            // wfc_obj.LOGIN_ID = LOGIN_ID;
+                            // wfc_obj.BUSORDERNO = data.ORDERNO;
+                            // wfc_obj.TRANS_TYPE = 'ALIPAY_WAP';
+                            // wfc_obj.BIZ_TYPE = 'Inspect';
+                            // wfc_obj.TXNAMT = obj.INSPECT_PRICE;
+                            // HttpServer(wfc_payTradeOrder, wfc_obj).then(function (data) {
+                            //     // console.log(data.PAY_BODY)
+                            //     dialog.loading.close();
+                            //     if (data.RSPCODE == 'SUCCESS') {
+                            //         // that.toPayment(wfc_obj.BUSORDERNO, wfc_obj.BIZ_TYPE, wfc_obj.TXNAMT);
+
+                            //     } else {
+                            //         dialog.toast(data.RSPMSG, 'none', 1000);
+                            //     }
+                            // })
+                        } else {
+                            dialog.loading.close();
+                            dialog.toast(data.RSPMSG, 'none', 1000);
+
+                        }
+                        // console.log(data)
+                    })
+                },
+                getFile: function (el) {
+                    var that = this
+                    var file = el.target.files[0]
+                    dialog.loading.open('处理中...');
+                    var reader = new FileReader();
+                    //abort none 中断读取
+                    //readAsBinary String file将文件读取为二进制码
+                    //readAsDataURL file 将文件读取为 DataURL
+                    //readAsTextfile, [encoding 编码]将文件读取为文本
+                    reader.readAsDataURL(file)
+                    reader.onabort = function (e) { //中断时触发
+
+                    }
+                    reader.onerror = function (e) { //出错时触发
+
+                    }
+                    reader.onload = function (e) { //文件读取成功完成时触发
+                        ImageCompressionO('ocrcanimg',e.target.result,function(d){
+                            OCRImage('ocrcanimg', d, function (a) {
+                                that.zm_img = a.split(",")[1]
+                                var obj = {
+                                    WX: 'wx',
+                                    ORG_ID: ORG_ID,
+                                    LOGIN_ID: LOGIN_ID,
+                                    IMG_TYPE: 'VehicleCard',
+                                    ATTACHMENT_A: that.zm_img,
+                                    ATTACHMENT_B: ''
+                                }
+                                HttpServer(wfc_ImageOCR, obj).then(function (data) {
+                                    if (data.RSPCODE == 'SUCCESS') {
+                                        //obj.HPHM = this.LicensePlateOne+this.LicensePlateTwo+this.LicensePlateThree; //车牌
+                                        that.BodyFrameNumber = data.VECHICLE_MAIN_VIN; //车架号
+                                        that.EngineNumber = data.VECHICLE_ENGINE_NO; //发动机
+                                        that.LicensePlateOne = data.VECHICLE_PLATE_NUM.substr(0, 1); //车牌
+                                        that.LicensePlateTwo = data.VECHICLE_PLATE_NUM.substr(1, 1); //车牌
+                                        that.LicensePlateThree = data.VECHICLE_PLATE_NUM.substr(2, data.VECHICLE_PLATE_NUM.length - 2); //车牌
+                                        that.Name = data.VECHICLE_OWNER;  // 姓名
+                                        dialog.loading.close();
+                                    } else {
+                                        dialog.loading.close();
+                                        dialog.toast(data.RSPMSG, 'none', 1000);
+                                    }
+                                })
+                            })
+                        });
+                    }
+                    reader.onloadend = function (e) { //读取完成触发无论成功或失败
+                        
+                    }
+                    reader.onloadstart = function (e) { //读取开始时触发
+
+                    }
+                    reader.onprogress = function (e) { //读取中...
+
+                    }
+                },
+                strjq: function (str, digit) {
+                    return str.substr(str.length - digit)
+                }
+            },
+            mounted: function () {
+                this.yd()
+            }
+        })
+    </script>
+</body>
+
+</html>

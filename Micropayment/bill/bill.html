@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>我的账单</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./bill.css">
+</head>
+<body>
+<section id="bill" class="bill" v-cloak>
+    <!--      <div class="billinquire">
+            账单查询
+          <span class="inquire" @click="goqryPayOrderBill">查询</span>
+         </div> -->
+    <div class="Dateselection" >
+        <div class="DateselectionS" @click="OnsetData">
+            <span class="datepaddingleft">开始日期</span><br>
+            <span class="datepaddingleft datepaddingle">{{ OnData }}</span>
+        </div>
+        <div class="DateselectionS" @click="OffsetData">
+            <span class="datepaddinglef">结束日期</span><br>
+            <span class="datepaddinglef datepaddingle">{{ OffData }}</span>
+        </div>
+        <div style="clear:both"></div>
+        <div class="xiabianxian"></div>
+        <div class="jiaoyibishujine">
+            <div class="jiaoyibishu">
+                <p class="jybsp">交易笔数</p>
+                <p class="jybsp">{{ zbs }}</p>
+            </div>
+            <div class="jiaoyibishu">
+                <p class="jybsp">交易金额</p>
+                <p class="jybsp">{{ (zje - 0)/100 }}</p>
+            </div>
+        </div>
+        <div class="Typesoforstatus">
+            <div class="Typesof">
+                <span class="typeofspan1">类型 :</span>
+                <select name="" id="" style="width: 40%;" v-model="lxselect">
+                    <option value="">全部</option>
+                    <option value="01">油卡</option>
+                    <option value="02">违章</option>
+                    <option value="03">保险</option>
+                    <option value="04">支付</option>
+                </select>
+                <!--<div>{{ lxselect }}</div>-->
+                <!--<span class="typeofspan2">全部</span>-->
+            </div>
+            <div class="Typesof">
+                <span class="typeofspan1">状态 :</span>
+                <select name="" id="" style="width: 40%;" v-model="ztselect">
+                    <option value="">全部</option>
+                    <option value="00">未处理</option>
+                    <option value="01">成功</option>
+                    <option value="02">失败</option>
+                    <option value="05">关闭</option>
+                    <option value="99">超时</option>
+                </select>
+                <!--<div>{{ ztselect }}</div>-->
+                <!--<span class="typeofspan2">全部</span>-->
+            </div>
+        </div>
+        <div class="colorkadu"></div>
+        <table class="table" style="color:#000">
+            <thead>
+            <tr>
+                <!-- <th>序号</th> -->
+                <th>日期时间</th>
+                <th>状态</th>
+                <th>金额</th>
+                <th>清算</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item, index) in items">
+                <!-- <td>{{ index+1 }}</td> -->
+                <td>{{ item.TXNDATE.substring(0,4)+'-'+item.TXNDATE.substring(4,6)+'-'+item.TXNDATE.substring(6,8) }} {{ item.TXNTIME.substring(0,2)+':'+item.TXNTIME.substring(2,4) }}</td>
+                <!--<td style="color:#FFD133">未处理</td>-->
+                <td v-if="item.ORDSTATUS=='00'" style="color:#FFD133">未处理</td>
+                <td v-if="item.ORDSTATUS=='01'" style="color:#4BFC4F">支付成功</td>
+                <td v-if="item.ORDSTATUS=='02'" style="color:#FE4B4B">支付失败</td>
+                <td v-if="item.ORDSTATUS=='05'" style="color:#bfc1fd">订单关闭</td>
+                <td v-if="item.ORDSTATUS=='21'" style="color:#4BFC4F">退款成功</td>
+                <td v-if="item.ORDSTATUS=='99'" style="color:#00c9ff">超时</td>
+                <td v-if="item.ORDSTATUS=='04'" style="color:#00c9ff">支付中</td>
+                <td>{{ (item.TXNAMT-0)/100 }}</td>
+                <td v-if="item.STL_STS=='0'" style="color:#FE4B4B">未清算</td>
+                <td v-if="item.STL_STS=='1'" style="color:#4BFC4F">已清算</td>
+                <!--<td style="color:#4BFC4F">已清算</td>-->
+            </tr>
+            </tbody>
+        </table>
+        <div id="onlyzwdd" v-if="items.length == '0'" style="text-align: center;margin-top: 2rem;">
+            <img src="./../public/img/newCar/noorder.png" alt="" style="display: inline-block;">
+            <p style="color: #959595;">暂无订单</p>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/echarts.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#bill',
+        data:{
+            danniu:true,
+            OnData:'', // 展示 开始日期
+            OffData:'', //展示  结束日期
+            c_OnData:'', //传后台 开始日期
+            c_OffData:'', //传后台 结束日期
+            items:[
+                // {
+                //     a:'21i29312831313111',b:'2018-10-23 09:50:20',c:'完成',d:'龙阳路路口',e:'2018-05-15 09：50：20',f:'超速100%',g:'12',h:'666',i:'888',j:'0'
+                // },
+                // {
+                //     a:'21i29312831313111',b:'2018-10-23 09:50:20',c:'未处理',d:'龙阳路路口',e:'2018-05-15 09：50：20',f:'超速100%',g:'12',h:'666',i:'888',j:'0'
+                // },
+                // {
+                //     a:'21i29312831313111',b:'2018-10-23 09:50:20',c:'进行中',d:'龙阳路路口',e:'2018-05-15 09：50：20',f:'超速100%',g:'12',h:'666',i:'888',j:'0'
+                // },
+                // {
+                //     a:'21i29312831313111',b:'2018-10-23 09:50:20',c:'退单',d:'龙阳路路口',e:'2018-05-15 09：50：20',f:'超速100%',g:'12',h:'666',i:'888',j:'0'
+                // }
+            ],
+            lxselect:'',
+            ztselect:'',
+            zbs:'0',
+            zje:'0'
+        },
+        watch:{
+            lxselect:function(val,oldVal) {
+                // console.log('new: %s, old: %s', val, oldVal)
+                this.Http(this.c_OnData,this.c_OffData,val,this.ztselect)
+            },
+            ztselect:function(val,oldVal) {
+                // console.log('new: %s, old: %s', val, oldVal)
+                this.Http(this.c_OnData,this.c_OffData,this.lxselect,val)
+            }
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                console.log(YDUI.device)
+                this.OnData = this.FormatTime(new Date((new Date().getTime()-(1000*60*60*24*7)))); // 一周前 开始日期
+                this.OffData = this.FormatTime(new Date(new Date().getTime()));  //当前时间   结束日期
+                this.c_OnData = this.DeleteTime(this.FormatTime(new Date((new Date().getTime()-(1000*60*60*24*7))))); // 一周前传后台 开始日期
+                this.c_OffData = this.DeleteTime(this.FormatTime(new Date(new Date().getTime()))); // 当前时间 传后台 结束日期
+
+                this.Http(this.c_OnData,this.c_OffData,this.lxselect,this.ztselect)
+            },
+            //时间格式化
+            FormatTime: function (time) {
+                if(!time) {return }
+                var y = time.getFullYear().toString(); // 年
+                var m = (time.getMonth()+1).toString().length < 2 ? '0'+(time.getMonth()+1).toString() : (time.getMonth()+1).toString();   // 月
+                var d = time.getDate().toString().length < 2 ? '0'+time.getDate().toString() : time.getDate().toString();    // 日
+                return y+'-'+m+'-'+d;
+            },
+            //删除 时间'-' 传后台
+            DeleteTime:function(time){
+                 var re = new RegExp("-","g");
+                 var t = time.replace(re,"");
+                 return t;
+            },
+            // selectState:function () {
+            //     var that = this;
+            //     weui.picker(vm.$data.stateList, {
+            //         onChange: function (result) {
+            //             // console.log(result);
+            //         },
+            //         onConfirm: function (result) {
+            //             // console.log(result);
+            //             that.State = vm.$data.stateList[result[0]].label;
+            //         }
+            //     });
+            // },
+            OnsetData:function () {
+                var that = this;
+                weui.datePicker({
+                    start: 2017,
+                    end: new Date().getFullYear(),
+                    onChange: function (result) {
+                        // console.log(result);
+                    },
+                    onConfirm: function (result) {
+                        // console.log(result);
+                        var m = result[1].toString().length < 2 ? '0'+result[1].toString() : result[1].toString();
+                        var d = result[2].toString().length < 2 ? '0'+result[2].toString() : result[2].toString();
+                        that.OnData = result[0]+'-'+m+'-'+d;
+                        that.c_OnData = result[0]+m+d;
+                        // console.log(that.c_OnData);
+                        that.Http(that.c_OnData,that.c_OffData,that.lxselect,that.ztselect)
+                    }
+                });
+            },
+            OffsetData:function () {
+                var that = this;
+                weui.datePicker({
+                    start: 2017,
+                    end: new Date().getFullYear(),
+                    onChange: function (result) {
+                        // console.log(result);
+                    },
+                    onConfirm: function (result) {
+                        // console.log(result);
+                        var m = result[1].toString().length < 2 ? '0'+result[1].toString() : result[1].toString();
+                        var d = result[2].toString().length < 2 ? '0'+result[2].toString() : result[2].toString();
+                        that.OffData = result[0]+'-'+m+'-'+d;
+                        that.c_OffData = result[0]+m+d;
+                        // console.log(that.c_OffData);
+                        that.Http(that.c_OnData,that.c_OffData,that.lxselect,that.ztselect)
+                    }
+                });
+            },
+            Http:function(START_TXNDATE,END_TXNDATE,BIZ_TYPE,ORDSTATUS) {
+                // START_TXNDATE 开始日期,END_TXNDATE 结束日期,BIZ_TYPE 业务类型,ORDSTATUS 订单状态
+                var that = this;
+                var obj = {};
+                obj.WX = 'wx';
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.START_TXNDATE = START_TXNDATE; // 开始日期
+                obj.END_TXNDATE = END_TXNDATE; // 结束日期
+                obj.BIZ_TYPE = BIZ_TYPE; // 业务类型
+                obj.ORDSTATUS = ORDSTATUS; // 订单状态
+                HttpServer(wfc_qryPayOrder,obj).then(function(data){
+                    console.log(data);
+                    // if(data.PAYORDER_LIST.length == '0') {
+                    //     // dialog.toast('没有订单', 'none', 1000);
+                    //     $('#onlyzwdd').css("width",$(document).width())
+                    //     $('#onlyzwdd').css("height",$(document).height())
+                    // }
+                    that.items = data.PAYORDER_LIST;
+                    that.zbs = data.TXNCONT;
+                    that.zje = data.ALL_TXNAMT
+                })
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

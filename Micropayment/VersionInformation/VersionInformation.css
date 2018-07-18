@@ -1,0 +1,58 @@
+body {
+    background-color: rgb(243,243,243);
+}
+[v-cloak] {
+    display: none !important;
+}
+#VersionInformation {
+	width: 100%;
+}
+#VersionInformation .logo {
+    width: 100%;
+    background-color: #ffffff;
+    padding-top: .8rem;
+    padding-bottom: .7rem;
+}
+#VersionInformation .logoi {
+    width: 29%;
+    height: 2.5rem;
+    background-image: url(./../public/img/banben.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
+#VersionInformation .guessyouul {
+    margin-top: .2rem;
+}
+#VersionInformation .Guessyouli {
+    width: 95%;
+    margin: 0 auto;
+    background-image: url(./../public/img/list.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 2.1rem;
+    color: #555555;
+}
+#VersionInformation #Guessyouliwe {
+    height: 1rem;
+    background-position-y: -1rem;    
+}
+#VersionInformation .Guessyoulip {
+    width: 95%;
+    margin: 0 auto;
+    height: 1rem;
+    line-height: 1rem;
+    font-size: .3rem;
+    letter-spacing: 1px;
+}
+#VersionInformation .Guessyous {
+    display: inline-block;
+    width: 49%;
+    box-sizing: border-box;
+}
+#VersionInformation .Guessyousi {
+    display: inline-block;
+    width: 48%;
+    text-align: right;
+    box-sizing: border-box;
+}

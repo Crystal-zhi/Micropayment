@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>添加油卡</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./Addoilcard.css">
+</head>
+<body>
+	<section id="OilCard" class="OilCard" v-cloak>
+		<!-- 头部start -->
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>添加油卡</div>
+		</div> -->
+		<!-- 头部end -->
+		<div class="content">
+			<p class="style">请选择卡类型</p>
+			<!-- 油卡类型start -->
+			<div class="card">
+              <div class="card_back card_back1" @click="selcardone">
+				  <p :class="{'one':classone,'one_bg':!classone}"></p>
+			  </div>
+			  <div class="card_back card_back2" @click="selcardtwo">
+				  <p :class="{'two_bg':classtwo,'two':!classtwo}"></p>
+			  </div>
+			</div>
+			<!-- 油卡类型end -->
+			<p class="card_number">请输入加油卡号</p>
+			<!-- 输入油卡号添加start -->
+			<div class="input_number">
+				<input type="number" class="cardnumber" placeholder="输入中石化/中石油加油卡号" @input="monitorinput" v-model="inputtext">
+			</div>
+			<span class="prompt" v-show="promptalert">请输入19位卡号</span>
+			<input type="button" id="btn" class="btn" value="确认添加" :class="{'btn1':ctrlclass}" @click="_submit">
+			<!-- 输入油卡号添加end -->
+		</div>
+		<!-- 弹框start -->
+		<div class="popup_bg" v-show="popup_bgalert">
+			<div class="popup">
+				<h2>请核实信息</h2>
+				<div class="customer_kh customer">
+					<span>卡号：</span>
+					<p>{{ heshi_kh }}</p>
+				</div>
+				<div class="customer_sj customer">
+					<span>手机：</span>
+					<p>{{ heshi_phone }}</p>
+				</div>
+				<div class="customer_ckr customer">
+					<span>持卡人：</span>
+					<p>{{ heshi_name }}</p>
+				</div>
+				<div class="confirm">
+					<input type="button" value="返回修改" id="back" @click="backbtn(-1)">
+					<input type="button" value="确认添加" id="forward" @click="backbtn(1)">
+				</div>
+			</div>
+		</div>
+		<!-- 弹框end -->
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#OilCard',
+			data:{
+			  urladd:base+'RGasoil/app/addOilCard',//添加油卡
+			  urlfind:base+'RGasoil/app/findStockOilCard',//确认信息
+			  inputtext:'',
+			  ctrlclass:false,
+			  promptalert:false,
+			  popup_bgalert:false,
+			  classone:true,
+			  classtwo:true,
+			  heshi_kh:'',
+			  heshi_phone:'',
+			  heshi_name:''
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+		      parseStrObjByRegExp:function(strDes) {  
+		          var obj = {};  
+		         strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {  
+		            obj[key] = value;  
+		        });  
+		        return obj;
+		      },            
+              yd: function() {
+                 console.log(YDUI.device)                
+			  },
+			  monitorinput: function(){
+                   if(this.inputtext==''){
+					this.ctrlclass=false
+				   }else if(this.inputtext.length<19){
+					this.ctrlclass=false
+				   }else {
+					  this.ctrlclass=true;
+				   }
+			  },
+			  _submit: function(){
+                var that = this
+				if(this.inputtext==''){
+					this.promptalert=true
+				   }else if(this.inputtext.length<19){
+					this.promptalert=true
+				   }else{
+					this.promptalert=false;
+					var obj = {}
+                    obj.WX = WX;
+                    obj.ORG_ID = ORG_ID;
+                    obj.LOGIN_ID = LOGIN_ID;
+                    obj.OILCARD_NO = this.inputtext;
+					HttpServer(this.urlfind,obj).then(function(data){
+                        if(data.RSPCODE == 'SUCCESS') {
+                            that.heshi_kh = data.OILCARD_NO;
+                            that.heshi_phone = data.PHONE;
+                            that.heshi_name = data.CUST_NAME;
+                            that.popup_bgalert=true;
+						}else{
+                            dialog.toast(data.RSPMSG, 'none', 1000);
+						}
+					})
+				   }  
+			  },
+			  backbtn: function(e){
+                  var that = this
+                  if(e<0){
+                      this.popup_bgalert=false;
+				  }else{
+                      var obj = {};
+                      obj.WX = WX;
+                      obj.ORG_ID = ORG_ID;
+                      obj.LOGIN_ID = LOGIN_ID;
+                      obj.OILCARD_NO = this.inputtext;
+                      HttpServer(this.urladd,obj).then(function(data){
+                          if(data.RSPCODE == 'SUCCESS') {
+                              dialog.toast(data.RSPMSG, 'none', 1000);
+                              that.popup_bgalert=false;
+                              OilCard.OlOilCard();
+                          }else{
+                              dialog.toast(data.RSPMSG, 'none', 1000);
+                              that.popup_bgalert=false;
+                          }
+                      })
+				  }
+
+			  },
+			  selcardone: function() {
+                 this.classone = true
+				 this.classtwo = true
+		      },
+			  selcardtwo: function() {
+                  this.classone = false
+                  this.classtwo = false
+			  }
+			},		
+			mounted: function () {
+			   this.yd()
+				// $(".card").click(function(){
+				// 	$(".card_back1").children("p").toggleClass("one").toggleClass("one_bg");
+				// 	$(".card_back2").children("p").toggleClass("two").toggleClass("two_bg");
+				// })
+			}
+		})		
+	</script>	
+</body>
+</html>

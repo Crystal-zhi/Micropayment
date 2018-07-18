@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>关于我们</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./aboutus.css">
+</head>
+<body>
+	<section id="aboutus" class="aboutus">
+		<!-- <div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div class="aboutus_word">关于我们</div>
+		</div> -->
+		<div class="logo">
+			<div class="logoi"></div>
+			<!-- <div class="logotext">微付车</div> -->
+		</div>
+		<div style="width: 100%;background: #ffffff;">
+			<div class="bor"></div>
+		</div>
+		<div class="text_div">
+			<p class="text_p">{{ text1 }}</p>
+			<div class="con_back" style="background-image: url(./../public/img/1.png);"></div>
+			<p class="text_p">{{ text2 }}</p>
+			<p class="text_p">{{ text3 }}</p>
+			<div class="con_back" style="background-image: url(./../public/img/2.png);"></div>	
+			<p class="text_p">{{ text4 }}</p>
+			<p class="text_p">{{ text5 }}</p>
+			<div class="con_back" style="background-image: url(./../public/img/3.png);"></div>	
+			<p class="text_p">{{ text6 }}</p>			
+			<p class="text_p">{{ text7 }}</p>										
+		</div>
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#aboutus',
+			data:{
+               text1:'深圳微付信息技术服务有限公司（深圳微付）与上海钜轩汽车用品有限公司（中国钜轩）在上海闵行区签署战略投资合作发布会。宣布合资子品牌钜轩微付正式进军互联网+汽车后市场行业。双方将利用各自资源，在汽车金融、后市场服务、营销推广等领域开展战略投资.',
+               text2:'作为中国汽车后市场独创精神的鲜活代表，上海钜轩汽车用品有限公司是国内汽车微修行业解决方案型供应商。上海钜轩一直致力于中国汽车后市场微修项目的研发和实践，掌握多项汽车微修核心技术。',
+               text3:'首创“微修”新概念引领中国汽车后市场的蓬勃发展，使中国钜轩在短短的四年内加盟商突破3000家；并荣获“创新先锋上海模范企业”“长三角地区活力龙头企业”“汽车美容十大品牌之一”等荣誉。',
+               text4:'深圳微付在过去的一年里表现也是可圈可点的。深圳微付信息技术服务有限公司是一家深度聚焦于智慧出行和汽车人性化服务的平台型公司。',
+               text5:'自我创新开发的微付车2.0 APP上线以来好评如潮，在汽车消费金融、违章处理等领域有重要布局，已初步建成人车生态圈的产业闭环。通过此次合作，深圳微付将发挥自身的优势，深度切入国内快速发展的汽车后市场，坚定不移的朝着打造便民利民的服务平台为目标前进，不论是对社会，投资者还是客户都是一大福利。',
+               text6:'在新闻发布会上，深圳微付信息技术服务有限公司微付董事长曹艳女士指出：“本次合作是在历经一年努力后做出的重大突破，是启动汽车后市场生态圈的关键，也是微付车管家在既有品牌战略上的一次成功延伸。她强调到中国钜轩在未来将成为深圳微付最重要的合作伙伴，并以此为契机，不断为中国消费者引进更多先进的车用产品，满足中国汽车后市场生态圈的消费升级。”',
+               text7:'汽车保有量与平均车龄的持续增长推动后市场进入快速成长阶段，吸引越来越多的企业进入汽车后市场行业。据《中国汽车后市场蓝皮书》的数据显示，伴随着汽车消费水平的攀升，不少车主对汽车养护知识的认识水平有了变化，“三分修，七分养”以养代修的理念逐渐得到人们的认可。经过测算， 2018年维保市值超过1万亿元，2022年则突破2万亿元。'
+
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              yd: function() {
+                 console.log(YDUI.device)   
+                 // $('.text_div').css("height",$(window).height()/50-3.46+'rem')
+              }
+			},		
+			mounted: function () {
+               this.yd()
+			}
+		})		
+	</script>	
+</body>
+</html>

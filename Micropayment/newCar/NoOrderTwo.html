@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>补单</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./NoOrder.css">
+</head>
+<body>
+<section id="NoOrder" class="NoOrder">
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>驾驶证查分</div>
+            </div> -->
+    <!-- 头部end -->
+
+    <div class="pad">
+        <!-- <div class="two_qsc">请上传补单截图凭证</div> -->
+
+
+        <section>
+            <div class="page">
+                <!--<div class="page__hd">-->
+                    <!--&lt;!&ndash;<h1 class="page__title">Uploader</h1>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<p class="page__desc">上传组件，一般配合<a class="link" href="#gallery">组件Gallery</a>来使用。</p>&ndash;&gt;-->
+                <!--</div>-->
+                <div class="page__bd">
+                    <div class="weui-gallery" id="gallery">
+                        <span class="weui-gallery__img" id="galleryImg"></span>
+                        <div class="weui-gallery__opr">
+                            <a href="javascript:" class="weui-gallery__del">
+                                <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <div class="weui-uploader">
+                                    <div class="weui-uploader__hd">
+                                        <p class="weui-uploader__title" style="color: #5C5C5C;">图片上传</p>
+                                        <div class="weui-uploader__info">{{ Numberofsheets }}/10</div>
+                                    </div>
+                                    <div class="weui-uploader__bd">
+                                        <ul class="weui-uploader__files" id="uploaderFiles">
+                                            <!--<li class="weui-uploader__file weui-uploader__file_status" style="background-image:url(./images/pic_160.png)">-->
+                                                <!--<div class="weui-uploader__file-content">-->
+                                                    <!--<i class="weui-icon-warn"></i>-->
+                                                <!--</div>-->
+                                            <!--</li>-->
+                                            <!--<li class="weui-uploader__file weui-uploader__file_status" style="background-image:url(./images/pic_160.png)">-->
+                                                <!--<div class="weui-uploader__file-content">50%</div>-->
+                                            <!--</li>-->
+                                        </ul>
+                                        <div class="weui-uploader__input-box">
+                                            <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <canvas id="canvas" style="display: none;"></canvas>
+        </section>
+        <!-- <div class="two_qsc">请简化语言描述补单原因</div> -->
+        <div class="Feedback">
+            <div class="feed_linear">
+                <div class="feed_input" style="margin-top: 19px;">
+                    <textarea maxlength="200" placeholder="请简化语言描述补单原因,业务人员会与您取得联系进行处理！" class="feed_rextar" @input="descInput" v-model="textaralength"></textarea>
+                    <div class="feedlength">
+                        <span>{{ length }}</span>
+                        <span>/200</span>
+                    </div>
+                </div>
+                <div class="feed_btn_submit">
+                    <input type="button" value="发送" disabled="disabled" class="feed_btn_text" :class="{'feed_btn_text1':!disa}" :disabled = "disa" @click="handleClick">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#NoOrder',
+        data:{
+            Numberofsheets:'0',
+            textaralength:'',
+            length:'200',
+            disa:true,
+            listimginxex: -1, // data-imgid
+            listimgname:['ATTACHMENT_A','ATTACHMENT_B','ATTACHMENT_C','ATTACHMENT_D','ATTACHMENT_E','ATTACHMENT_F','ATTACHMENT_G','ATTACHMENT_H','ATTACHMENT_I','ATTACHMENT_J']
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                console.log(YDUI.device)
+            },
+            weuiuploader: function() {
+                var that = this;
+                var $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
+                    $uploaderInput = $("#uploaderInput"),
+                    $uploaderFiles = $("#uploaderFiles");
+                var maxSize = 1024 * 1024;//  图片大小
+                $uploaderInput.on("change", function(e){
+                    if($('.weui-uploader__file').length>=10){
+                        dialog.toast('已上传10张!', 'none', 1000);
+                        return
+                    }
+                    var fileone =  e.target.files[0];
+                    var reader = new FileReader();
+                    reader.readAsDataURL(fileone)
+                    var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+                    for (var i = 0, len = files.length; i < len; ++i) {
+                        var file = files[i];
+                        dialog.toast('处理中...','none', 200)
+                        // console.log(file.size)
+                        // if (file.size > maxSize) {
+                        //     weui.alert('图片太大，不允许上传');
+                        //     continue;
+                        // }
+                        if (url) {
+                            src = url.createObjectURL(file);
+                        } else {
+                            src = e.target.result;
+                        }
+
+                        that.listimginxex += 1;
+                        var tmpl = '<li class="weui-uploader__file" data-imgid='+'"'+that.listimgname[that.listimginxex]+'"'+' style="background-image:url(#url#)"></li>';
+                        var imgnames = that.listimgname[that.listimginxex];
+                        // console.log(imgnames)
+                        $uploaderFiles.append($(tmpl.replace('#url#', src)));
+                        that.Numberofsheets = $('.weui-uploader__file').length; // 第几张
+                        reader.onload = function($e) {
+                            var obj = {
+                                WX : WX,
+                                ORG_ID: ORG_ID,
+                                LOGIN_ID: LOGIN_ID,
+                                HPHM: decodeURI(_location.HPHM)
+                            };
+                            ImageCompressionO('canvas',$e.target.result,function(d){
+                                obj[imgnames] = d.split(",")[1];
+                                HttpServer(wfc_imageUpload,obj).then(function(data){
+                                    dialog.loading.close();
+                                    if(data.RSPCODE == 'SUCCESS'){
+                                        dialog.toast(data.RSPMSG, 'none', 500);
+                                    }else{
+                                        dialog.toast(data.RSPMSG, 'none', 1000);
+                                    }
+                                })
+                            }) 
+                        };
+
+                    }
+
+
+                });
+                $uploaderFiles.on("click", "li", function(){
+                    $galleryImg.attr("style", this.getAttribute("style"));
+                    $gallery.fadeIn(100);
+                });
+                $gallery.on("click", function(){
+                    // console.log($galleryImg.attr("style"));
+                    $gallery.fadeOut(100);
+                });
+                $('.weui-gallery__del').on("click",function(){
+                    $('.weui-uploader__file').each(function(i,e){
+                        if($(this).attr("style")==$galleryImg.attr("style")){
+                            $(this).remove()
+                            that.Numberofsheets =$('.weui-uploader__file').length; //第几张
+                        }
+                    });
+                    $gallery.fadeOut(100);
+                })
+            },
+            descInput: function() {
+                var txtVal = this.textaralength.length;
+                this.length = 200 - txtVal;
+                if(this.length != '200'){
+                    this.disa = false
+                }else{
+                    this.disa = true
+                }
+            },
+            handleClick: function () {
+                var that = this;
+                var dialog = YDUI.dialog;
+                if(that.textaralength == ''){
+                    dialog.toast('内容不能为空', 'none', 1000);
+                    return
+                }
+                if(that.Numberofsheets == '0'){
+                    dialog.toast('请上传图片', 'none', 1000);
+                    return
+                }
+                dialog.loading.open('正在处理');
+                var objsub = {
+                    WX : WX,
+                    ORG_ID: ORG_ID,
+                    LOGIN_ID: LOGIN_ID,
+                    HPHM: decodeURI(_location.HPHM),
+                    TEXT: that.textaralength
+                };
+                $('.weui-uploader__file').each(function(index,element){
+                    objsub[$(this).data('imgid')] = index;
+                });
+                HttpServer(wfc_SupSubmit,objsub).then(function(data){
+
+                    if(data.RSPCODE == 'SUCCESS'){
+                        dialog.loading.close();
+                        newCarIWantRemedy.go_NoOrderThree();
+                        // dialog.toast(data.RSPMSG, 'none', 500);
+                    }else{
+                        dialog.toast(data.RSPMSG, 'none', 1000);
+                    }
+                })
+                    // window.location.href='./NoOrderThree.html'
+
+            }
+        },
+        mounted: function () {
+            this.$nextTick(function () {
+                // Code that will run only after the
+                // entire view has been rendered
+                this.yd();
+                this.weuiuploader();
+            })
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+body {
+    background-color: rgb(243,243,243);
+}
+.Feedback {
+   width: 100%;
+}
+/** Feed HTML css start */
+
+.Feedback .feed_linear {
+    /** 反馈布局 */
+    width: 100%;
+
+    text-align: center;
+}
+
+.Feedback .feed_input {
+    width: 100%;
+    outline: -webkit-focus-ring-color auto 0;
+    border: none;
+    background-color: white;
+    font-size: .28rem; 
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #ffffff;      
+    padding: .2rem 0;     
+    position: relative;
+}
+
+.Feedback .feed_btn_submit {
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    /*padding: .3rem 0;*/
+    padding: .3rem 0 .27rem 0;    
+    margin-top: .2rem;    
+}
+
+.Feedback .feed_btn_text {
+    width: 95%;
+    height: .79rem;    
+    margin: 0 auto;
+    line-height: 0.66rem;
+    color: #ffffff;
+    /*border-radius: 3px;*/
+    /*background-color: #DADADA;*/
+    background-image: url(./../public/img/btn.png);
+    background-size: 100%;
+    background-repeat: no-repeat;     
+}
+.Feedback .feed_btn_text1{
+    /*background-color: #15B6A4;*/
+    background-image: url(./../public/img/btn1.png);
+    background-size: 100%;
+    background-repeat: no-repeat;    
+}
+.Feedback .feed_rextar {
+    width: 95%;
+    height: 3.08rem;
+    outline: -webkit-focus-ring-color auto 0;
+    border: none;
+    background-color: white;
+    font-size: .26rem;
+    padding: 6px 6px;
+    box-sizing: border-box;
+    background-color: rgb(243,243,243);
+}
+.Feedback .feedlength {
+    position: absolute;
+    bottom: .3rem;
+    right: .3rem;
+    font-size: .25rem;
+    color: #555555;    
+}

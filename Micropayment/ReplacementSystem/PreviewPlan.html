@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>计划预览</title>
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./pub.css">
+    <style>
+        html,body {
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<section id="cardThree" class="cardThree planrepayment3" v-cloak>
+    <div class="planrepayment3_back" v-for="(item,index) in items1">
+        <div class="planrepayment3_backinformation">
+            <div class="planrepayment3_backinformationpublic">
+                <span>计划订单:</span>
+                <span>{{ item.PAY_PLAN_ID }}</span>
+            </div>
+            <div class="planrepayment3_backinformationpublic">
+                <span>还款周期:</span>
+                <span>{{item.REPAY_START_DATE}} - {{item.REPAY_END_DATE}}</span>
+            </div>
+            <div class="planrepayment3_backinformationpublic">
+                <span>付款卡号:</span>
+                <span>{{ item.PLAN_CARD_NO_A}}</span>
+            </div>
+        </div>
+        <div class="planrepayment3_back_img">
+            <div class="planrepayment3_back_imgc">
+                <p class="planrepayment3_back_imgp planrepayment3_back_imgp1 planrepayment3_back_imgpwi"></p>
+                <p class="planrepayment3_back_imgp">计划还款额</p>
+                <p class="planrepayment3_back_imgp">{{ (item.PLAN_REPAY_AMT-0)/100 }}</p>
+            </div>
+            <div class="planrepayment3_back_imgc">
+                <p class="planrepayment3_back_imgp planrepayment3_back_imgp2 planrepayment3_back_imgpwi"></p>
+                <p class="planrepayment3_back_imgp">预留金额</p>
+                <p class="planrepayment3_back_imgp">{{ (item.RESERVE_AMT-0)/100+(item.PROXY_RATE_AMT-0)/100 }}</p>
+            </div>
+            <div class="planrepayment3_back_imgc" style="border:none">
+                <p class="planrepayment3_back_imgp planrepayment3_back_imgp3 planrepayment3_back_imgpwi"></p>
+                <p class="planrepayment3_back_imgp">预留手续费</p>
+                <p class="planrepayment3_back_imgp">{{ (item.ALL_RATE_AMT-0)/100 }}</p>
+            </div>
+        </div>
+        <div class="planrepayment3_back_hbank">
+            <span>还款卡号:</span>
+            <span>{{ item.PLAN_CARD_NO_B }}</span>
+        </div>
+    </div>
+    <div class="planrepayment3_instructions">
+        <p style="margin: 0.3rem 0;">温馨提示：为了保证您的用卡安全，请保证您使用的信用卡保留更多的预留资金，从而降低用卡风险！</p>
+    </div>
+    <div class="planrepayment3_instructions" style="margin-top: .2rem;margin-bottom: .05rem;">
+        <span>明细</span>
+        <span>当前共:</span>
+        <span class="disn" v-for="(item,index) in items" :class="{ disss: index+1==items.length }" style="color: #40E8BC;">{{ index+1 }}</span>
+        <span>期</span>
+    </div>
+    <div class="planrepayment3_instructions">
+        <div class="planrepayment3detailslist" v-for="(item,index) in items">
+            <p class="planrepayment3detailslist_p">第<span>{{ index+1 }}</span>期</p>
+            <div class="planrepayment3detailslist_div">
+                <div class="planrepayment3detailslist_divspan1">
+                    <span>{{ item.REPAY_DATE }}</span>
+                </div>
+                <div class="planrepayment3detailslist_divspan2" style="color: #40E8BC;">
+                    <span>&yen</span>
+                    <span>{{ (item.SINGEL_REPAY_AMT-0)/100 }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="planrepayment3_nx" v-on:click="planrepaymentdis">提交计划</div>
+    <div class="planrepayment3alertcuccess_f"  :class="{ 'disn':diss,'dis':!diss}">
+        <div class="planrepayment3alertcuccess">
+            <p class="planrepayment3alertcuccess_p1">提交成功，订单处理中</p>
+            <p class="planrepayment3alertcuccess_p2">
+                该订单将在30分钟之内处理完成,请留意该订单状态
+            </p>
+            <div class="planrepayment3alertcuccess_btn" @click="planrepayment3_goloc"> 我知道了</div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#cardThree',
+        data:{
+            items1:[],
+            items:[],
+            diss:true
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            yd: function() {
+                var that = this;
+                console.log(YDUI.device)
+                this.items1 = eval('['+getStore('PreviewPlan')+']');
+                this.items = this.items1[0].PLAN_DETAIL_LIST;
+            },
+            planrepaymentdis: function () {
+                var that = this;
+                var obj = {
+                    WX: 'wx',
+                    ORG_ID: _location.ORG_ID,
+                    LOGIN_ID: _location.LOGIN_ID,
+                    RETIME: _location.RETIME,
+                    PAY_PLAN_ID: that.items1[0].PAY_PLAN_ID
+                };
+                dialog.loading.open('正在处理...');
+                HttpServer(planRepayCreat,obj).then(function(data){
+                    dialog.loading.close();
+                    if(data.RSPCODE=="SUCCESS"){
+                        that.diss = false;
+                    }else{
+                        dialog.toast(data.RSPMSG, 'none', 1000);
+                    }
+                });
+            },
+            planrepayment3_goloc: function () {
+                      this.diss = true;
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

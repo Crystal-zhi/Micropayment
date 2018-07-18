@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="./../public/css/layer.css">
+    <title></title>
+    <style type="text/css" media="screen">
+        body { 
+            font-family: Microsoft Yahei,SimSun,Helvetica; 
+        }
+        html,body {
+            -webkit-user-select:none; user-select: none; 
+        }
+        [v-cloak] {
+            display:none;
+        }
+        #ticketDialog {
+            color: #fff;
+        }
+        .shopCartItem {
+            position: relative;
+        }
+        .daijinquan {
+            position: absolute;
+            left: 1.2rem;
+            top: .3rem;
+            font-size: 24px;
+            font-weight:bold;
+        }
+        .money {
+            position: absolute;
+            right: 1rem;
+            top: .3rem;
+            font-size: 20px;
+        }
+        .date {
+            position: absolute;
+            right: 1rem;
+            top: 1.0rem;
+            font-size: 15px;
+            font-weight:lighter;
+        }
+        .discount {
+            position: absolute;
+            left: 0.4rem;
+            top: 1.8rem;
+            font-size: 15px;
+            color: #999999;
+        }
+         .xuan {
+           position: absolute;
+           right: 0.01rem;
+           top: 0.28rem;
+           font-size: 15px;
+           color: #fff;
+           transform:rotate(45deg);
+           -ms-transform:rotate(45deg);     /* IE 9 */
+           -moz-transform:rotate(45deg);    /* Firefox */
+           -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+           -o-transform:rotate(45deg);
+           opacity: 0.5
+        }
+    </style>
+</head>
+<body>
+    <div id="ticketDialog" v-cloak>
+        <div class="mui-content">
+            <div v-if="items.length==0" style="text-align: center;margin-top: 7em;color: #000000;font-size: 0.3em">暂无可用优惠券</div>
+            <div v-for="(item,index) in items">
+                <div class="shopCartItem" @click="xuanze(index)">
+                    <img class="ticimg" src="./../public/img/ticket.png" style="width:100%"/>
+                    <div class="daijinquan">代金券</div>
+                    <div class="money">{{ (item.TICKET_VALUE-0)/100 }} 元</div>
+                    <div class="date">有效期: {{ item.VALIDITY_DATE.substring(0,4)+'-'+item.VALIDITY_DATE.substring(4,6)+'-'+item.VALIDITY_DATE.substring(6,8) }}</div>
+                    <div class="discount">使用须知:凭此代金券可抵扣</div>
+                    <div class="xuan" :id="item.TICKET_NO" style="display:none">已选中</div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#ticketDialog',
+        data:{
+            items:[]
+        },
+        methods:{
+            yd: function() {
+                var that = this;
+                console.log(YDUI.device)
+                var obje ={};
+                obje.WX = WX;
+                obje.ORG_ID = getStore('ORG_ID');
+                obje.LOGIN_ID = getStore('LOGIN_ID')
+                obje.TICKET_TYPE = 'VOUCHER'; //类型
+                HttpServer(ticketList,obje).then(function(data){
+
+                    // console.log(data);
+                    that.items = data.TICKET_LIST;
+                     console.log(that.items.length)
+                    
+                });
+            },
+            xuanze:function(e){
+                var that = this;
+                setStore('e',that.items[e].TICKET_NO)
+                var dis = $('#'+that.items[e].TICKET_NO).css('display');
+                if(dis=='none'){
+                    $('#'+that.items[e].TICKET_NO).css('display','block')
+                    var ticketNo = that.items[e].TICKET_NO;
+                    setStore('TICKET_NO',ticketNo);
+                    setStore('DISCOUNT',that.items[e].USE_RATE);
+                }else if(dis=='block'){
+                    $('#'+that.items[e].TICKET_NO).css('display','none')
+                    removeStore('TICKET_NO');
+                    removeStore('DISCOUNT');
+                }
+                $('.shopCartItem').each(function(i){
+                    if(getStore('e')!=that.items[i].TICKET_NO){
+                       $('#'+that.items[i].TICKET_NO).css('display','none') 
+                    }
+                })
+            }
+        },
+        mounted: function () {
+            this.yd();
+        }
+    })
+
+    $(document).ready(function(){
+        $('#'+getStore('e')).css('display','block');
+    });
+   
+</script>
+</body>
+</html>

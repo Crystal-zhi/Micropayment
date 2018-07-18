@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>版本信息</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./VersionInformation.css">
+</head>
+<body>
+	<section id="VersionInformation" class="VersionInformation">
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>版本信息</div>
+		</div> -->
+        <div class="logo"><div class="logoi"></div></div>		
+        <div class="help_content">
+            <ul class="guessyouul" v-cloak>
+	            	<li class="Guessyouli">
+	            		<p class="Guessyoulip">
+	            			<span class="Guessyous">
+							   {{ thisversion }}
+							</span> 
+							<span class="Guessyousi">
+								{{ thisversionnum }}
+							</span>
+						</p> 
+						<p class="Guessyoulip">
+							<span class="Guessyous">
+							   {{ Officialwebsite }}
+							</span> 
+							<span class="Guessyousi">
+                                <a href="javascript:void(0);">{{ URL2 }}</a>
+						    </span>
+						</p>
+				    </li>
+					<li class="Guessyouli" id="Guessyouliwe">
+						<p class="Guessyoulip">
+							<span class="Guessyous">
+							   {{ WeChat }}
+							</span> 
+							<span class="Guessyousi">
+                               {{ WeChatnum }}
+							</span>
+						</p>
+					</li>
+					</ul>
+		</div>        
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#VersionInformation',
+			data:{
+                thisversion:'当前版本',
+                thisversionnum:'--',
+                Officialwebsite:"微付车官网",
+                URL1:"www.weifuche.cn",
+                URL2:"www.weifuche.cn",
+                WeChat:"客服电话",
+                WeChatnum:"--",
+				url:base+'RMobile/app/getAppBasicMsg'
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              yd: function() {
+                 console.log(YDUI.device)
+                 // console.log(md5('123'))
+				  var that = this
+                  HttpServer(this.url,HttpParams).then(function(data){
+                      if(data.RSPCODE == 'SUCCESS') {
+	                      that.thisversionnum = data.APP_VERSION;
+	                      that.WeChatnum = data.CUST_SER_TLE;
+					  }
+
+				  })
+              }            
+			},		
+			mounted: function () {
+               this.yd()
+			}
+		})		
+	</script>	
+</body>
+</html>

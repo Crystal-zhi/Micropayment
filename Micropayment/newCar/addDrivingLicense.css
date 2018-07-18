@@ -1,0 +1,124 @@
+#addDrivingLicense {
+    width: 100%;
+}
+.content {
+    width: 100%;
+    padding: .2rem .2rem;
+}
+.fl {
+     float: left;
+}
+.fr {
+    float: right;
+}
+.a {
+    color: #7C7C7C;
+}
+.b {
+    width: 100%;
+    margin: 0 auto;
+    background-image: url(./../public/img/newCar/list.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 2.5rem;
+    margin-top: .3rem;
+    margin-bottom: .2rem;
+}
+.b .b_top {
+    width: 100%;
+    overflow: hidden;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    padding: 0 .3rem;
+}
+.b .b_title {
+    font-size: .32rem;
+}
+.b .b_inp {
+    height: 100%;
+    color: #959595;
+    padding-right: .25rem;
+}
+.b .b_input {
+    text-align: right;
+    height: 100%;
+    padding-right: .1rem;
+    color: #959595;
+}
+.b .b_btn {
+    width: .8rem;
+    height: .6rem;
+    transform: translate3d(.25rem,50%,0);
+    -webkit-transform: translate3d(.25rem,50%,0);
+}
+.b .b_btnon {
+    background: url(../public/img/newCar/on.png) no-repeat 0/100%;
+
+}
+.b .b_btnoff {
+    background: url(../public/img/newCar/off.png) no-repeat 0/100%;
+
+}
+.b .xj {
+    background: url(../public/img/newCar/xj.png) no-repeat 0 45%/100%;
+    width: .45rem;
+    height: .45rem;
+    transform: translateY(80%);
+    -webkit-transform: translateY(80%);
+}
+.b .pad_r {
+    padding-right: 0;
+}
+.c {
+    margin-top: .3rem;
+    margin-bottom: .2rem;
+}
+.c .bc {
+    width: 98%;
+    height: .8rem;
+    line-height: .8rem;
+    background-color: #02AD9A;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 auto;
+    font-size: .33rem;
+    border-radius: 2pt;
+}
+.d {
+    overflow: hidden;
+    margin-top: .7rem;
+    color: #969696;
+}
+.d #ServiceAgreementcheckbox {
+    width: .32rem;
+    height: .32rem;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(./../public/img/OilCard_chno.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.03rem;
+    background-size: 99%;
+    border: none;
+    transform: translateY(-9%);
+    -ms-transform: translateY(-9%);
+    -webkit-transform: translateY(-9%);
+    -o-transform: translateY(-9%);
+    -moz-transform: translateY(-9%);
+}
+.d #ServiceAgreementcheckbox:checked {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-image: url(./../public/img/OilCard_chyes.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.03rem;
+    background-size: 99%;
+    border: none;
+    background-color: #fff;
+}
+.d .colorspan{
+    color: #02AD9A;
+}

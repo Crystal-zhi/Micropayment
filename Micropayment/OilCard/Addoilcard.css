@@ -1,0 +1,127 @@
+#OilCard .content{
+    width: 100%;
+    padding: .2rem .2rem;
+}
+#OilCard .content .style{
+    margin-top: .63rem;
+    color: #757575;
+}
+#OilCard .content .card{
+    width: 100%;
+}
+#OilCard .content .card {
+    overflow: hidden;
+    margin-top: .63rem;
+}
+#OilCard .content .card .card_back {
+    float: left;
+    width: 50%;
+    height: 1.48rem;
+    background-image: url(./../public/img/OilCard_cardback.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+#OilCard .content .card .card_back p{
+    margin-top: 0.18rem;
+    display: inline-block;
+    height: 1.04rem;
+    width: 1rem;
+}
+#OilCard .content .card .card_back .one{
+    background: url(../public/img/zsh@2x.png) no-repeat center;
+    background-size: 100% 100%;
+}
+#OilCard .content .card .card_back .two_bg{
+    background: url(../public/img/zsy_@2x.png) no-repeat center;
+    background-size: 100% 100%;
+}
+#OilCard .content .card .card_back .one_bg{
+    background: url(../public/img/zsh_@2x.png) no-repeat center;
+    background-size: 100% 100%;
+}
+#OilCard .content .card .card_back .two{
+    background: url(../public/img/zsy@2x.png) no-repeat center;
+    background-size: 100% 100%;
+}
+#OilCard .content .card_number{
+    color: #757575;
+    margin: .63rem 0;
+}
+#OilCard .content .input_number{
+    border-bottom: solid 2px #E1E1E1;
+    height: 0.6rem;
+}
+#OilCard .content .input_number input{
+    font-size: 0.24rem;
+    text-indent: .1rem;
+    width: 100%;
+}
+#OilCard .content .prompt{
+    display: block;
+    text-align: center;
+    font-size: 0.24rem;
+    color: #F15056;
+    margin-top: 0.2rem;
+}
+#OilCard .content .btn{
+    width: 100%;
+    font-size: 0.32rem;
+    color: #ffffff;
+    background: #C3C3C3;
+    height: 0.93rem;
+    margin-top: 1rem;
+}
+#OilCard .popup_bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: RGB(0,0,0,.2);
+    padding: .25rem;
+}
+#OilCard .popup_bg .popup{
+    width: 6.96rem;
+    height: 3.88rem;
+    background: #fff;
+    position: absolute;
+    top: 2.8rem;
+    border-radius: 0.16rem;
+}
+#OilCard .popup_bg .popup h2{
+    text-align: center;
+    font-size: .3rem;
+   color: #565656;
+   margin: .35rem 0;
+}
+#OilCard .popup_bg .popup .customer{
+    color: #565656;
+    font-size: .3rem;
+    padding-left: 0.72rem;
+    margin-bottom: 0.36rem;
+}
+#OilCard .popup_bg .popup .customer span{
+    float: left;
+}
+#OilCard .popup_bg .popup .confirm{
+    border-top: solid 1px #D3D3D3;
+    width: 100%;
+    height: .9rem;
+}
+#OilCard .popup_bg .popup .confirm input{
+    line-height: .9rem;
+    width: 50%;
+    float: left;
+    font-size: .3rem;
+}
+#OilCard .popup_bg .popup .confirm #back{
+    border-right: solid 1px #D3D3D3;
+    color: #565656;
+}
+#OilCard .popup_bg .popup .confirm #forward{
+    color: #02AD9A;
+}
+#OilCard .content .btn1 {
+    background:#02AD9A
+}

@@ -1,0 +1,22 @@
+
+#OilCard1{
+    text-align: center
+}
+
+.orderNumber{
+    font-size: .3rem;
+}
+.orderType{
+    font-size: .3rem;
+    margin:.2rem 0;
+}
+.orderMoney{
+    font-size: .3rem;
+}
+.pay{
+    display: inline-block;
+    width:6.5rem;
+    height:.7rem;
+  
+
+}

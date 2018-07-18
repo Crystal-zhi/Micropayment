@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>添加行驶证</title>
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./addDrivingLicense.css">
+</head>
+<body>
+<section id="addDrivingLicense" class="addDrivingLicense">
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>添加行驶证</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="content">
+        <div class="a">
+            <p>以下信息仅交管12123查询，我们将严格保密</p>
+        </div>
+        <div class="b">
+            <div class="b_top">
+                <div class="fl b_title">车牌号</div>
+                <div class="fr xj"></div>
+                <div class="fr">
+                    <input class="b_input" type="text" value="苏D-N305C">
+                </div>
+            </div>
+            <div class="b_top">
+                <div class="fl b_title">车架号后6位</div>
+                <div class="fr">
+                    <input class="b_input" type="text" value="153158">
+                </div>
+            </div>
+        </div>
+        <div class="b">
+            <div class="b_top">
+                <div class="fl b_title">违章通知及提醒</div>
+                <div class="fr b_inp">
+                    <div class="b_btn" :class="{'b_btnon':anniu,'b_btnoff':!anniu}" @click="b_btnqh"></div>
+                </div>
+            </div>
+            <div class="b_top">
+                <div class="fl b_title">手机号码</div>
+                <div class="fr pad_r">
+                    <input class="b_input" type="text" value="13053062170">
+                </div>
+            </div>
+        </div>
+        <div class="c">
+            <div class="bc">保存</div>
+        </div>
+        <div class="d">
+            <span @click="clickAgree"><input id="ServiceAgreementcheckbox" type="checkbox" name="input_ra" :checked="che"> 点我同意</span>
+            <a href="javascript:void(0);"><span class="colorspan">&lt;加油卡充值服务协议&gt;</span></a>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#addDrivingLicense',
+        data:{
+            anniu:true,
+            che:false
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                console.log(YDUI.device)
+            },
+            b_btnqh:function() {
+                this.anniu = !this.anniu
+            },
+            clickAgree:function() {
+                this.che = !this.che
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

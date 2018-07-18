@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <title>收益明细</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./../public/css/dropload.css">
+    <link rel="stylesheet" href="./../public/css/mui.css">
+    <link rel="stylesheet" href="./../public/css/mui.picker.min.css">
+    <link rel="stylesheet" href="./../public/css/iconfont.css">
+    <link rel="stylesheet" href="./../public/css/iconfontyou.css">
+    <link rel="stylesheet" href="Revenuedetails.css">
+</head>
+<body>
+   <section class="Revenuedetails" id="Revenuedetails" v-cloak>
+        <!-- <div class="Globalnavstyle">
+          <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+            <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+          </div>
+          <div>收益明细</div>
+        </div> -->
+
+     <div class="Dateselection" >
+       <div class="DateselectionS" @click="openPicker">
+         <span class="datepaddingleft">开始日期</span><br>
+         <span class="datepaddingleft datepaddingle" v-html="shoucipicker"></span>
+       </div>
+       <div class="DateselectionS" @click="openPicker1">
+         <span class="datepaddinglef">结束日期</span><br>
+         <span class="datepaddinglef datepaddingle" v-html="shoucipicker1"></span>
+       </div>
+       <div style="clear:both"></div>
+       <div class="xiabianxian"></div>
+       <div class="jiaoyibishujine">
+         <div class="jiaoyibishu">
+           <p class="jybsp">交易笔数</p>
+           <p class="jybsp">{{ TXNCONT }}</p>
+         </div>
+         <div class="jiaoyibishu">
+           <p class="jybsp">交易金额</p>
+           <p class="jybsp">{{ (ALL_TXNAMT-0)/100}}</p>           
+         </div>
+       </div>
+       <div class="colorkadu"></div>
+          <table class="table" style="color:#000">
+          <thead>
+            <tr>
+              <!-- <th>序号</th> -->
+              <th>日期时间</th>
+              <th>状态</th>
+              <th>金额</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in items">
+              <!-- <td>{{ index+1 }}</td> -->
+              <td>{{ item.STATIST_DATE }}-{{ item.STATIST_TIME }}</td>
+              <td v-if="item.SLTFLG=='0'" style="color:#4BFC4F">已结算</td>
+              <td v-if="item.SLTFLG=='1'" style="color:#FE4B4B">未结算</td>
+              <td>{{ (item.SHARE_AMT-0)/100 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      <div class="daodi"></div> 
+     </div>
+     <div class="zhezhao"></div>    
+   </section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/mui.picker.all.js"></script>
+<script>
+  var vm = new Vue({
+      el:'#Revenuedetails',
+      data:{
+          shoucipicker:'', //首次展示当前日期
+          shoucipicker1:'', //首次展示当前日期
+          shoucipicker2:'', //传后台 开始日期日期
+          shoucipicker3:'', //传后台 结束日期日期       
+          typeshow:true,
+          statusshow:true,
+          items: [],//表格
+          TXNCONT:'',// 总笔数
+          ALL_TXNAMT:''//总金额
+      },
+      filters: {
+          //保留2位小数点过滤器 不四舍五入
+          number(value) {
+              var toFixedNum = Number(value).toFixed(3);
+              var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1);
+              return realVal;
+          }
+      },
+       methods: {  
+          goBackToTheLastPage:function () {
+            window.history.go(-1)
+          },   
+          openPicker:function() {
+             var that =this 
+
+             var dtpicker = new mui.DtPicker({
+               type: "date",//设置日历初始视图模式 
+               beginDate: new Date((new Date()/1000-8640000)*1000),//设置开始日期 
+               endDate: new Date(2030, 12, 31),//设置结束日期  
+            });
+
+             dtpicker.show(function(e) {
+                that.shoucipicker = e.y.text+'年'+'-'+e.m.text+'月'+'-'+e.d.text+'日'+'<i class="iconfont icon-you" style="color:#ffffff;font-size:15px"></i>'
+                that.shoucipicker2 = e.y.text+e.m.text+e.d.text
+                that.goqryInComeOrder()
+              }) 
+          },
+          openPicker1:function() {
+             var that =this
+              var dtpicker = new mui.DtPicker({
+                     type: "date",//设置日历初始视图模式 
+                     beginDate: new Date((new Date()/1000-8640000)*1000),//设置开始日期 
+                     endDate: new Date(2030, 12, 31),//设置结束日期  
+              });
+             dtpicker.show(function(e) {
+                that.shoucipicker1 = e.y.text+'年'+'-'+e.m.text+'月'+'-'+e.d.text+'日'+'<i class="iconfont icon-you" style="color:#ffffff;font-size:15px"></i>'
+                that.shoucipicker3 = e.y.text+e.m.text+e.d.text
+                that.goqryInComeOrder()
+              })
+          },         
+         kaishizhanshiriqi:function() {          
+             let arrr = [];//开始
+             let arr = []; //结束
+             let arr1 = []; 
+             let arr2 = [];
+             let d1 = new Date(new Date().getTime()-30 * 24 * 3600 * 1000); //开始日期
+             let d = new Date(); //结束日期 当前日期
+             // 开始 展示日期
+             arrr.push(d1.getFullYear()+'年');
+             arrr.push(d1.getMonth()+1+'月');
+             arrr.push(d1.getDate()+'日'); 
+             //结束 展示 日期
+             arr.push(d.getFullYear()+'年');
+             arr.push(d.getMonth()+1+'月');
+             arr.push(d.getDate()+'日');
+            // 开始 日期 传入后台
+             arr2.push(d1.getFullYear());
+             arr2.push(d1.getMonth()+1);
+             arr2.push(d1.getDate());
+            // 结束 日期 传入后台
+             arr1.push(d.getFullYear());
+             arr1.push(d.getMonth()+1);
+             arr1.push(d.getDate());
+             if(arrr[1].length<=2){
+                arrr[1] = '0'+arrr[1]
+             }       
+             if(arr[1].length<=2){
+                arr[1] = '0'+arr[1]
+             } 
+             if(arr1[1].toString().length<=2){
+                arr1[1] = '0'+arr1[1]
+             } 
+             if(arr2[1].toString().length<=2){
+                arr2[1] = '0'+arr2[1]
+             }
+             if(arrr[2].length<=2){
+                arrr[2] = '0'+arrr[2]
+             }       
+             if(arr[2].length<=2){
+                arr[2] = '0'+arr[2]
+             } 
+             if(arr1[2].toString().length<=1){
+                arr1[2] = '0'+arr1[2]
+             } 
+             if(arr2[2].toString().length<=1){
+                arr2[2] = '0'+arr2[2]
+             }                              
+             this.shoucipicker = arrr.join('-')+'<i class="iconfont icon-you" style="color:#ffffff;font-size:15px"></i>'//展示
+             this.shoucipicker1 = arr.join('-')+'<i class="iconfont icon-you" style="color:#ffffff;font-size:15px"></i>'//展示
+             this.shoucipicker2 = arr2.join('') //传给后台
+             this.shoucipicker3 = arr1.join('') //传给后台   
+            var that = this;
+            var obj = {};
+                obj.WX = WX;
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.START_TXNDATE = this.shoucipicker2;
+                obj.END_TXNDATE = this.shoucipicker3;
+             HttpServer(rewardList,obj).then(function(data){
+              that.TXNCONT = data.TXNCONT
+              that.ALL_TXNAMT = data.ALL_TXNAMT
+               if(data.INCOME_ORDER_LIST.length>0){
+                 for(let i=0; i<data.INCOME_ORDER_LIST.length; i++){
+                    data.INCOME_ORDER_LIST[i].STATIST_DATE = data.INCOME_ORDER_LIST[i].STATIST_DATE.substr(0,4)+'/'+data.INCOME_ORDER_LIST[i].STATIST_DATE.substr(4,2)+'/'+data.INCOME_ORDER_LIST[i].STATIST_DATE.substr(6,2)
+                    data.INCOME_ORDER_LIST[i].STATIST_TIME = data.INCOME_ORDER_LIST[i].STATIST_TIME.substr(0,2)+':'+data.INCOME_ORDER_LIST[i].STATIST_TIME.substr(2,2)+':'+data.INCOME_ORDER_LIST[i].STATIST_TIME.substr(4,2)
+                 }
+               }
+                that.items = data.INCOME_ORDER_LIST 
+                console.log(that.items)
+            })
+         },
+         goqryInComeOrder:function () {
+          var that = this;
+             var obj = {};
+                obj.WX = WX;
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.START_TXNDATE = this.shoucipicker2;
+                obj.END_TXNDATE = this.shoucipicker3;
+             HttpServer(rewardList,obj).then(function(data){
+              that.TXNCONT = data.TXNCONT
+              that.ALL_TXNAMT = data.ALL_TXNAMT
+               if(data.INCOME_ORDER_LIST.length>0){
+                 for(let i=0; i<data.INCOME_ORDER_LIST.length; i++){
+                    data.INCOME_ORDER_LIST[i].STATIST_DATE = data.INCOME_ORDER_LIST[i].STATIST_DATE.substr(0,4)+'/'+data.INCOME_ORDER_LIST[i].STATIST_DATE.substr(4,2)+'/'+data.INCOME_ORDER_LIST[i].STATIST_DATE.substr(6,2)
+                    data.INCOME_ORDER_LIST[i].STATIST_TIME = data.INCOME_ORDER_LIST[i].STATIST_TIME.substr(0,2)+':'+data.INCOME_ORDER_LIST[i].STATIST_TIME.substr(2,2)+':'+data.INCOME_ORDER_LIST[i].STATIST_TIME.substr(4,2)
+                 }
+               }
+                that.items = data.INCOME_ORDER_LIST;
+                console.log(that.items)
+            })   
+         }
+        },
+        mounted: function() {
+           this.kaishizhanshiriqi()
+        }
+    });
+
+</script>
+</body>
+</html>

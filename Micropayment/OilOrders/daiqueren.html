@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <title>油卡订单</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./../public/css/dropload.css">
+    <link rel="stylesheet" href="./Orders.css">
+</head>
+<body>
+<section id="Ordermanagement" class="Ordermanagement" v-cloak>
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>订单</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="anniu">
+        <a href="./All.html"><div class="anniua anniuabackb">全部</div></a>
+        <a href="./daichuli.html"><div class="anniua anniuabackb">待处理</div></a>
+        <a href="javascript:void(0);"><div class="anniua anniuabacka">待确认</div></a>
+        <a href="./yiwancheng.html"><div class="anniua anniuabackb">已完成</div></a>
+    </div>
+
+    <div class="list">
+        <div id="onlyzwdd" v-if="items.length == '0'" style="text-align: center;margin-top: 3.5rem;">
+            <img src="./../public/img/newCar/noorder.png" alt="" style="display: inline-block;">
+            <p style="color: #959595;">暂无订单</p>
+        </div>
+        <ul>
+            <li class="Guessyouli opacity">
+                <div class="list-a-div ove">
+                    <p class="fl">油卡充值</p>
+                    <div class="fr">
+                        <span>订单时间：</span>
+                        <span>2018-05-15 09：50：20</span>
+                    </div>
+                </div>
+                <div class="list-a-div ove">
+                    <div class="fl">
+                        <span>订单号：</span>
+                        <span>12312312312313131asdas</span>
+                    </div>
+                    <p class="fr">待处理</p>
+                </div>
+                <div class="list-a-div ove">
+                    <div class="fl">
+                        <span>金额：</span>
+                        <span>200.00元</span>
+                    </div>
+                    <div class="fl ce-pa">
+                        <span>差额：</span>
+                        <span>100.00元</span>
+                    </div>
+                    <div class="fr ove btn-width">
+                        <div class="cuibandiv">
+                            <div class="cuiban">补缴</div>
+                            <div class="yicuiban">已补缴</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/Zepto.js"></script> -->
+<script type="text/javascript" charset="utf-8" src="./../public/js/dropload.min.js"></script>
+<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/weui.js"></script> -->
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#Ordermanagement',
+        data:{
+
+
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                console.log(YDUI.device)
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+
+</script>
+</body>
+</html>

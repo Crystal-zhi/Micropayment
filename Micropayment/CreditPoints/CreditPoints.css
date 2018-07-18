@@ -1,0 +1,222 @@
+
+*{
+    margin:0;
+    padding:0;
+}
+html{
+    font-size:16px;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration:none ;
+
+}
+.mainBox .Globalnavstyle {
+    background-color:  #59D7C9;
+    color: #ffffff;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: .29rem;
+    box-shadow: 0px 1px 10px rgba(21,182,164,0.21);
+    -webkit-box-shadow: 0px 1px 10px rgba(21,182,164,0.21);
+}
+.mainBox .Globalnavstyle .Globalnavstyle_div {
+    position: absolute;
+    width: .15rem;
+    height: .27rem;
+    vertical-align: middle;
+    left: .2rem;
+    top: .3rem;
+}
+.mainBox .Globalnavstyle .Globalnavstyle_div .Globalnavstyle_img {
+    width: 100%;
+}
+.mainBox{
+    width:100%;
+}
+.mainBox .header{
+    height:10.31rem;
+    width:100%;
+    background-image: url(./../public/img/CreditPoints/1.png) ;
+    background-repeat:no-repeat;
+    background-size:100% 10.31rem;
+    position: relative;
+}
+.header .grade{
+    display: inline-block;
+    width:2.97rem;
+    height:1.34rem;
+    font-size:1.78rem;
+    font-family:PingFang-SC-Bold;
+    color:rgba(255,255,255,1);
+    line-height:3.11rem;
+    position: absolute;
+    left:2rem;
+    top:2rem;
+}
+.header #justUp{
+    display: inline-block;
+    width:.8rem;
+    height:1rem;
+    position: absolute;
+    left:5.4rem;
+    top:3.3rem;
+}
+.header .lastAssess{
+    display: inline-block;
+    height:0.72rem;
+    font-size:0.75rem;
+    font-family:PingFang-SC-Medium;
+    color:rgba(255,255,255,1);
+    position: absolute;
+    left:7rem;
+    top:3.3rem;
+}
+.header .goOn{
+    height:0.84rem;
+    font-size:0.88rem;
+    font-family:PingFang-SC-Medium;
+    color:rgba(255,255,255,1);
+    line-height:2.19rem;
+    position: absolute;
+    left:2rem;
+    top:4.8rem;
+}
+.tabs{
+    margin-top:-2.1rem;
+}
+.tabs .tab-nav{
+    display: flex;
+    -webkit-justify-content: space-around;
+    width:86%;
+    margin:0 7%;
+}
+.tabs .tab-nav .tab-nav-item .tab-active{
+    color: #333333;
+}
+.tabs .tab-nav .tab-nav-item img{
+    display: inline-block;
+    width:4rem;
+    height:4rem;
+}
+.tabs .tab-nav .tab-nav-item{
+    position: relative;
+}
+.tabs .tab-nav .tab-nav-item span{
+    font-size:.8rem;
+    position: absolute;
+    color:#999999;
+    left:1.2rem;
+}
+.tabs .tab-nav .tab-nav-item .special{
+    position: absolute;
+    left:.45rem
+}
+
+.mainBox .wavyLine{
+    margin-top:1rem;
+    width:100%;
+
+}
+.mainBox .wavyLine img{
+    display: inline-block;
+    width:88%;
+    margin: 0 6%;
+}
+._word{
+    width: 88%;
+    height: 3.6rem;
+    margin: 1.5rem 0 1.5rem 1.2rem;
+    font-size: .9rem;
+    line-height: 1.25rem;
+    word-spacing: 1.2rem;
+    color: #666666;
+}
+.carInsurance{
+    width: 88%;
+    margin-left:5%; 
+    margin-top: 1.8rem;
+}
+.carInsurance_title{
+    font-size: .9rem;
+    display: flex;
+    justify-content: space-between;
+}
+.carInsurance_title a{
+    text-decoration:underline;
+    color: #51A999;
+}
+.performance{
+    width: 88%;
+    margin-left:5%; 
+     margin-top: 1.8rem;
+}
+.performance_title{
+    font-size: .9rem;
+    display: flex;
+    justify-content: space-between;
+}
+.performance_title .state{
+    color: #51A999;
+}
+.line{
+    width: 100%;
+    height: .98rem;
+    background-color: #F6F6F6;
+    margin: 1.9rem 0;
+}
+.baiseInformation{
+    width:88%;
+    margin-left:5%;
+    font-size: .9rem;
+}
+.signs_list{
+    width: 100%;
+    padding:.5rem;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.signs_list li{
+    color: #999999;
+    font-size: .8rem;
+    background-color: #F6F6F6;
+    border-radius: 2px: 
+    -webkit-border-radius:2px;
+    padding: .4rem .5rem;
+    margin:.5rem 1rem .5rem 0;
+}
+.history_list{
+    width:95%;
+    margin: 0 2.5%; 
+}
+.history_list li{
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem .68rem 1.3rem .68rem;
+    font-size: .8rem;
+    border-bottom: solid 1px #BBBBBB;
+}
+.history_list li .number{
+    color: #333333;
+}
+.tips{
+    text-align: center;
+    margin: 1.3rem 0;
+    color: #666666;
+}
+.imgBox{
+    text-align: center;
+    margin-top: 4rem;
+}
+.imgBox img{
+    width:5.9rem;
+    height: 6rem;
+    margin-left: 1rem;
+}

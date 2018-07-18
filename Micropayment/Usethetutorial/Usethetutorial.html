@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>使用教程</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./Usethetutorial.css">
+</head>
+<body>
+	<section id="Usethetutorial" class="Usethetutorial">
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>使用教程</div>
+		</div> --> 
+		<div class="content">
+			<div class="usevideo">
+				<video controls="controls" loop="loop" autoplay="autoplay" style="width: 100%;">
+				  <source src="./../public/video/bg1.mp4" type="video/mp4">
+				   Your browser does not support the video tag.
+				</video>		
+			</div> 
+			<div class="uselist">
+				<p class="title_p"><span>1</span>. <span>使用教程</span></p>
+				<div class="divimg">
+					<img class="img" src="./../public/img/1.png">
+				</div>
+			</div> 
+			<div class="uselist">
+				<p class="title_p"><span>2</span>. <span>使用教程</span></p>
+				<div class="divimg">
+					<img class="img" src="./../public/img/2.png">
+				</div>
+			</div>						
+		</div>		   
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#Usethetutorial',
+			data:{
+
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              yd: function() {
+                 console.log(YDUI.device)
+              }            
+			},		
+			mounted: function () {
+               this.yd()
+			}
+		})		
+	</script>	
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>驾驶证查分</title>
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./ScoreDisplay.css">
+</head>
+<body>
+<section id="ScoreDisplay" class="ScoreDisplay" v-cloak>
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>驾驶证查分</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="content">
+        <!--你 Start-->
+        <section>
+             <!--<div class="a_top">-->
+                  <!--<span class="a-top-span">你</span>-->
+             <!--</div>-->
+            <div class="b_top" v-show="gx">
+                   <div class="b-top-div1"><img class="b-top-img" src="./../public/img/newCar/car.gif" alt="">努力查询中，请耐心等待...</div>
+                   <div class="b-top-div1">更新完成</div>
+            </div>
+            <div class="c_top" ref="gxshijian">
+                <div class="c-top-div">
+                    查询成功，本次更新时间：{{ sj }}
+                </div>
+            </div>
+        </section>
+        <!--你 End-->
+
+        <!--查分 Start-->
+        <section style="position: relative;">
+            <div class="CheckPoints">
+                <div class="checkpoints-back animation-zhuanone" v-show="zhuanquan"></div>
+                <div class="checkpoints-back animation-zhuantwo" v-show="!zhuanquan"></div>
+                <div style="position: absolute;top: 8%;left: 41.5%;" v-show="!zhuanquan">
+                    <p class="checkpoints-back-p1">{{ animatedNumber }}</p>
+                    <p class="checkpoints-back-p2">累计扣分</p>
+                </div>
+            </div>
+
+            <div class="CheckPointstitle">{{ zhengzaichaxun }}</div>
+            <div class="CheckPointsbtn">去炫耀</div>
+            <!--&lt;!&ndash;编辑&ndash;&gt;-->
+            <!--<div class="edit" @click="chafen">-->
+                <!--<img src="./../public/img/newCar/bj.png" alt=""><span class="editspan">编辑</span>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;编辑&ndash;&gt;-->
+        </section>
+        <!--查分 End-->
+        <!--列表 Start-->
+        <section>
+            <div class="che-list">
+                <ul>
+                    <li class="che-li">
+                        <div class="che-l">
+                            <div class="che-list-title che-list-title1">距扣分清零天数</div>
+                            <div class="che-list-zq che-list-zq1">
+                                <span>查分周期：</span>
+                                <span>2018-5-21~2018-12-08</span>
+                            </div>
+                        </div>
+                        <div class="che-r">
+                            <span class="che-list-sz">{{ cfzq }}</span>
+                            <span>天</span>
+                        </div>
+                    </li>
+                    <li class="che-li">
+                        <div class="che-l">
+                            <div class="che-list-title">距扣分清零提醒</div>
+                        </div>
+                        <div class="che-r">
+                            <div v-if="danniu" class="che-anniu" @click="RemindButton"><img src="./../public/img/newCar/don.png" alt=""></div>
+                            <div v-else="danniu" class="che-anniu" @click="RemindButton"><img src="./../public/img/newCar/doff.png" alt=""></div>
+                        </div>
+                    </li>
+                    <li class="che-li che-bor-bot">
+                        <div class="che-l">
+                            <div class="che-list-title">驾驶证新规</div>
+                        </div>
+                        <div class="che-r">
+                            &gt;
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!--列表 End-->
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/tween.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#ScoreDisplay',
+        data:{
+            danniu: true,
+            gx: false,
+            zhuanquan: true,
+            sj: '',
+            cfzq: '0',
+            fenshuone: '0',
+            animatedNumber: '0',
+            zhengzaichaxun: '正在查询...'
+        },
+        watch: {
+            fenshuone: function(newValue, oldValue) {
+
+                function animate () {
+                    if (TWEEN.update()) {
+                        requestAnimationFrame(animate)
+                    }
+                }
+                new TWEEN.Tween({ tweeningNumber: oldValue })
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .to({ tweeningNumber: newValue }, 1000)
+                    .onUpdate(function () {
+                        vm.$data.animatedNumber = this.tweeningNumber.toFixed(0)
+                        // console.log(vm.animatedNumber)
+                    }).start()
+
+                animate()
+            }
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                var that = this;
+                that.gx = true;
+                console.log(YDUI.device);
+                var obj = {};
+                obj.WX = WX;
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.DRIVING_NUMBER = _location.DRIVING_NUMBER;
+                obj.ARCHIVES_NO = _location.ARCHIVES_NO;
+                HttpServer(wfc_driverScore,obj).then(function (data) {
+                    console.log(data);
+                    that.gx = false;
+                    that.shijian();
+                    that.$refs.gxshijian.style.height = '.7rem';
+                    setTimeout(function () {
+                        that.$refs.gxshijian.style.height = '0rem';
+                    },3000)
+                    that.zhuanquan = false;
+                    that.fenshuone = data.DRIVER_SCORE;
+                    that.zhengzaichaxun = '哇！真棒，中国好司机';
+                })
+            },
+            RemindButton: function() {
+                this.danniu = !this.danniu
+            },
+            shijian:function () {
+                var myDate = new Date();
+                this.sj = myDate.toLocaleString( );    //获取当前日期和时间
+            }
+            // chafen: function() {
+            //     window.location.href = '--DrivingLicenseCheckPoints--.html'
+            // }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title></title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./Real-timeQuotes.css">
+</head>
+<body>
+<section id="Real-timeQuotes" class="Real-timeQuotes" v-cloak>
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>驾驶证查分</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="content">
+        <!--<div class="title">{{ chepai }}</div>-->
+        <div class="anniu">
+            <div class="anniua anniuabacka" @click="go_one"><div class="ssbj">实时报价</div></div>
+            <div class="anniua anniuabackb" @click="go_two"><div class="dbj">待报价</div></div>
+            <div class="anniua anniuabackb" @click="go_three"><div class="bkbl" style="border-bottom: 1px solid;height: 1.1rem;">不可办理</div></div>
+        </div>
+        <div class="pad">
+            <!-- 通知 Start-->
+            <div class="tongzhi" v-if="t_tiaodan=='N'">
+                <img src="../public/img/newCar/tz.png" alt="">
+                <span>注意：你的车牌所在地不接受挑单处理，所以违章必须全部提交</span>
+            </div>
+            <!-- <div id="zwbkcldd" style="display: none;text-align: center;margin-top: 150px;color: #686868;">暂无不可处理订单</div> -->
+            <!-- 通知 End-->
+            <!-- 列表 Start-->
+            <div class="rtq-list">
+                <div id="onlyzwdd" style="text-align: center;margin-top: 3.5rem;display:none">
+                    <img src="./../public/img/newCar/noorder.png" alt="" style="display: inline-block;">
+                    <p style="color: #959595;">暂无违章</p>
+                </div>
+                <section class="rtq-back" v-for="(item,index) in items" v-show="item.CANHANDLE=='N'">
+
+                    <div class="rtq-list-top">
+
+                        <div class="a_div">
+                            <div class="a_l">
+                                <span class="a_span1">违章状态：</span>
+                                <span class="a_span2" v-if="item.STATUS=='00'">待处理</span>
+                                <span class="a_span2" v-if="item.STATUS=='01'">待确认</span>
+                                <span class="a_span2" v-if="item.STATUS=='02'">已完成</span>
+                                <span class="a_span2" v-if="item.STATUS=='03'">退单</span>
+                                <span class="a_span2" v-if="item.STATUS=='04'">未处理</span>
+                            </div>
+                            <div class="a_r" @click="co_ckxq(index)">查看详情</div>
+                        </div>
+
+                        <div class="a_div">
+                            <div class="a_l" style="width: 100%;">
+                                <span class="a_span1 fl">违章地点：</span>
+                                <span class="a_span2 fl xingwei">{{ item.ADDRESS }}</span>
+                            </div>
+                        </div>
+
+                        <div class="a_div">
+                            <div class="a_l">
+                                <span class="a_span1">违章时间：</span>
+                                <span class="a_span2">{{ item.TIME }}</span>
+                            </div>
+                        </div>
+
+                        <div class="a_div">
+                            <div class="a_l" style="width: 100%;">
+                                <span class="a_span1 fl">违章行为：</span>
+                                <span class="a_span2 fl xingwei" style="width:55%">{{ item.CONTENT }}</span>
+                            </div>
+                            <!--<div class="a_r">差额金：66.8元</div>-->
+                        </div>
+                    </div>
+
+                    <div class="rtq-list-bottom">
+                        <div class="rtq-dotted"></div>
+                        <div class="rtq-f-f">
+                            <div class="rtq-f">
+                                <p class="rtq-p1">扣分</p>
+                                <p class="rtq-p2">{{ item.SCORE }}</p>
+                            </div>
+                            <div class="rtq-f rtq-leftdotted">
+                                <p class="rtq-p1">服务费</p>
+                                <p class="rtq-p2">{{ (item.FEE-0)/100 }}</p>
+                            </div>
+                            <div class="rtq-f rtq-leftdotted">
+                                <p class="rtq-p1">罚款</p>
+                                <p class="rtq-p2">{{ (item.PRICE-0)/100 }}</p>
+                            </div>
+                            <div class="rtq-f rtq-leftdotted">
+                                <p class="rtq-p1">滞纳金</p>
+                                <p class="rtq-p2">{{ (item.LATEFEE-0)/100 }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<input type="button" value="补缴差额" class="bjce">-->
+                    <!--<input class="rtq-inputche" type="radio" @click="selecttj(index)" name="rtq-radio">-->
+                    <img class="rtq-image" src="../public/img/newCar/dbkcl.png" alt="">
+
+                </section>
+
+            </div>
+            <!-- 列表 End-->
+        </div>
+    </div>
+
+    <div style="width: 100%;height: 1.3rem;"></div>
+
+    <!--<div class="tj_l">-->
+        <!--<div class="tj_ltop">-->
+            <!--&lt;!&ndash;<div class="tj_le">&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="tjspan1">使用优惠券</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="tj_ri">&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="tjspan2">代金券 </span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="tjspan3">&gt;</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="tj_lbottom">-->
+            <!--&lt;!&ndash;<div class="tj_le tj_div1">&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<input class="tj-inputche" type="checkbox">&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<span class="tj-qx">全选</span>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="tj_le">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="tj_div3">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="tjspc1">{{ (select_je-0)/100 }}元</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="tjspc2 tjfonts">（已优惠</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="tjspc1 tjfonts">0</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="tjspc2 tjfonts">元）</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="tj_div3">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="tjspc2 tjfonts">扣分：{{ t_SCORE }}分</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span class="tjspc2 tjfonts tj_padd_a">罚款：{{ (t_PRICE-0)/100 }}元</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--<div class="tj_ri tj_div4" @click="tj">-->
+                <!--补单-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+    <div class="js_dialog" id="iosDialog2" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd" style="text-align: left;color: #353535;">违章地址 : {{ xqdz }}</div>
+            <div class="weui-dialog__bd" style="text-align: left;color: #353535;">违章详情 : {{ wzxq }}</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="gb_zdl">知道了</a>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/layer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#Real-timeQuotes',
+        data:{
+            danniu:true,
+            chepai:'',
+            items:[],
+            t_FEE:'0',
+            t_LATEFEE:'0',
+            t_tiaodan:'N',
+            t_PRICE: '0', //罚款
+            t_SCORE: '0',  //扣分
+            wzxq:'',   //详情
+            xqdz:'',   //详情 地址
+            select_je:'', //总罚款
+        },
+        filters: {
+            formatTime: function(e) {
+
+            }
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                var that = this;
+                console.log(YDUI.device);
+                this.chepai = getStore('Inq_weizhangchepai');
+                document.title = this.chepai
+                //var WX = 'wx',ORG_ID = _location.ORG_ID,LOGIN_ID = _location.LOGIN_ID;
+                var obj = {};
+                obj.WX = 'wx';
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.HPHM = getStore('Inq_weizhangchepai');
+
+                if(getStore('checkUpstreamOrCheckTheDatabase') =='1'){ // 查 上游
+                    HttpServer(wfc_findVioList,obj).then(function (data) {
+                        // console.log(data);
+                        if(data.RSPCODE == 'SUCCESS'){
+                            var panduano = true;
+                            that.items = data.VIODETAILLIST
+                            that.t_tiaodan = data.IS_TIAODAN
+                            var panduano = false;
+                            that.items.forEach(function(item,index){
+                                if(item.CANHANDLE == "N") {
+                                    panduano = true;
+                                }  
+                            })
+                            if(!panduano){
+                                $('#onlyzwdd').css("display","block")
+                                $('.tj_l').css("display","none")
+                            }
+                        }else{
+                            dialog.toast(data.RSPMSG, 'none', 1000);
+                        }
+
+                    })
+                }else{   //查数据库
+                    HttpServer(wfc_queryDbVioDetail,obj).then(function (data) {
+                        // console.log(data);
+                        if(data.RSPCODE == 'SUCCESS'){
+                            // var panduan = true;
+                            that.items = data.VIODETAILLIST
+                            // that.items.forEach(function(item,index){
+                            //     if((item.CANHANDLE == "Y"||item.CANHANDLE == "T")&& panduan) {
+                            //        $('#zwbkcldd').css("display","block")
+                            //     }else{
+                            //         panduan = false
+                            //         $('#zwbkcldd').css("display","none")
+                            //     }
+                            // })
+                            that.t_tiaodan = data.IS_TIAODAN
+                            var panduano = false;
+                            that.items.forEach(function(item,index){
+                                if(item.CANHANDLE == "N") {
+                                    panduano = true;
+                                }  
+                            })
+                            if(!panduano){
+                                $('#onlyzwdd').css("display","block")
+                                $('.tj_l').css("display","none")
+                            }
+                        }else{
+                            dialog.toast(data.RSPMSG, 'none', 1000);
+                        }
+
+                    });
+                }
+                // console.log(that.t_PRICE)
+            },
+            co_ckxq:function(e) {
+                // console.log(e);
+                this.wzxq = this.items[e].CONTENT;
+                this.xqdz = this.items[e].ADDRESS;
+                $('#iosDialog2').fadeIn(200);
+
+            },
+            gb_zdl:function() {
+                $('#iosDialog2').fadeOut(200);
+            },
+            go_one: function () {
+                dialog.loading.open();
+                RPeccancy.RealtimeQuotesOne()
+            },
+            go_two: function () {
+                dialog.loading.open();
+                RPeccancy.RealtimeQuotesTwo()
+            },
+            go_three: function () {
+                dialog.loading.open();
+                RPeccancy.RealtimeQuotesThree()
+            },
+            selecttj: function (e) {
+                var that = this;
+
+            },
+            tj: function () {
+
+
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

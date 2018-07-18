@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <title>油卡订单</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./../public/css/dropload.css">
+    <link rel="stylesheet" href="./Orders.css">
+</head>
+<body>
+<section id="Ordermanagement" class="Ordermanagement" v-cloak>
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>订单</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="anniu">
+        <div class="anniua anniuabacka" @click="goall"><div class="ssbj">全部</div></div>
+        <div class="anniua anniuabackb" @click="godaichuli"><div class="ssbj">处理中</div></div>
+        <!--<a href="./daiqueren.html"><div class="anniua anniuabackb">待确认</div></a>-->
+        <div class="anniua anniuabackb" @click="goyiwancheng"><div class="ssbj" style="border-bottom: 1px solid;height: 1.1rem;">已完成</div></div>
+    </div>
+
+    <div class="list">
+        <div id="onlyzwdd" v-if="items.length == '0'" style="text-align: center;margin-top: 3.5rem;">
+            <img src="./../public/img/newCar/noorder.png" alt="" style="display: inline-block;">
+            <p style="color: #959595;">暂无订单</p>
+        </div>
+        <ul>
+            <li class="Guessyouli opacity" v-for="(item,index) in items">
+                <div class="list-a-div ove">
+                    <p class="fl" v-if="item.BUS_TYPE == 'Recharge'" style="color:#51A999">油卡充值</p>
+                    <p class="fl" v-if="item.BUS_TYPE == 'Transact'" style="color:#51A999">新办油卡</p>
+                    <div class="fr">
+                        <span>订单时间：</span>
+                        <span>{{ item.TXDATE }}</span>
+                    </div>
+                </div>
+                <div class="list-a-div ove" v-if="item.BUS_TYPE == 'Recharge'">
+                    <div class="fl">
+                        <span>姓名：</span>
+                        <span>{{ item.CUST_NAME }}</span>
+                    </div>
+                    <p class="fr" v-if="item.OILCARD_TYPE=='PetroChina'"><span>卡类型：</span>中国石油</p>
+                    <p class="fr" v-if="item.OILCARD_TYPE=='Sinopec'"><span>卡类型：</span>中国石化</p>
+                </div>
+                <div class="list-a-div ove">
+                    <div class="fl">
+                        <span>订单号：</span>
+                        <span>{{ item.ORDERNO }}</span>
+                    </div>
+                    <p class="fr" v-if="item.ORD_STATUS =='0'" style="color:yellowgreen">未处理</p>
+                    <p class="fr" v-if="item.ORD_STATUS == '1'" style="color:deepskyblue">处理中</p>
+                    <p class="fr" v-if="item.ORD_STATUS == '2'" style="color:#51A999">完成</p>
+                    <p class="fr" v-if="item.ORD_STATUS == '3'" style="color:red">失败</p>
+                </div>
+                <div class="list-a-div ove">
+                    <div class="fl">
+                        <span>金额：</span>
+                        <span>{{ (item.ORDAMT-0)/100 | number }}元</span><!-- 支付金额-->
+                    </div>
+                    <div class="fr ove btn-width" v-if="item.ORD_STATUS =='1'">
+                        <div class="cuibandiv">
+                            <div class="cuiban" @click="cuiban(index)">催办</div>
+                            <!--<div class="yicuiban">已催办</div>-->
+                        </div>
+                    </div>
+                    <div class="fr ove btn-width" v-if="item.ORD_STATUS =='0'">
+                        <div class="cuibandiv">
+                            <div class="cuiban" @click="toPayment1(item.ORDERNO,item.BUS_TYPE,item.ORDAMT)">去支付</div>
+                            <!--<div class="yicuiban">已催办</div>-->
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/Zepto.js"></script> -->
+<!--<script type="text/javascript" charset="utf-8" src="./../public/js/dropload.min.js"></script>-->
+<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/weui.js"></script> -->
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#Ordermanagement',
+        data:{
+            items:[]
+        },
+        filters: {
+            //保留2位小数点过滤器 不四舍五入
+            number(value) {
+                var toFixedNum = Number(value).toFixed(3);
+                var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1);
+                return realVal;
+            }
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                var that = this;
+                console.log(YDUI.device);
+                var obj = {};
+                obj.WX = WX;
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.BUS_TYPE = '';
+                obj.ORD_STATUS = '2';
+                HttpServer(wfc_oilCardBusOrderList,obj).then(function(data){
+                    if(data.RSPCODE=='SUCCESS'){
+                        dialog.loading.close();
+                        // dialog.toast(data.RSPMSG, 'none', 1000);
+                        that.items = data.RECORDS;
+                        console.log(that.items)
+                    }else{
+                        dialog.loading.close();
+                        dialog.toast(data.RSPMSG, 'none', 1000);
+                    }
+                })
+            },
+            toPayment1: function(orderNo,busType,txnAmt){
+                window.location.href = "../OilCard/toPayment.html?BUSORDERNO="+orderNo+"&BIZ_TYPE="+busType+"&TXNAMT="+txnAmt;
+            },
+            cuiban:function(e) {
+                var that = this;
+                var obj = {};
+                obj.WX = 'wx';
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.ORDERNO = this.items[e].ORDERNO; // 订单
+                dialog.loading.open();
+                HttpServer(wfcoil_addOilRemark,obj).then(function(data){
+                    console.log(data)
+                    if(data.RSPCODE=='SUCCESS'){
+                        dialog.toast(data.RSPMSG, 'none', 1000);
+                    }else{
+                        dialog.toast(data.RSPMSG, 'none', 1000);
+                    }
+                })
+            },
+            goall:function() {
+                dialog.loading.open();
+                OilOrders.all()
+            },
+            godaichuli:function() {
+                dialog.loading.open();
+                OilOrders.daichuli()
+            },
+            goyiwancheng:function() {
+                dialog.loading.open();
+                OilOrders.yiwancheng()
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+
+</script>
+</body>
+</html>

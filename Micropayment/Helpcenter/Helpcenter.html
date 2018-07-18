@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>帮助中心</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./Helpcenter.css">
+	<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/rem.js"></script>		 -->
+</head>
+<body>
+	<section id="Helpcenter" class="Helpcenter">
+		<div class="help_top">			
+			<div class="help_top_back">
+				<div class="Globalnavstyle">
+<!-- 					<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+						<img class="Globalnavstyle_img"  src="./../public/img/goreturn1.png">
+					</div> -->
+					<!-- <div>帮助中心</div> -->
+				</div>	
+				<div class="help_top_text">
+					<p class="help_top_text_p">{{ help_top_p1 }}</p>
+					<p class="help_top_text_p">{{ help_top_p2 }}</p>
+					<p class="help_top_text_p">{{ help_top_p3 }}</p>
+				</div>			
+			</div>
+		</div>
+		<div class="help_content">
+			<p class="Guessyou">猜您想问</p>
+			<ul class="guessyouul">
+				<li class="Guessyouli">
+					<p class="Guessyoulip">
+						<span class="Guessyous">
+						   1.微付车违章真的能代缴全国交通违章吗?
+						</span>
+ 
+						<span class="Guessyousi">
+							<img class="Guessyoui" src="./../public/img/right.png">
+						</span>
+				    </p>
+					<p class="Guessyoulip">
+						<span class="Guessyous">
+						   答:当然能啦!而且很快哦!
+						</span>
+ 
+						<span class="Guessyousi">
+							<img class="Guessyoui" src="./../public/img/right.png">
+						</span>
+				    </p>
+				</li>
+				<li class="Guessyouli">
+					<p class="Guessyoulip">
+						<span class="Guessyous">
+						   2.微付车还能干什么
+						</span>
+ 
+						<span class="Guessyousi">
+							<img class="Guessyoui" src="./../public/img/right.png">
+						</span>
+				    </p>
+					<p class="Guessyoulip">
+						<span class="Guessyous">
+						   答:还可以办理油卡,油卡充值哦!
+						</span>
+ 
+						<span class="Guessyousi">
+							<img class="Guessyoui" src="./../public/img/right.png">
+						</span>
+				    </p>					
+				</li>
+				<li class="Guessyouli">
+					<p class="Guessyoulip">
+						<span class="Guessyous">
+						   3.能给别人办理油卡么?
+						</span>
+ 
+						<span class="Guessyousi">
+							<img class="Guessyoui" src="./../public/img/right.png">
+						</span>
+				    </p>
+					<p class="Guessyoulip">
+						<span class="Guessyous">
+						   答:当然可以
+						</span>
+ 
+						<span class="Guessyousi">
+							<img class="Guessyoui" src="./../public/img/right.png">
+						</span>
+				    </p>					
+				</li>
+			</ul>
+		</div>
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#Helpcenter',
+			data:{
+               help_top_p1:'这里是微付车帮助中心',
+               help_top_p2:'有什么问题我们都能帮你解决',
+               help_top_p3:'做您的贴心小伙伴'
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              } 
+			},		
+			mounted: function () {
+
+			}
+		})
+	</script>	
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>驾驶证查分</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./addDrivingLicense.css">
+</head>
+<body>
+<section id="DrivingLicenseCheckPoints" class="DrivingLicenseCheckPoints">
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>驾驶证查分</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="content">
+        <div class="a">
+            <p>以下信息仅交管12123查询，我们将严格保密</p>
+        </div>
+        <div class="b">
+            <div class="b_top">
+                <div class="fl b_title">驾驶证号码</div>
+                <!--<div class="fr xj"></div>-->
+                <div class="fr">
+                    <input class="b_input" type="text" placeholder="请输入驾驶证号码" v-model="DRIVING_NUMBER">
+                </div>
+            </div>
+            <div class="b_top">
+                <div class="fl b_title">驾驶证档案编号</div>
+                <div class="fr pad_r">
+                    <input class="b_input" type="text" placeholder="请输入档案号码" v-model="ARCHIVES_NO">
+                </div>
+            </div>
+        </div>
+        <div class="b" style="height: 1.25rem;background-size: 127%;background-position-x: -0.9rem;">
+            <div class="b_top">
+                <div class="fl b_title">驾驶证领证日期</div>
+                <span class="fr b_inp" style="padding-left: .1rem;padding-right: 0rem;">&gt;</span>
+                <div class="fr b_inp pad_r" @click="xzrq">{{ date }}</div>
+            </div>
+            <!--<div class="b_top">-->
+                <!--<div class="fl b_title">驾驶证备注（选填）</div>-->
+                <!--<div class="fr pad_r">-->
+                    <!--<input class="b_input" type="text" placeholder="例如：“我的驾驶证”">-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="c">
+            <div class="bc" @click="ljcf">立即查分</div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#DrivingLicenseCheckPoints',
+        data:{
+            date:'请选择日期',
+            c_date:'', //传后台日期 暂时不用
+            DRIVING_NUMBER:'',//驾驶证
+            ARCHIVES_NO:'' //档案号
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                console.log(YDUI.device)
+            },
+            xzrq: function() {
+                var that = this
+                weui.datePicker({
+                    start: 1990,
+                    end: new Date().getFullYear(),
+                    onChange: function (result) {
+                        // console.log(result);
+                    },
+                    onConfirm: function (result) {
+                        // console.log(result);
+                        that.date = result[0]+'-'+result[1]+'-'+result[2]
+                    }
+                });
+            },
+            ljcf: function () {
+                if(this.DRIVING_NUMBER == ''){
+                    dialog.toast('请输入驾驶证号', 'none', 1000);
+                    return
+                }
+                if(this.ARCHIVES_NO == ''){
+                    dialog.toast('请输入档案号', 'none', 1000);
+                    return
+                }
+                dialog.loading.open();
+                newCarCheckpoints.go_ScoreDisplay(this.DRIVING_NUMBER,this.ARCHIVES_NO)
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

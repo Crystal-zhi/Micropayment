@@ -1,0 +1,106 @@
+.pad {
+    padding: 0 .2rem;
+}
+.tongzhi {
+    color: #686868;
+    font-size: 12px;
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+}
+.cp_list {
+
+}
+.cp_list_li {
+    width: 100%;
+    background: #ffffff;
+    border-radius: .1rem;
+    height: 1.2rem;
+    overflow: hidden;
+    line-height: 1.2rem;
+    padding: 0 .2rem;
+    margin-top: 1px;
+    /*border-bottom: 1px solid #efefef;*/
+}
+.cp_list_li_clxtop {
+    float: left;
+}
+.cp_list_li_inp {
+    width: .32rem;
+    height: .32rem;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(./../public/img/OilCard_chno.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.02rem;
+    background-size: 99%;
+    border: none;
+    transform: translateY(-9%);
+    -ms-transform: translateY(-9%);
+    -webkit-transform: translateY(-9%);
+    -o-transform: translateY(-9%);
+    -moz-transform: translateY(-9%);
+}
+.cp_list_li_inp:checked {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-image: url(./../public/img/OilCard_chyes.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.02rem;
+    background-size: 99%;
+    border: none;
+    background-color: #fff;
+}
+.cp_list_li_chepai {
+    color: #959595;
+    padding-left: .1rem;
+}
+
+.cp_list_li_clximg {
+    float: right;
+    color: #959595;
+}
+
+/*.cp_list_li_clximg {*/
+    /*float: right;*/
+/*}*/
+/*.cp_list_li_clximg>img {*/
+    /*display: inline-block;*/
+    /*vertical-align: middle;*/
+/*}*/
+
+
+.c {
+    margin-top: .3rem;
+    margin-bottom: .2rem;
+}
+
+.c .bc {
+    width: 98%;
+    height: .8rem;
+    line-height: .8rem;
+    background-color: #02AD9A;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 auto;
+    font-size: .33rem;
+    border-radius: 2pt;
+}
+
+
+.opacity {
+    -webkit-animation: opacity 0.8s ease;
+    animation: opacity 0.8s ease;
+}
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

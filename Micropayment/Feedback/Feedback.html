@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">			
+	<title>意见反馈</title>	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./Feedback.css">
+	<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/rem.js"></script>		 -->
+</head>
+<body>
+	<section id="Feedback" class="Feedback">
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>意见反馈</div>
+		</div> -->
+	    <div class="feed_linear">
+
+	        <div class="feed_input" style="margin-top:19px">
+	            <textarea class="feed_rextar" maxlength="200" placeholder="微付车感谢您的宝贵意见，请输入问题，并留下联系方式" @input="descInput" v-model="textaralength"></textarea>
+	            <div class="feedlength"><span>{{ length }}</span><span>/200</span></div>
+	        </div>
+
+	        <div class="feed_btn_submit">
+	            <input type="button" class="feed_btn_text" value="发送" :class="{'feed_btn_text1':!disa}" :disabled = "disa" @click="handleClick">
+	        </div>
+	    </div>
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#Feedback',
+			data:{
+				textaralength:'',
+                length: 200,
+                disa:true,
+				url:base+'RMobile/app/feedBack'
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              descInput: function() {
+				 var txtVal = this.textaralength.length;
+				 this.length = 200 - txtVal;
+				 if(this.length != '200'){
+                      this.disa = false
+				 }else{
+				 	  this.disa = true
+				 }
+              },
+              handleClick: function () {
+                  var that = this;
+                  var dialog = YDUI.dialog;
+                 if(this.textaralength == ''){
+                     dialog.toast('内容不能为空', 'none', 1000);
+                     return
+				 }
+                  HttpParams.BACK_TITLE = '手机';
+                  HttpParams.BACK_MSG = that.textaralength;
+				 HttpServer(that.url,HttpParams).then(function(data){
+                     if(data.RSPCODE == 'SUCCESS') {
+                         dialog.toast(data.RSPMSG, 'none', 1000);
+					 }else{
+                         dialog.toast(data.RSPMSG, 'none', 1000);
+					 }
+				})
+              }   
+			},		
+			mounted: function () {
+
+			}
+		})		
+	</script>	
+</body>
+</html>

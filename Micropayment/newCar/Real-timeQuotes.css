@@ -1,0 +1,296 @@
+.fl{float: left;}
+.fr{float: right;}
+#Real-timeQuotes {
+    width: 100%;
+}
+.content {
+    width: 100%;
+    overflow: hidden;
+}
+.content .title {
+    width: 100%;
+    height: .8rem;
+    line-height: .8rem;
+    background: #51A999;
+    color: #fff;
+    text-align: center;
+    font-size: .3rem;
+}
+.content .anniu {
+    background: #fff;
+    height: 1.1rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    align-items: center;
+    -webkit-align-items: center;
+}
+.content .anniua {
+    width: 1.82rem;
+    text-align: center;
+    color: #51A999;
+    height: 1.1rem;
+    line-height: 1.1rem;
+    border-radius: .03rem;
+    /*transition: all .5s ease;*/
+    /*-webkit-transition: all .5s ease;*/
+}
+.content .pad {
+    padding: 0 .2rem;
+}
+/*.content .anniuabacka {
+    background: #fff;
+}
+.content .anniuabackb {
+    background: #fff;
+}*/
+.content .tongzhi img {
+    display: inline-block;
+    vertical-align: top;
+}
+.content .tongzhi {
+    color: #686868;
+    font-size: 12px;
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+}
+.content .rtq-list {
+
+}
+.content .rtq-back {
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    height: 3.74rem;
+    position: relative;
+    margin: .2rem 0;
+}
+.content .rtq-list-top{
+    width: 100%;
+    padding: 0 .4rem;
+}
+.content .a_div {
+    width: 100%;
+    overflow: hidden;
+    height: .66rem;
+    line-height: .66rem;
+}
+.content .a_l {
+    float: left;
+}
+.content .a_span1 {
+    color: #2B2B2B;
+    font-size: .29rem;
+}
+.content .a_span2 {
+    color: #959595;
+    font-size: .28rem;
+}
+.content .a_r {
+    float: right;
+    color: #02AD9A;
+    font-size: .28rem;
+}
+.content .rtq-list-bottom {
+    width: 100%;
+}
+.content .rtq-dotted {
+    width: 100%;
+    height: 1px;
+    border-top: 1px dotted #E5E5E5;
+    margin-top: .15rem;
+}
+.content .rtq-f-f {
+    overflow: hidden;
+    padding-top: .25rem;
+    overflow: initial;
+}
+.content .rtq-f {
+    box-sizing: border-box;
+    width: 25%;
+    height: .44rem;
+    text-align: center;
+    float: left;
+    overflow: initial;
+}
+.content .rtq-leftdotted {
+    border-left: 1px dotted #E5E5E5;
+}
+.content .rtq-f .rtq-p1 {
+    margin-bottom: .02rem;
+    transform: translateY(-19%);
+    -webkit-transform: translateY(-19%);
+    color: #2B2B2B;
+}
+.content .rtq-f .rtq-p2 {
+    padding-top: .04rem;
+    color: #02AD9A;
+}
+.content .xingwei {
+    width: 66%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.content .rtq-inputche {
+    width: .32rem;
+    height: .32rem;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(./../public/img/OilCard_chno.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.02rem;
+    background-size: 99%;
+    border: none;
+    transform: translateY(-9%);
+    -ms-transform: translateY(-9%);
+    -webkit-transform: translateY(-9%);
+    -o-transform: translateY(-9%);
+    -moz-transform: translateY(-9%);
+    position: absolute;
+    left: .05rem;
+    top: .18rem;
+}
+.content .rtq-inputche:checked {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-image: url(./../public/img/OilCard_chyes.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.02rem;
+    background-size: 99%;
+    border: none;
+    background-color: #fff;
+}
+.content .bjce {
+    position: absolute;
+    top: 39%;
+    right: 4%;
+    background-color: #EE5B5B;
+    color: #fff;
+    padding: 0.05rem 0.1rem;
+    font-size: .27rem;
+    border-radius: .06rem;
+}
+.content .rtq-image {
+    width: 1.84rem;
+    position: absolute;
+    top: 39%;
+    right: 2%;
+}
+.IwantRemedy {
+    width: 88%;
+    height: .8rem;
+    line-height: .8rem;
+    background-color: #02AD9A;
+    color: #ffffff;
+    text-align: center;
+    font-size: .33rem;
+    border-radius: 2pt;
+    margin: .3rem auto;
+}
+.tj_l {
+    width: 100%;
+    height: 1.3rem;
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #E3E3E3;
+}
+.tj_ltop {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 .32rem;
+    height: .56rem;
+    line-height: .56rem;
+}
+.tj_le {
+    float: left;
+}
+.tj_ri {
+    float: right;
+}
+.tj_ltop .tjspan1 {
+    color: #2B2B2B;
+}
+.tj_ltop .tjspan2 {
+    color: #F54444;
+}
+.tj_ltop .tjspan3 {
+    color: #B9B9B9;
+}
+.tj_lbottom {
+    width: 100%;
+    overflow: hidden;
+    border-top: 1px solid #E3E3E3;
+    height: .74rem;
+    padding-left: .32rem;
+}
+.tj-inputche {
+    width: .32rem;
+    height: .32rem;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    text-align: center;
+    vertical-align: middle;
+    background-image: url(./../public/img/OilCard_chno.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.02rem;
+    background-size: 99%;
+    border: none;
+    transform: translateY(-9%);
+    -ms-transform: translateY(-9%);
+    -webkit-transform: translateY(-9%);
+    -o-transform: translateY(-9%);
+    -moz-transform: translateY(-9%);
+}
+.tj-inputche:checked {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-image: url(./../public/img/OilCard_chyes.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0 0.02rem;
+    background-size: 99%;
+    border: none;
+    background-color: #fff;
+}
+.tj-qx {
+    color: #2B2B2B;
+}
+.tj_l .tj_div1 {
+    line-height: .74rem;
+}
+.tjspc1 {
+    color: #02AD9A;
+}
+.tjspc2 {
+    color: #2B2B2B;
+}
+.tjfonts {
+    font-size: .25rem;
+}
+.tj_div3 {
+    height: .37rem;
+    line-height: .37rem;
+    padding-left: .22rem;
+    overflow: hidden;
+}
+.tj_padd_a {
+    padding-left: .23rem;
+}
+.tj_div4{
+    width: 1.76rem;
+    height: .74rem;
+    line-height: .74rem;
+    text-align: center;
+    color: #FFFFFF;
+    background: #02AD9A;
+}

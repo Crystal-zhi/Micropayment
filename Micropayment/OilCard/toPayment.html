@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="./payment.css">
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/jqueryWeui.css">
+
+    <script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/echarts.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+
+    <title>支付页面</title>
+</head>
+
+<body>
+    <section id="OilCard1" class="OilCard" v-cloak>
+        <h1 style="color: #09bb07;margin-top: 20px;margin-bottom: 20px;">订单确认</h1>
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__hd">
+                <label class="weui-form-preview__label">付款金额</label>
+                <em class="weui-form-preview__value">¥ {{obj.TXNAMT/100}}</em>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">交易类型</label>
+                    <span class="weui-form-preview__value" v-if="(obj.BIZ_TYPE=='Recharge') || (obj.BIZ_TYPE==='Transact')">油卡业务</span>
+                    <span class="weui-form-preview__value" v-if="obj.BIZ_TYPE=='Inspect'"> 年检业务</span>
+                    <span class="weui-form-preview__value" v-if="(obj.BIZ_TYPE=='VIOPAY') || (obj.BIZ_TYPE==='VIOSUPPAY')">违章业务</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">订单号</label>
+                    <span class="weui-form-preview__value">{{ obj.BUSORDERNO }}</span>
+                </div>
+            </div>
+            <div class="weui-form-preview__ft">
+                <button type="submit" class="weui-btn weui-btn_plain-primary" href="javascript:" @click="goBackToTheLastPage">支付完成</button>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+
+        var vm = new Vue({
+            el: '#OilCard1',
+            data: {
+                obj: {},
+
+            },
+            methods: {
+                goBackToTheLastPage: function () {
+                    window.history.go(-1)
+                },
+                parseStrObjByRegExp: function (strDes) {
+                    var obj = {};
+                    strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                        obj[key] = value;
+                    });
+                    return obj;
+                },
+                yd: function () {
+                    var that = this;
+                    var url = window.location.search;
+                    var obj1 = StrObjByRegExpLocation(url);
+                    that.obj = obj1;
+                    console.log(that.obj)
+                },
+
+                goNext: function () {
+                    var that = this;
+                    if ((that.obj.BIZ_TYPE == 'Recharge') || (that.obj.BIZ_TYPE == 'Transact')) {//油卡2
+                        window.location.href = "OilCard.html?ORG_ID=" + getStore("ORG_ID") + "&LOGIN_ID=" + getStore("LOGIN_ID");
+                    }
+                    if (that.obj.BIZ_TYPE == 'Inspect') {//车辆年检1
+                        window.location.href = "../newCar/AnnualInspectionOfVehicles.html?ORG_ID=" + getStore("ORG_ID") + "&LOGIN_ID=" + getStore("LOGIN_ID");
+                    }
+                    if ((that.obj.BIZ_TYPE == 'VIOPAY') || (that.obj.BIZ_TYPE == 'VIOSUPPAY')) {//违章查询1
+                        window.location.href = "../newCar/SReal-timeQuotesOne.html?ORG_ID=" + getStore("ORG_ID") + "&LOGIN_ID=" + getStore("LOGIN_ID") + "&HPHM=" + getStore('Inq_weizhangchepai');
+                    }
+
+                },
+            },
+            mounted: function () {
+                this.yd()
+            }
+        })
+
+    </script>
+</body>
+
+</html>

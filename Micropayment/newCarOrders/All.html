@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <title>违章订单</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./../public/css/dropload.css">
+    <link rel="stylesheet" href="./Orders.css">
+</head>
+<body>
+<section id="Ordermanagement" class="Ordermanagement" v-cloak>
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>订单</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="anniu">
+        <a href="javascript:void(0);" @click="goall"><div class="anniua anniuabacka"><div class="ssbj" style="border-bottom: 1px solid;height: 1.1rem;">全部</div></div></a>
+        <a href="javascript:void(0);" @click="godaichuli"><div class="anniua anniuabackb"><div class="ssbj">待处理</div></div></a>
+        <a href="javascript:void(0);" @click="godaiqueren"><div class="anniua anniuabackb"><div class="ssbj">待确认</div></div></a>
+        <a href="javascript:void(0);" @click="goyiwancheng"><div class="anniua anniuabackb"><div class="ssbj">已完成</div></div></a>
+    </div>
+    <div class="content">
+        <!-- 列表 Start-->
+        <div class="rtq-list">
+            <div id="onlyzwdd" v-if="items.length == '0'" style="text-align: center;margin-top: 3.5rem;">
+                <img src="./../public/img/newCar/noorder.png" alt="" style="display: inline-block;">
+                <p style="color: #959595;">暂无订单</p>
+            </div>
+            <section class="rtq-back opacity" v-for="(item,index) in items">
+                <div class="rtq-list-top">
+
+                    <div class="a_div">
+                        <div class="a_l">
+                            <span class="a_span1">违章状态：</span>
+                            <span class="a_span2" v-if="item.STATUS=='00'">待处理</span>
+                            <span class="a_span2" v-if="item.STATUS=='01'">待确认</span>
+                            <span class="a_span2" v-if="item.STATUS=='02'">已完成</span>
+                            <span class="a_span2" v-if="item.STATUS=='03'">退单</span>
+                            <span class="a_span2" v-if="item.STATUS=='04'">未处理</span>
+                            <span class="a_span2" v-if="item.STATUS=='05'">待报价</span>
+                        </div>
+                        <div class="a_r" @click="co_ckxq(index)">查看详情</div>
+                    </div>
+
+                    <div class="a_div">
+                        <div class="a_l">
+                            <span class="a_span1">违章地点：</span>
+                            <span class="a_span2">{{ item.ADDRESS }}</span>
+                        </div>
+                    </div>
+
+                    <div class="a_div">
+                        <div class="a_l">
+                            <span class="a_span1">违章时间：</span>
+                            <span class="a_span2">{{ item.TIME }}</span>
+                        </div>
+                    </div>
+
+                    <div class="a_div">
+                        <div class="a_l" style="width: 100%;">
+                            <span class="a_span1 fl">违章行为：</span>
+                            <span class="a_span2 fl xingweitaichang">{{ item.CONTENT }}</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rtq-list-bottom">
+                    <div class="rtq-dotted"></div>
+                    <div class="rtq-f-f">
+                        <div class="rtq-f">
+                            <p class="rtq-p1">扣分</p>
+                            <p class="rtq-p2">{{ item.SCORE }}</p>
+                        </div>
+                        <div class="rtq-f rtq-leftdotted">
+                            <p class="rtq-p1">服务费</p>
+                            <p class="rtq-p2">{{ (item.FEE-0)/100 }}</p>
+                        </div>
+                        <div class="rtq-f rtq-leftdotted">
+                            <p class="rtq-p1">罚款</p>
+                            <p class="rtq-p2">{{ (item.PRICE-0)/100 }}</p>
+                        </div>
+                        <div class="rtq-f rtq-leftdotted">
+                            <p class="rtq-p1">滞纳金</p>
+                            <p class="rtq-p2">{{ (item.LATEFEE-0)/100 }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <input v-if="item.STATUS=='01' && item.SUPSTATUS=='01'" type="button" value="补缴差额" class="bjce" @click="jiaofei(index)">
+                <input v-if="item.STATUS=='00'" type="button" value="催办" class="bjce" style="top: 20%; background-color: #02ad9a;" @click="cuiban(index)">
+                <input v-if="item.STATUS=='04'" type="button" value="支付" class="bjce" style="top: 20%; background-color: #02ad9a;" @click="weichukli(index)">
+                <input v-if="item.STATUS=='01'&&item.SUPSTATUS=='00'" type="button" value="支付" class="bjce" style="background-color: #02ad9a;" @click="weichukli(index)">
+                <!--<input class="rtq-inputche" type="checkbox" @click="selecttj(index)">-->
+                <img v-if="item.STATUS=='00'" class="rtq-image" src="../public/img/newCar/d_d.png" alt="">
+                <!--<img v-if="item.STATUS=='01' && item.SUPSTATUS!=='02'" class="rtq-image" src="../public/img/newCar/d_j.png" alt="">-->
+                <img v-if="item.STATUS=='02'" class="rtq-image" src="../public/img/newCar/d_yes.png" alt="">
+                <img v-if="item.STATUS=='03'" class="rtq-image" src="../public/img/newCar/d_t.png" alt="">
+                <img v-if="item.STATUS=='04'" class="rtq-image" src="../public/img/newCar/d_w.png" alt="">
+                <img v-if="item.STATUS=='05'" class="rtq-image" src="../public/img/newCar/dbj.png" alt="">
+                <div v-if="item.SUPSTATUS=='02'" class="a_r chaexianshi">差额金：{{ (item.SUPTXNAMT-0)/100 }}元</div>
+            </section>
+        </div>
+        <!-- 列表 End-->
+    </div>
+
+    <div class="js_dialog" id="iosDialog2" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd" style="text-align: left;color: #353535;">违章地址 : {{ xqdz }}</div>
+            <div class="weui-dialog__bd" style="text-align: left;color: #353535;">违章详情 : {{ wzxq }}</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="gb_zdl">知道了</a>
+            </div>
+        </div>
+    </div>
+    <div id="zfb_zf" style="display: none;"></div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/Zepto.js"></script> -->
+<script type="text/javascript" charset="utf-8" src="./../public/js/dropload.min.js"></script>
+<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/weui.js"></script> -->
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#Ordermanagement',
+        data:{
+            items:[
+                // {
+                //     ADDRESS:'123',
+                //     TIME:'2018',
+                //     CONTENT:'zhuangbi',
+                //     SCORE:'123',
+                //     PRICE:'10000'
+                // }
+            ],
+            wzxq:'',   //详情 详情
+            xqdz:''   //详情 地址
+
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                var that = this;
+                console.log(YDUI.device)
+                var obj = {};
+                obj.WX = 'wx';
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.STATUS = '';
+                HttpServer(wfc_queryVioOrder,obj).then(function (data) {
+                        // console.log(data);
+                        if(data.RSPCODE == 'SUCCESS'){
+                            that.items = data.ORDERLIST
+                        }else{
+                            dialog.toast(data.RSPMSG, 'none', 1000);
+                        }
+
+                    })
+            },
+            co_ckxq:function(e) {
+                // console.log(e);
+                this.wzxq = this.items[e].CONTENT;
+                this.xqdz = this.items[e].ADDRESS;
+                $('#iosDialog2').fadeIn(200);
+
+            },
+            gb_zdl:function() {
+                $('#iosDialog2').fadeOut(200);
+            },
+            jiaofei:function(e) {
+                var that = this;
+                // var obj = {};
+                // obj.WX = 'wx';
+                // obj.ORG_ID = ORG_ID;
+                // obj.LOGIN_ID = LOGIN_ID;
+                // obj.TXNAMT = this.items[e].SUPTXNAMT; // 差额金
+                // obj.ILLEGALID = this.items[e].ILLEGALID; // 违章id
+                // obj.BIZ_TYPE = 'VIOSUPPAY'; // 补缴 VIOSUPPAY     代缴  VIOPAY
+                // obj.ORDERNO = this.items[e].VIO_MAIN_ID; // 订单号
+
+                 // HttpServer(wfc_vioPay,obj).then(function(res){
+
+                     // console.log(data.ORDERNO)
+                     // if(res.RSPCODE == 'SUCCESS'){
+                         var wfc_obj = {};
+                         wfc_obj.WX = WX;
+                         wfc_obj.ORG_ID = ORG_ID;
+                         wfc_obj.LOGIN_ID = LOGIN_ID;
+                         wfc_obj.BUSORDERNO = this.items[e].VIO_MAIN_ID;
+                         wfc_obj.TRANS_TYPE = 'ALIPAY_WAP';
+                         wfc_obj.BIZ_TYPE = 'VIOSUPPAY';
+                         wfc_obj.TXNAMT = this.items[e].SUPTXNAMT;
+                         toPayment(wfc_obj.BUSORDERNO,wfc_obj.BIZ_TYPE,wfc_obj.TXNAMT);
+                         // HttpServer(wfc_payTradeOrder,wfc_obj).then(function(data){
+                         //     dialog.loading.close();
+                         //     console.log(data.PAY_BODY)
+                         //     if(data.RSPCODE == 'SUCCESS'){
+                         //         if($('#zfb_zf').html() == '' || $('#zfb_zf').html() == null || $('#zfb_zf').html() == undefined){
+                         //             $('#zfb_zf').html(data.PAY_BODY)
+                         //         }else{
+                         //             $('#zfb_zf').html('')
+                         //             $('#zfb_zf').html(data.PAY_BODY)
+                         //         }
+                         //     }else{
+                         //         dialog.toast(data.RSPMSG, 'none', 1000);
+                         //     }
+                         // })
+                     // }else{
+                     //     dialog.toast(res.RSPMSG, 'none', 1000);
+                     // }
+                 // })
+            },
+            cuiban:function(e){
+                var that = this;
+                var obj = {};
+                obj.WX = 'wx';
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.ILLEGALID = this.items[e].ILLEGALID; // 违章id
+                dialog.loading.open('正在处理...');
+                HttpServer(wfc_addRemark,obj).then(function(data){
+                    dialog.loading.close();
+                    console.log(data)
+                    if(data.RSPCODE=='SUCCESS'){
+                        dialog.toast(data.RSPMSG, 'none', 1000);
+                    }else{
+                        dialog.toast(data.RSPMSG, 'none', 1000);
+                    }
+                })
+            },
+            weichukli:function(e){
+                var that = this;
+                // var obj = {};
+                // obj.WX = 'wx';
+                // obj.ORG_ID = ORG_ID;
+                // obj.LOGIN_ID = LOGIN_ID;
+                // obj.TXNAMT = this.items[e].TXNAMT; // 金额
+                // obj.ILLEGALID = this.items[e].ILLEGALID; // 违章id
+                // obj.BIZ_TYPE = 'VIOPAY'; // 补缴 VIOSUPPAY     代缴  VIOPAY
+
+                // HttpServer(wfc_vioPay,obj).then(function(res){
+
+                    // console.log(data.ORDERNO)
+                    // if(res.RSPCODE == 'SUCCESS'){
+                        var wfc_obj = {};
+                        wfc_obj.WX = WX;
+                        wfc_obj.ORG_ID = ORG_ID;
+                        wfc_obj.LOGIN_ID = LOGIN_ID;
+                        wfc_obj.BUSORDERNO = this.items[e].VIO_MAIN_ID;
+                        wfc_obj.TRANS_TYPE = 'ALIPAY_WAP';
+                        wfc_obj.BIZ_TYPE = 'VIOPAY';
+                        wfc_obj.TXNAMT = this.items[e].TXNAMT;
+                        toPayment(wfc_obj.BUSORDERNO,wfc_obj.BIZ_TYPE,wfc_obj.TXNAMT);
+                        // HttpServer(wfc_payTradeOrder,wfc_obj).then(function(data){
+                        //     dialog.loading.close();
+                        //     console.log(data.PAY_BODY)
+                        //     if(data.RSPCODE == 'SUCCESS'){
+                        //         if($('#zfb_zf').html() == '' || $('#zfb_zf').html() == null || $('#zfb_zf').html() == undefined){
+                        //             $('#zfb_zf').html(data.PAY_BODY)
+                        //         }else{
+                        //             $('#zfb_zf').html('')
+                        //             $('#zfb_zf').html(data.PAY_BODY)
+                        //         }
+                        //     }else{
+                        //         dialog.toast(data.RSPMSG, 'none', 1000);
+                        //     }
+                        // })
+                    // }else{
+                        // dialog.toast(res.RSPMSG, 'none', 1000);
+                    // }
+                // })
+            },
+            goall:function() {
+                dialog.loading.open();
+               newCardOrders.all()
+            },
+            godaichuli:function() {
+                dialog.loading.open();
+               newCardOrders.daichuli()
+            },
+            godaiqueren:function() {
+                dialog.loading.open();
+               newCardOrders.daiqueren()
+            },
+            goyiwancheng:function() {
+                dialog.loading.open();
+               newCardOrders.yiwancheng()
+            }
+
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+
+</script>
+</body>
+</html>

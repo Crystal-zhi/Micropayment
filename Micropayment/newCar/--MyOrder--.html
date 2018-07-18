@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>我的订单</title>
+    <link rel="stylesheet" href="./../public/css/weui.css">
+    <link rel="stylesheet" href="./../public/css/ydui.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <link rel="stylesheet" href="./MyOrder.css">
+</head>
+<body>
+<section id="MyOrder" class="MyOrder">
+    <!-- 头部start -->
+    <!-- 		<div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+                </div>
+                <div>我的订单</div>
+            </div> -->
+    <!-- 头部end -->
+    <div class="content">
+        <div class="title">我的订单</div>
+
+        <div class="StateDate">
+             <div class="StateData_div StateData_divbl fl">
+                  <div class="State" @click="selectState">
+                      <span class="">{{ State }}</span>
+                      <img class="StateDataimg" src="./../public/img/newCar/sanjiao.png" alt="" style="display: inline-block;vertical-align: middle;">
+                  </div>
+             </div>
+             <div class="StateData_div fr">
+                 <div class="State" @click="selectData">
+                     <span class="">{{ Data }}</span>
+                     <img class="StateDataimg" src="./../public/img/newCar/sanjiao.png" alt="" style="display: inline-block;vertical-align: middle;">
+                 </div>
+             </div>
+        </div>
+
+        <div class="pad">
+            <!-- 列表 Start-->
+            <div class="rtq-list">
+                <section class="rtq-back" v-for="(item,index) in items">
+                    <div class="rtq-list-top">
+
+                        <div class="a_div">
+                            <div class="a_l">
+                                <span class="a_span1">订单号：</span>
+                                <span class="a_span2">{{ item.a }}</span>
+                            </div>
+                            <div class="a_r">查看详情</div>
+                        </div>
+                        <div class="a_div">
+                            <div class="a_l">
+                                <span class="a_span1">订单日期：</span>
+                                <span class="a_span2">{{ item.b }}</span>
+                            </div>
+                        </div>
+
+                        <div class="a_div">
+                            <div class="a_l">
+                                <span class="a_span1">违章状态：</span>
+                                <span class="a_span2">{{ item.c }}</span>
+                            </div>
+                        </div>
+
+                        <div class="a_div">
+                            <div class="a_l">
+                                <span class="a_span1">违章地点：</span>
+                                <span class="a_span2">{{ item.d }}</span>
+                            </div>
+                        </div>
+
+                        <div class="a_div">
+                            <div class="a_l">
+                                <span class="a_span1">违章时间：</span>
+                                <span class="a_span2">{{ item.e }}</span>
+                            </div>
+                        </div>
+
+                        <div class="a_div">
+                            <div class="a_l">
+                                <span class="a_span1">违章行为：</span>
+                                <span class="a_span2">{{ item.f }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rtq-list-bottom">
+                        <div class="rtq-dotted"></div>
+                        <div class="rtq-f-f">
+                            <div class="rtq-f">
+                                <p class="rtq-p1">扣分</p>
+                                <p class="rtq-p2">{{ item.g }}</p>
+                            </div>
+                            <div class="rtq-f rtq-leftdotted">
+                                <p class="rtq-p1">服务费</p>
+                                <p class="rtq-p2">{{ item.h }}</p>
+                            </div>
+                            <div class="rtq-f rtq-leftdotted">
+                                <p class="rtq-p1">罚款</p>
+                                <p class="rtq-p2">{{ item.i }}</p>
+                            </div>
+                            <div class="rtq-f rtq-leftdotted">
+                                <p class="rtq-p1">滞纳金</p>
+                                <p class="rtq-p2">{{ item.j }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <img v-if="item.c=='完成'" class="rtq-image" src="../public/img/newCar/d_yes.png" alt="">
+                    <img v-if="item.c=='未处理'" class="rtq-image" src="../public/img/newCar/d_w.png" alt="">
+                    <img v-if="item.c=='进行中'" class="rtq-image" src="../public/img/newCar/d_j.png" alt="">
+                    <img v-if="item.c=='退单'" class="rtq-image" src="../public/img/newCar/d_t.png" alt="">
+                </section>
+            </div>
+            <!-- 列表 End-->
+        </div>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#MyOrder',
+        data:{
+            danniu:true,
+            State:'全部 ( 状态 )',
+            stateList:[{
+                label: '未处理',
+                value: 0
+            }, {
+                label: '进行中',
+                value: 1
+            }, {
+                label: '完成',
+                value: 2
+            },{
+                label: '退单',
+                value: 3
+            }],
+            Data:'全部 ( 日期 )',
+            items:[
+                {
+                    a:'21i29312831313111',b:'2018-10-23 09:50:20',c:'完成',d:'龙阳路路口',e:'2018-05-15 09：50：20',f:'超速100%',g:'12',h:'666',i:'888',j:'0'
+                },
+                {
+                    a:'21i29312831313111',b:'2018-10-23 09:50:20',c:'未处理',d:'龙阳路路口',e:'2018-05-15 09：50：20',f:'超速100%',g:'12',h:'666',i:'888',j:'0'
+                },
+                {
+                    a:'21i29312831313111',b:'2018-10-23 09:50:20',c:'进行中',d:'龙阳路路口',e:'2018-05-15 09：50：20',f:'超速100%',g:'12',h:'666',i:'888',j:'0'
+                },
+                {
+                    a:'21i29312831313111',b:'2018-10-23 09:50:20',c:'退单',d:'龙阳路路口',e:'2018-05-15 09：50：20',f:'超速100%',g:'12',h:'666',i:'888',j:'0'
+                }
+            ]
+        },
+        methods:{
+            goBackToTheLastPage: function() {
+                window.history.go(-1)
+            },
+            parseStrObjByRegExp:function(strDes) {
+                var obj = {};
+                strDes.replace(/(\w+)(?:=([^&]*))?/g, function (str, key, value) {
+                    obj[key] = value;
+                });
+                return obj;
+            },
+            yd: function() {
+                console.log(YDUI.device)
+            },
+            selectState:function () {
+                var that = this;
+                    weui.picker(vm.$data.stateList, {
+                        onChange: function (result) {
+                            // console.log(result);
+                        },
+                        onConfirm: function (result) {
+                            // console.log(result);
+                            that.State = vm.$data.stateList[result[0]].label;
+                        }
+                    });
+            },
+            selectData:function () {
+                var that = this;
+                    weui.datePicker({
+                        start: 1990,
+                        end: new Date().getFullYear(),
+                        onChange: function (result) {
+                            // console.log(result);
+                        },
+                        onConfirm: function (result) {
+                            // console.log(result);
+                            that.Data = result[0]+'-'+result[1]+'-'+result[2];
+                        }
+                    });
+            }
+        },
+        mounted: function () {
+            this.yd()
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 设置缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <!-- 可隐藏地址栏，仅针对IOS的Safari（注：IOS7.0版本以后，safari上已看不到效果） -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- 仅针对IOS的Safari顶端状态条的样式（可选default/black/black-translucent ） -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- IOS中禁用将数字识别为电话号码/忽略Android平台中对邮箱地址的识别 -->
+    <meta name="format-detection" content="telephone=no, email=no" />
+
+	<title>微视</title>
+	<!-- <link href="./../WeVideo/css/video-js.css" rel="stylesheet"> -->
+	<style>
+    body { 
+        font-family: Microsoft Yahei,SimSun,Helvetica; 
+    }
+    html,body {
+        -webkit-user-select:none; user-select: none; 
+    }
+    [v-cloak] {
+        display: none;
+    }
+	.video-js .vjs-big-play-button{
+	    font-size: 0em;
+	    margin: 0 auto;
+	    top: 27.6%;
+    	left: 26%;
+    	border: none;
+    	height: 0em; 
+	}
+	.vjs-poster{
+		text-align: center;
+	}
+    .m_m{
+        text-align: center;
+        margin-bottom: .5em;
+        border: 1px solid #d0cdcd;
+        padding-top: .1em;
+    }
+    .detail_m{
+        margin-top: -0.55em;
+        margin-left: 3.5em;
+    }
+    .detail{
+        margin-left: 8px;
+        font-size: 12px;
+        vertical-align: middle;
+    }
+    .detail img{
+        vertical-align:middle;
+    }
+    .title{
+        position: absolute;
+        color: #969494;
+        margin: .5em 0 0 1.5em;
+        z-index: 999999;
+        font-size: 18px;
+    }
+    .my-video{
+        margin: 0 auto;
+        width: 7em;
+    }
+    /*.back{
+        position: relative;
+        top: -4.2em;
+        height: 3.95em;
+    }*/
+	</style>
+	
+</head>
+
+<body >
+	<section class="list" id="videoM" v-cloak>
+		<div class="m" v-for="(item,index) in items">
+			<div class="m_m">
+                <span class="title">{{ item.TAB_TITLE }}</span>
+				<video :id="item.TAB_ID" class="my-video" loop preload="auto" controls playsinline x5-playsinline x-webkit-airplay="allow" webkit-playsinline controlsList='nofullscreen nodownload'>
+					<source :src="item.TAB_PATH" type="video/mp4">
+                    <!-- <source src="./../public/video/bg.mp4" type="video/mp4"> -->
+				</video>
+                <!-- <div class="back"><img src="bofang.png" style="width: 7.2em" @click="play(index)"></div> -->
+                <div class="detail_m" v-if="OUT_ID!='1'"> 
+                    <div style="margin:0 auto;">
+                        <img src="./../public/img/thumb.png" style="width:30px;" alt="" :class="item.TAB_ID+item.TAB_ID" @click="dianzan(index)">
+                        <img src="./../public/img/thumb.png" style="width:30px;display:none" alt="" :id="item.TAB_ID+item.TAB_ID">
+                        <span style="display:none"> {{ item.TAB_ID }} </span>
+                        <span class="detail"> {{ item.TAB_THUMB }} </span>
+                        <!--span class="detail"><img src="./../public/img/webVideo/comment.png" alt=""--><!--{{ item.TAB_COMMENT }} --><!--/span--> 
+                        <img src="./../public/img/forward.png" style="margin-left: .4em;width:22px"  :class="item.TAB_ID+item.TAB_ID+item.TAB_ID" alt=""  @click="zhuanfa(index)">
+                        <img src="./../public/img/forward.png" style="margin-left: .4em;width:22px;display:none"  :id="item.TAB_ID+item.TAB_ID+item.TAB_ID" alt="">
+                        <span style="display:none"> {{ item.TAB_ID }} </span>
+                        <span class="detail">{{ item.TAB_FORWARD }} </span>     
+                    </div> 
+                </div>
+			</div>	
+		</div>
+        <div id="output"></div>
+	</section>
+<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+<script type="text/javascript" charset="utf-8" src="./../public/js/html5media.min.js"></script>
+<!-- <script type="text/javascript" charset="utf-8" src="./../WeVideo/js/video.min.js"></script> -->
+<script>
+    var vm = new Vue({
+        el:'#videoM',
+        data:{
+            items:[],
+            url:base + 'RMobile/app/qryWSTabDetail',
+            up_url:base + 'RMobile/app/tabCounter',
+            OUT_ID:'0'
+            // url:"http://192.168.0.137:8080/"+"RMobile/app/qryWSTabDetail"
+        },
+        filters: {
+        },
+        methods:{
+            yd: function() {
+                var that = this;
+                var obj = {};
+                obj.WX = WX;
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.TAB_SEQ = _location.TAB_SEQ;
+                obj.TAB_ID = _location.TAB_ID;
+                that.OUT_ID = _location.OUT_ID;
+                HttpServer(this.url,obj).then(function(data){
+                    if(data.RSPCODE=='SUCCESS'){
+                        dialog.loading.close();
+                        that.items = data.TAB_DETAIL_LIST;
+                        that.can();
+                    }else{
+                        dialog.loading.close();
+                        dialog.toast(data.RSPMSG, 'none', 1000);
+                    }
+                })
+            },
+            dianzan: function(index){
+                var that = this;
+                that.items[index].TAB_THUMB = parseInt(that.items[index].TAB_THUMB) +1
+                var obj = {};
+                obj.WX = WX;
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.TAB_ID = that.items[index].TAB_ID;
+                obj.OPER_TYPE = '0'
+                HttpServer(this.up_url,obj).then(function(data){
+                    if(data.RSPCODE=='SUCCESS'){
+                        $('.'+that.items[index].TAB_ID+that.items[index].TAB_ID).css('display','none');
+                        $('#'+that.items[index].TAB_ID+that.items[index].TAB_ID).css('display','inline-block');
+                    }else{
+                        dialog.toast(data.RSPMSG, 'none', 2000);
+                    }
+                })
+            },
+            zhuanfa: function(index){
+                var that = this;
+                that.items[0].TAB_FORWARD = parseInt(that.items[0].TAB_FORWARD) +1
+                var obj = {};
+                obj.WX = WX;
+                obj.ORG_ID = ORG_ID;
+                obj.LOGIN_ID = LOGIN_ID;
+                obj.TAB_ID = that.items[index].TAB_ID;
+                obj.OPER_TYPE = '1'
+                HttpServer(this.up_url,obj).then(function(data){
+                    if(data.RSPCODE=='SUCCESS'){
+                        // $('.'+that.items[index].TAB_ID+that.items[index].TAB_ID+that.items[index].TAB_ID).css('display','none');
+                        // $('#'+that.items[index].TAB_ID+that.items[index].TAB_ID+that.items[index].TAB_ID).css('display','inline-block');
+                        // webShare("http://www.diyiyinshang.com"+"/Micropayment/toShare.html?url=http://www.diyiyinshang.com/Micropayment/WeVideo/webVideo.html?ORG_ID="+ORG_ID+"&LOGIN_ID="+LOGIN_ID+"&TAB_SEQ="+_location.TAB_SEQ+"&TAB_ID="+obj.TAB_ID+"&OUT_ID=1");
+                        webShare(window.location.href+"&TAB_ID="+obj.TAB_ID+"&OUT_ID=1")
+                    }else{
+                        dialog.toast(data.RSPMSG, 'none', 2000);
+                    }
+                })
+            },
+            can:function(){
+                var that = this;
+                $(document).ready(function(){
+                    $.each($('.my-video'),function(i,j){
+                        var video = j;
+                        $(video).css('background','transparent url("'+that.items[i].TAB_POSTER+'")  repeat');
+                        $(video).css('background-size','cover');
+                        // video.addEventListener('loadeddata',function(){
+                        //     var canvas = document.createElement("canvas");
+                        //     canvas.width = video.videoWidth * 0.8;
+                        //     canvas.height = video.videoHeight * 0.8;
+                        //     video.crossOrigin = 'Anonymous';
+                        //     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                        //     // video.setAttribute("poster", canvas.toDataURL("image/png"));
+                        //     $(video).next('div').find('img').eq(0).attr('src',canvas.toDataURL("image/png"));
+                        // });   
+                    });
+                });
+            }
+            // play:function(e){
+            //     var that = this;
+            //     $('#'+that.items[e].TAB_ID).next('div').css('z-index','-999').css('background-color','#000000')
+            //     $('#'+that.items[e].TAB_ID)[0].play();
+            // }
+        },
+        mounted: function () {
+            this.yd();
+        }
+    })
+</script>
+</body>
+</html>

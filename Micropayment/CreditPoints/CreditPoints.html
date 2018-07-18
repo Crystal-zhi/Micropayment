@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>信用分</title>
+    <link rel="stylesheet" href="CreditPoints.css">
+    <link rel="stylesheet" href="./../public/css/reset.css">
+    <script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+    <div class="mainBox" id="mainBox">
+        
+        <div class="header">
+            <!-- <div class="Globalnavstyle">
+                <div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+                    <img class="Globalnavstyle_img"  src="./../public/img/goreturn1.png">
+                </div>
+                <div class="creditPoints_word">了解分</div>
+            </div> -->
+            <span class="grade">352</span>
+            <span>
+                <img src="./../public/img/CreditPoints/2.png" id="justUp">
+            </span>
+            <span class="lastAssess">上次评估：348</span>
+            <div class="goOn">请继续保持呦</div>
+        </div>
+
+        <div class="tabs">
+            <ul class="tab-nav">
+                <li class="tab-nav-item">
+                    <img :src="pointsIndex==0?'./../public/img/CreditPoints/4.png':'./../public/img/CreditPoints/3.png'" class="changeImg" @click="changeIndex('0')">
+                    <span :class="pointsIndex==0?'tab-active':''">身份</span>
+                </li>
+                <li class="tab-nav-item">
+                    <img :src="pointsIndex==1?'./../public/img/CreditPoints/4.png':'./../public/img/CreditPoints/3.png'" class="changeImg" @click="changeIndex('1')">
+                    <span :class="pointsIndex==1?'tab-active':''" class="special">履历能力</span>
+                </li>
+                <li class="tab-nav-item">
+                    <img :src="pointsIndex==2?'./../public/img/CreditPoints/4.png':'./../public/img/CreditPoints/3.png'" class="changeImg" @click="changeIndex('2')">
+                    <span :class="pointsIndex==2?'tab-active':''">历史</span>
+                </li>
+                <li class="tab-nav-item">
+                    <img :src="pointsIndex==3?'./../public/img/CreditPoints/4.png':'./../public/img/CreditPoints/3.png'" class="changeImg" @click="changeIndex('3')">
+                    <span :class="pointsIndex==3?'tab-active':''">人脉</span>
+                </li>
+                <li class="tab-nav-item">
+                    <img :src="pointsIndex==4?'./../public/img/CreditPoints/4.png':'./../public/img/CreditPoints/3.png'" class="changeImg" @click="changeIndex('4')">
+                    <span :class="pointsIndex==4?'tab-active':''">行为</span>
+                </li>
+            </ul>
+
+        </div>
+        <div class="wavyLine">
+            <img :src="srcUrl">
+        </div>
+
+        <div class="informationBox">
+            <div class="information" v-show="pointsIndex==0">
+                <p class="_word">个人信息评估：完善个人资料，以及你的油卡消费情况，保险购买情况，是评估车辆信用分的重要因素。</p>
+                <div  class="carInsurance">
+                    <div class="carInsurance_title">
+                        <span>车险</span>
+                        <span><a href="">未添加</a></span>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <div class="baiseInformation">           
+                    <span>基本信息</span>
+                    <ul class="signs_list">
+                        <li>账号注册</li>
+                        <li>油卡绑定</li>
+                        <li>油卡充值</li>
+                        <li>添加车辆</li>
+                        <li>身份证认证</li>
+                        <li>绑定银行卡</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="information" v-show="pointsIndex==1">
+                <p class="_word">履约能力：综合您各方面信息来判断您的履约能力，包括会员升级、油卡充值、油卡消费、车辆保险、车辆信息等</p>
+                <div class="performance">
+                    <div class="performance_title">
+                        <span>履约情况</span>
+                        <span class="state">良好</span>
+                    </div>
+                </div>
+            </div>
+            <div class="information" v-show="pointsIndex==2">
+                <p class="_word">履约能力：每一次的油卡充值与消费都将录入您的车辆信用分，如油卡消费没有按规定的时间内消费完成则会降低您的车辆信用分，给您带来负面影响。</p>
+                <ul class="history_list">
+                    <li>
+                        <span>油卡充值次数</span>
+                        <span class="number">12></span>
+                    </li>
+                    <li>
+                        <span>油卡消费守约</span>
+                        <span class="number">12></span>
+                    </li>
+                    <li>
+                        <span>车险购买次数</span>
+                        <span class="number">12></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="information" v-show="pointsIndex==3">
+                <div class="imgBox">
+                    <img src="./../public/img/10.png">
+                </div>
+                <p class="tips">本栏目暂未开放,敬请期待!!</p>
+            </div>
+            <div class="information" v-show="pointsIndex==4">
+                <div class="imgBox">
+                    <img src="./../public/img/10.png">
+                </div>
+                <p class="tips">本栏目暂未开放,敬请期待!!</p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./CreditPoints.js"></script>
+</body>
+
+</html>

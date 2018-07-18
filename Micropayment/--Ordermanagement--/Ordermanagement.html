@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">		
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">   	
+	<title>订单管理</title>	
+	<link rel="stylesheet" href="./../public/css/weui.css">
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./../public/css/dropload.css">
+	<link rel="stylesheet" href="./Ordermanagement.css">
+</head>
+<body>
+	<section id="Ordermanagement" class="Ordermanagement">
+<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>订单管理</div>
+		</div> -->
+
+		<div class="sle">
+					<!-- <div class="he"></div> -->
+			<div id="J_Tab" class="m-tab">
+			    <ul class="tab-nav">
+			        <li class="tab-nav-item tab-active"><a href="javascript:;">全部</a></li>
+			        <li class="tab-nav-item"><a href="javascript:;">待支付</a></li>
+			        <li class="tab-nav-item"><a href="javascript:;">待办理</a></li>
+			        <li class="tab-nav-item"><a href="javascript:;">待确认</a></li>
+			        <li class="tab-nav-item"><a href="javascript:;">已完成</a></li>
+			    </ul>		    
+			    <div class="tab-panel" style="margin-top: .1rem;">		    	
+			        <div class="tab-panel-item tab-active  content1">
+			        	<ul class="guessyouul">
+			        		<li class="Guessyouli opacity" v-for="(item,index) in items1">
+			        			<div class="lil">
+				        			<p class="p1">{{ item.p1 }}</p>
+				        			<p class="p1 p2">订单号：<span>{{ item.num }}</span></p>
+				        			<p class="p1 p2">订单时间：<span>{{ item.time }}</span></p>			        				
+			        			</div>
+			        			<div class="lir">
+			        				<div class="btn1 btn3" v-if="item.btncq">查看进度</div>
+			        				<div class="btn1" v-if="item.btnqq" @click="trigger">取消订单</div>
+			        				<div class="btn1 btn2" v-if="item.btnq" @click="gopayment">去支付</div>
+			        				<div class="btn1 btn2" v-if="item.btnqr" @click="Confirmcompletion">确认完成</div>
+			        				<div class="btn1 btn2" v-if="item.btnc">催办</div>
+			        				<div class="btn1 btn2" v-if="item.btnf">分享</div>
+			        			</div>
+			        		</li>			        		
+			        	</ul>
+			        </div>
+			        <div class="tab-panel-item">
+			        	<ul class="guessyouul">
+			        		<li class="Guessyouli opacity" v-for="(item,index) in items2">
+			        			<div class="lil">
+				        			<p class="p1">{{ item.p1 }}</p>
+				        			<p class="p1 p2">订单号：<span>{{ item.num }}</span></p>
+				        			<p class="p1 p2">订单时间：<span>{{ item.time }}</span></p>			        				
+			        			</div>
+			        			<div class="lir">
+			        				<div class="btn1 btn3" v-if="item.btncq">查看进度</div>
+			        				<div class="btn1" v-if="item.btnqq">取消订单</div>
+			        				<div class="btn1 btn2" v-if="item.btnq">去支付</div>
+			        				<div class="btn1 btn2" v-if="item.btnqr">确认完成</div>
+			        				<div class="btn1 btn2" v-if="item.btnc">催办</div>
+			        				<div class="btn1 btn2" v-if="item.btnf">分享</div>
+			        			</div>
+			        		</li>			        		
+			        	</ul>			        	
+			        </div>
+			        <div class="tab-panel-item">
+			        	<ul class="guessyouul">
+			        		<li class="Guessyouli opacity" v-for="(item,index) in items3">
+			        			<div class="lil">
+				        			<p class="p1">{{ item.p1 }}</p>
+				        			<p class="p1 p2">订单号：<span>{{ item.num }}</span></p>
+				        			<p class="p1 p2">订单时间：<span>{{ item.time }}</span></p>			        				
+			        			</div>
+			        			<div class="lir">
+			        				<div class="btn1 btn3" v-if="item.btncq">查看进度</div>
+			        				<div class="btn1" v-if="item.btnqq" @click="trigger">取消订单</div>
+			        				<div class="btn1 btn2" v-if="item.btnq">去支付</div>
+			        				<div class="btn1 btn2" v-if="item.btnqr">确认完成</div>
+			        				<div class="btn1 btn2" v-if="item.btnc" style="overflow: hidden;background-color: #ffffff;">
+			        					<div  class="cuibandiv">
+			        						<div class="cuiban"  @click="fadeInRight($event)">催办</div>
+			        						<div class="yicuiban">已催办</div>
+			        					</div>
+			        				
+			        			   </div>
+			        				<div class="btn1 btn2" v-if="item.btnf">分享</div>
+			        			</div>
+			        		</li>			        		
+			        	</ul>			        	
+			        </div>
+			        <div class="tab-panel-item">
+			        	<ul class="guessyouul">
+			        		<li class="Guessyouli opacity" v-for="(item,index) in items4">
+			        			<div class="lil">
+				        			<p class="p1">{{ item.p1 }}</p>
+				        			<p class="p1 p2">订单号：<span>{{ item.num }}</span></p>
+				        			<p class="p1 p2">订单时间：<span>{{ item.time }}</span></p>			        				
+			        			</div>
+			        			<div class="lir">
+			        				<div class="btn1 btn3" v-if="item.btncq">查看进度</div>
+			        				<div class="btn1" v-if="item.btnqq">取消订单</div>
+			        				<div class="btn1 btn2" v-if="item.btnq">去支付</div>
+			        				<div class="btn1 btn2" v-if="item.btnqr">确认完成</div>
+			        				<div class="btn1 btn2" v-if="item.btnc">催办</div>
+			        				<div class="btn1 btn2" v-if="item.btnf">分享</div>
+			        			</div>
+			        		</li>			        		
+			        	</ul>			        	
+			        </div>
+			        <div class="tab-panel-item">
+			        	<ul class="guessyouul">
+			        		<li class="Guessyouli opacity" v-for="(item,index) in items5">
+			        			<div class="lil">
+				        			<p class="p1">{{ item.p1 }}</p>
+				        			<p class="p1 p2">订单号：<span>{{ item.num }}</span></p>
+				        			<p class="p1 p2">订单时间：<span>{{ item.time }}</span></p>			        				
+			        			</div>
+			        			<div class="lir">
+			        				<div class="btn1 btn3" v-if="item.btncq">查看进度</div>
+			        				<div class="btn1" v-if="item.btnqq">取消订单</div>
+			        				<div class="btn1 btn2" v-if="item.btnq">去支付</div>
+			        				<div class="btn1 btn2" v-if="item.btnqr">确认完成</div>
+			        				<div class="btn1 btn2" v-if="item.btnc">催办</div>
+			        				<div class="btn1 btn2" v-if="item.btnf">分享</div>
+			        			</div>
+			        		</li>			        		
+			        	</ul>			        	
+			        </div>
+			    </div>
+			</div>			
+		</div>
+	</section>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/Zepto.js"></script> -->
+	<script type="text/javascript" charset="utf-8" src="./../public/js/dropload.min.js"></script>
+	<!-- <script type="text/javascript" charset="utf-8" src="./../public/js/weui.js"></script> -->
+	<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script>
+		var vm = new Vue({
+			el:'#Ordermanagement',
+			data:{
+               items1: [
+                  {
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:false, //查看进度
+                  	btnqq:true,  //取消订单
+                  	btnq:true,   //去支付
+                  	btnqr:false, //确认完成
+                  	btnc:false,  //催办
+                  	btnf:false   //分享
+                  },
+                  {
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:false,
+                  	btnqq:false,
+                  	btnq:false,
+                  	btnqr:false,
+                  	btnc:false,
+                  	btnf:true
+                  },
+                  {
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:false,
+                  	btnqq:true,
+                  	btnq:true,
+                  	btnqr:false,
+                  	btnc:false,
+                  	btnf:false
+                  }, 
+                  {
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:true,
+                  	btnqq:false,
+                  	btnq:false,
+                  	btnqr:true,
+                  	btnc:false,
+                  	btnf:false
+                  }                                                    
+
+               ],
+               items2:[{
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:false, //查看进度
+                  	btnqq:true,  //取消订单
+                  	btnq:true,   //去支付
+                  	btnqr:false, //确认完成
+                  	btnc:false,  //催办
+                  	btnf:false   //分享
+                  }],              
+               items3:[
+                    {
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:false, //查看进度
+                  	btnqq:true,  //取消订单
+                  	btnq:false,   //去支付
+                  	btnqr:false, //确认完成
+                  	btnc:true,  //催办
+                  	btnf:false   //分享
+                  },
+                  {
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:false, //查看进度
+                  	btnqq:true,  //取消订单
+                  	btnq:false,   //去支付
+                  	btnqr:false, //确认完成
+                  	btnc:true,  //催办
+                  	btnf:false   //分享
+                  }
+                  ],           
+               items4:[{
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:true, //查看进度
+                  	btnqq:false,  //取消订单
+                  	btnq:false,   //去支付
+                  	btnqr:true, //确认完成
+                  	btnc:false,  //催办
+                  	btnf:false   //分享
+                  }],        
+               items5:[{
+                  	p1: '加油充值订单',
+                  	num: '1000112234567421',
+                  	time: '2018-03-22 15:30',
+                  	btncq:false, //查看进度
+                  	btnqq:false,  //取消订单
+                  	btnq:false,   //去支付
+                  	btnqr:false, //确认完成
+                  	btnc:false,  //催办
+                  	btnf:true  //分享
+                  }],
+                  options:[{
+				            label: '我不想买了',
+				            value: 0
+				        }, {
+				            label: '信息填写错误',
+				            value: 1
+				        }, {
+				            label: '价格太贵',
+				            value: 2
+				        },{
+				            label: '没有优惠',
+				            //disabled: true,
+				            value: 3
+				        }, {
+				            label: '其他原因',
+				            value: 4
+				        }]        
+			},
+			methods:{
+              goBackToTheLastPage: function() {
+                 window.history.go(-1)
+              },
+              yd: function() {
+                  var that = this
+                 console.log(YDUI.device)
+			    var $tab = $('#J_Tab');
+
+			    $tab.tab({
+			        nav: '.tab-nav-item',
+			        panel: '.tab-panel-item',
+			        activeClass: 'tab-active'
+			    });
+
+			    $tab.find('.tab-nav-item').on('open.ydui.tab', function (e) {
+			        // console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
+
+			    });
+
+			    $tab.find('.tab-nav-item').on('opened.ydui.tab', function (e) {
+			         // console.log('索引：%s - [%s]已经打开了', e.index, $(this).text());
+			     // if(e.index == '1'){
+        //             that.items2 = 
+			     // }else if(e.index == '2'){
+        //             that.items3 = 
+			     // }else if(e.index == '3'){
+        //             that.items4 = 
+			     // }else if(e.index == '4'){
+        //             that.items5 = [{
+        //           	p1: '加油充值订单',
+        //           	num: '1000112234567421',
+        //           	time: '2018-03-22 15:30',
+        //           	btncq:false, //查看进度
+        //           	btnqq:false,  //取消订单
+        //           	btnq:false,   //去支付
+        //           	btnqr:false, //确认完成
+        //           	btnc:false,  //催办
+        //           	btnf:true  //分享
+        //           }]
+			     // }
+
+			    });
+
+				  // 页数
+				    var page = 0;
+				    // 每页展示5个
+				    var size = 1;
+
+				    // dropload
+				    $('.content1').dropload({
+				        scrollArea : window,
+				        autoLoad:true,
+				        distance:50,
+				        threshold:10,
+				        loadDownFn : function(me){
+				            page++;
+				            // 拼接HTML
+				            var result = '';
+				            $.ajax({
+				                type: 'GET',
+				                url: 'http://ons.me/tools/dropload/json.php?page='+page+'&size='+size,
+				                dataType: 'json',
+				                success: function(data){
+				                    var arrLen = data.length;
+				                    if(arrLen > 0){
+				                        // for(var i=0; i<arrLen; i++){
+				                        //     result +=   '<a class="item opacity" href="'+data[i].link+'">'
+				                        //                     +'<img src="'+data[i].pic+'" alt="">'
+				                        //                     +'<h3>'+data[i].title+'</h3>'
+				                        //                     +'<span class="date">'+data[i].date+'</span>'
+				                        //                 +'</a>';
+				                        // }
+				                    // 如果没有数据
+				                       var list = {
+					                  	p1: '加油充值订单',
+					                  	num: '1000112234567421',
+					                  	time: '2018-03-22 15:30',
+					                  	btncq:false,
+					                  	btnqq:false,
+					                  	btnq:false,
+					                  	btnqr:false,
+					                  	btnc:false,
+					                  	btnf:true
+					                  }
+			                       
+				                    }else{
+
+				                        // 锁定
+				                        me.lock();
+				                        // 无数据
+				                        me.noData();
+				                    }
+                                     that.items1.push(list)
+				                    // setTimeout(function(){
+				                        me.resetload();				                    	
+				                    // },500)	
+
+				                },
+				                error: function(xhr, type){
+				                    alert('Ajax error!');
+				                    // 即使加载出错，也得重置
+				                    me.resetload();
+				                        // 无数据
+				                        me.noData();				                    
+				                }
+				            });
+				            //me.resetload();
+				            // me.lock();
+				            // me.noData();
+				        }
+				    });
+
+			    },
+			    fadeInRight: function(e){
+			       // e.target 是你当前点击的元素
+			       // e.currentTarget 是你绑定事件的元素
+			       // console.log(e.target)
+			       // console.log(e.currentTarget)
+			       var dialog = YDUI.dialog;
+			       var classlist = e.currentTarget.parentNode.classList;
+		           dialog.confirm('催办', '确定催办吗?', function () {
+		                // dialog.toast('你点了确定', 'none', 1000);
+			            classlist.add("cuibananim")
+		           });			       
+			       // e.currentTarget.style.backgroundColor="#cccccc"
+			       // e.currentTarget.innerHTML="已催办"
+			    },
+			    trigger: function(){
+				 	 weui.picker(vm.$data.options, {
+				            onChange: function (result) {
+				                console.log(result);
+				            },
+				            onConfirm: function (result) {
+				                console.log(vm.$data.options[result[0]].label);
+				                console.log(vm.$data.options[result[0]].value);
+
+				            }
+				        });
+			    },
+			    gopayment: function(){
+			        window.location.href = './../Payment/Payment.html'
+			    },
+			    Confirmcompletion: function(){
+			    	var dialog = YDUI.dialog;
+			   dialog.confirm('确认完成', '确认订单完成?', [
+                {
+                    txt: '取消',
+                    color: false, /* false:黑色  true:绿色 或 使用颜色值 */
+                    callback: function () {
+			           dialog.confirm('查看进度', '是否查看进度?', function () {
+			                dialog.toast('你点了确定', 'none', 1000);
+			           });                         
+                    }
+                },
+                {
+                    txt: '确定',
+                    color: true,
+                    callback: function () {
+			           dialog.confirm('分享', '是否分享?', function () {
+			                dialog.toast('你点了确定', 'none', 1000);
+			           });                        
+                    }
+                }
+            ]);
+
+			    }           
+			},		
+			mounted: function () {
+               this.yd()
+			}
+		})	
+		$(function(){
+
+		})	
+			  
+	</script>	
+</body>
+</html>

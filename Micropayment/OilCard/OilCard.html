@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>油卡业务</title>
+	<link rel="stylesheet" href="./OilCard.css">	
+	<link rel="stylesheet" href="./../public/css/ydui.css">
+	<link rel="stylesheet" href="./../public/css/reset.css">
+	<link rel="stylesheet" href="./../public/css/weui.css">
+	
+	
+	<link rel="stylesheet" href="./../public/css/layer.css">
+	
+	
+</head>
+
+<body>
+	<section id="OilCard" class="OilCard">
+		<!-- 		<div class="Globalnavstyle">
+			<div class="Globalnavstyle_div" @click="goBackToTheLastPage">
+				<img class="Globalnavstyle_img"  src="./../public/img/goreturn.png">
+			</div>
+			<div>油卡业务</div>
+		</div> -->
+		<div class="overall" style="border-top: 1px solid #E6F0EF;">
+
+			<div id="J_Tab" class="m-tab">
+				<ul class="tab-nav">
+					<li class="tab-nav-item tab-active">
+						<a href="javascript:;" >油卡充值</a>
+					</li>
+					<li class="tab-nav-item">
+						<a href="javascript:;" >特惠套餐</a>
+					</li>
+					<li class="tab-nav-item">
+						<a href="javascript:;" >新办油卡</a>
+					</li>
+					<li class="tab-nav-item">
+						<a href="javascript:;" >油卡记录</a>
+					</li>
+				</ul>
+				<div class="tab-panel"  v-cloak>
+
+					<!-- 选项卡 第一页 Start-->
+					<div class="tab-panel-item tab-active">
+						<div class="tab-padding">
+							<div class="AddFuelCard">
+								<!-- 没有卡时的状态 Start-->
+								<div class="nocardstatus" v-if="!nooryescardstatus1" @click="tab1_addcard">
+									<div class="AddFuelCard_div">
+										<img src="./../public/img/OilCard_back2.png" style="width: 74px;">
+									</div>
+									<div class="AddFuelCard_div">
+										添加加油卡
+									</div>
+									<div class="AddFuelCard_div">
+										<img src="./../public/img/OilCard_goreturn.png" style="width: 7px;">
+									</div>
+								</div>
+								<!-- 没有卡时的状态 End-->
+								<!-- 有卡时的状态 Start-->
+								<div class="yescardstatus" v-if="nooryescardstatus1" @click="tab1_adduser" v-for="(item,index) in taboneitems">
+									<div class="yescardstatuscon">
+										<div class="yescardstatuscontent">
+											<div class="yescardstatusimg">
+												<img v-if="item.OILCARD_TYPE=='Sinopec'" src="./../public/img/ChinaPetrochemical.png" style="width: 100%;">
+												<img v-if="item.OILCARD_TYPE=='PetroChina'" src='../public/img/zsy@2x.png' alt="" style="width: 100%;">
+											</div>
+											<div class="yescardstatustext">
+												<div>
+													{{ item.OILCARD_TYPE | oilcardName}}
+													<img src="./../public/img/OilCard_goreturn.png" style="width: 7px;display: inline-block">
+												</div>
+											</div>
+											<div class="yescardstatusname">
+												{{ item.CUST_NAME }}
+											</div>
+										</div>
+										<div class="yescardstatusbottom">
+											{{ item.OILCARD_NO | onecardnumberfil}}
+										</div>
+									</div>
+								</div>
+								<!-- 有卡时的状态 End-->
+							</div>
+							<div class="SelectText">-请选择充值金额-</div>
+							<div class="_select">
+								<ul id="_selectul">
+									<li class="selectback" v-for="(item,index) in items1" @click="selectoilcard($event,index)">
+										<div class="_selectdiv" :class="{'_selectdiv1color':index==0}">
+											<div class="_selectdiv1">&yen;
+												<span style="cursor: pointer">{{ item }}</span>
+											</div>
+											<div class="_selectdiv2">售价:{{ item }}</div>
+										</div>
+									</li>
+									<!-- 			        			<li class="selectback">
+				        				<div class="_selectdiv">
+					        				<div class="_selectdiv1">&yen;<span>200</span></div>
+					        				<div class="_selectdiv2">售价:200</div>			        					
+				        				</div>			        				
+				        			</li>
+				        			<li class="selectback">
+				        				<div class="_selectdiv">
+					        				<div class="_selectdiv1">&yen;<span>500</span></div>
+					        				<div class="_selectdiv2">售价:500</div>			        					
+				        				</div>			        				
+				        			</li>
+				        			<li class="selectback">
+				        				<div class="_selectdiv">
+					        				<div class="_selectdiv1">&yen;<span>1000</span></div>
+					        				<div class="_selectdiv2">售价:1000</div>
+				        				</div>			        				
+				        			</li> -->
+								</ul>
+							</div>
+
+						</div>
+						<div class="ServiceAgreement" style="margin-left: 12px;margin-right: 12px;">
+							<span class="ServiceAgreement_spanleft">
+								<span @click="clickagree">
+									<input id="ServiceAgreementcheckbox" type="checkbox" name="input_ra" :checked="che"> 点我同意
+								</span>
+								<a href="javascript:;">
+									<font color="#02AD9A" @click="getAgreement">&lt;油卡服务协议&gt;</font>
+								</a>
+							</span>
+							<span class="ServiceAgreement_spanright">
+								<a href="javascript:;">常见问题&gt;&gt;</a>
+							</span>
+						</div>
+						<!-- <div class="Separator"></div> -->
+						<!-- 与底部 去支付 齐高 -->
+						<div style="width: 100%;height: 1.67rem;"></div>
+					</div>
+					<!-- 选项卡 第一页 End-->
+					<!-- 选项卡 第二页 Start-->
+					<div class="tab-panel-item">
+						<div class="tab-padding">
+							<div class="AddFuelCard">
+								<!-- 没有卡时的状态 Start-->
+								<div class="nocardstatus" v-if="!nooryescardstatus1" @click="tab1_addcard">
+									<div class="AddFuelCard_div">
+										<img src="./../public/img/OilCard_back2.png" style="width: 74px;">
+									</div>
+									<div class="AddFuelCard_div">
+										添加加油卡
+									</div>
+									<div class="AddFuelCard_div">
+										<img src="./../public/img/OilCard_goreturn.png" style="width: 7px;">
+									</div>
+								</div>
+								<!-- 没有卡时的状态 End-->
+								<!-- 有卡时的状态 Start-->
+								<div class="yescardstatus" v-if="nooryescardstatus1" @click="tab1_adduser" v-for="(item,index) in taboneitems">
+									<div class="yescardstatuscon">
+										<div class="yescardstatuscontent">
+											<div class="yescardstatusimg">
+												<img v-if="item.OILCARD_TYPE=='Sinopec'" src="./../public/img/ChinaPetrochemical.png" style="width: 100%;">
+												<img v-if="item.OILCARD_TYPE=='PetroChina'" src='../public/img/zsy@2x.png' alt="" style="width: 100%;">
+											</div>
+											<div class="yescardstatustext">
+												<div>
+													{{ item.OILCARD_TYPE | oilcardName}}
+													<img src="./../public/img/OilCard_goreturn.png" style="width: 7px;display: inline-block">
+												</div>
+											</div>
+											<div class="yescardstatusname">
+												{{ item.CUST_NAME }}
+											</div>
+										</div>
+										<div class="yescardstatusbottom">
+											{{ item.OILCARD_NO | onecardnumberfil}}
+											<!--{{ cardnumber1 | onecardnumberfil}}-->
+										</div>
+									</div>
+								</div>
+								<!-- 有卡时的状态 End-->
+							</div>
+							<div class="Tabtwopagecontent">
+								<p class="Tabtwopagetext">每月加油</p>
+								<div class="Optionsbox">
+									<div class="less" @click="TabtwoRefuelingamountplusless(-100)">
+										<img src="./../public/img/OilCard_Less.png" alt="">
+									</div>
+									<div class="numberoption">
+										<input type="text" v-model="Refuelingamountplusyuan" readonly="readonly">
+									</div>
+									<div class="plus" @click="TabtwoRefuelingamountplusless(100)">
+										<img src="./../public/img/OilCard_plus.png" alt="">
+									</div>
+								</div>
+								<div class="Tabtwopagedial">
+									<div id="TabtwopagedialAmount" class="Tabtwopagedialleft"></div>
+									<div id="TabtwopagedialMonth" class="Tabtwopagedialleft"></div>
+
+									<div class="TabtwopagedialAmountleft">100</div>
+									<div class="TabtwopagedialAmountright">1000000</div>
+									<div class="TabtwopagedialAmountcenter">
+										<p class="TabtwopagedialAmountcenterp1">{{ Refuelingamount }}</p>
+										<p class="TabtwopagedialAmountcenterp2">金额/元</p>
+									</div>
+
+									<div class="TabtwopagedialMonthleft">1</div>
+									<div class="TabtwopagedialMonthright">12</div>
+									<div class="TabtwopagedialMonthcenter">
+										<p class="TabtwopagedialMonthcenterp1">{{ monthMonth }}</p>
+										<p class="TabtwopagedialMonthcenterp2">月份</p>
+									</div>
+								</div>
+
+								<p class="Tabtwopagetext">充值时间</p>
+								<div class="Optionsbox">
+									<div class="less" @click="TabtwomonthMontplusless(-1)">
+										<img src="./../public/img/OilCard_Less.png" alt="">
+									</div>
+									<div class="numberoption">
+										<input type="text" v-model="monthMonthplusyue" readonly="readonly">
+									</div>
+									<div class="plus" @click="TabtwomonthMontplusless(1)">
+										<img src="./../public/img/OilCard_plus.png" alt="">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="SelectDiscount">
+							<div class="SelectDiscountimg">
+								<img src="./../public/img/OilCard_SelectDiscount.png" alt="">
+							</div>
+							<div class="SelectDiscounttext1">选择折扣</div>
+							<div class="SelectDiscounttext">
+								<a href="javascript:;">套餐说明&gt;</a>
+							</div>
+						</div>
+						<div class="SelectDiscount1">
+							<div class="SelectDiscountimg1">
+								<p class="SelectDiscountimg1p1">原价{{ Refuelingamount }}元</p>
+								<p class="SelectDiscountimg1p2">折扣价0元</p>
+							</div>
+
+							<div class="SelectDiscounttext2">
+								<a href="javascript:;">共节省0元</a>
+							</div>
+						</div>
+						<div class="SelectDiscount1">
+							<div class="SelectDiscountimg1">
+								<p class="SelectDiscountimg1p3">充值明细</p>
+							</div>
+
+							<div class="SelectDiscounttext3">
+								<a href="javascript:;">{{ Refuelingamount }}元 X {{ monthMonth }}个月</a>
+							</div>
+						</div>
+						<!-- 与底部 去支付 齐高 -->
+						<div style="width: 100%;height: 1.868rem;"></div>
+					</div>
+					<!-- 选项卡 第二页 End-->
+					<!-- 选项卡 第三页 Start-->
+					<div class="tab-panel-item">
+						<div class="tab-panel3-top">
+							<div @click="tabpanel3_ziji" class="tab-panel3topl" :class="{'tab-panel3topcolor1':tabpanel3topcolorl,'tab-panel3topcolor2':!tabpanel3topcolorl}">
+								自己办卡
+							</div>
+							<div @click="tabpanel3_taren" class="tab-panel3topr" :class="{'tab-panel3topcolor1':!tabpanel3topcolorr,'tab-panel3topcolor2':tabpanel3topcolorr}">
+								他人办卡
+							</div>
+						</div>
+						<div class="tab-padding">
+							<p class="tabpanel3-cardtype">选择油卡类型</p>
+							<div class="tabpanel3select">
+								<div class="tabpanel3selectsy" @click="tabthreeSelectTheTypeOfOilCardgo(1)">
+									<input type="radio" name="tabpanel3yes" class="tabpanel3yes" :checked="tabthreeSelectTheTypeOfOilCard">
+									<img src="./../public/img/ChinaPetrochemical.png" class="tabpanel3ChinaPetrochemical">
+								</div>
+								<div class="tabpanel3selectsh" @click="tabthreeSelectTheTypeOfOilCardgo(-1)">
+									<input type="radio" name="tabpanel3yes" class="tabpanel3yes" :checked="!tabthreeSelectTheTypeOfOilCard">
+									<img src="./../public/img/zsy@2x.png" class="tabpanel3zsy2x">
+								</div>
+							</div>
+							<p class="tabpanel3-cardtype">选择油品类型</p>
+							<div style="position: relative">
+								<select name="tabpanel3select" id="tabpanel3select">
+									<option value="1">汽油卡</option>
+									<option value="2">柴油卡</option>
+								</select>
+								<div class="tabpanel3selectsanjiao" @click="tabpanel3selectsanjiao($event)"></div>
+							</div>
+							<p class="tabpanel3-cardtype">填写办理信息</p>
+							<ul class="tabpanel3-ul">
+								<li v-if="YourselfOrOthers">
+									<div class="tabpanel3-cardtypediv1">
+										姓名
+									</div>
+									<div class="tabpanel3-cardtypediv2">
+										<input type="text" placeholder="请输入此卡办理人姓名" v-model="tabthree_name">
+									</div>
+								</li>
+								<li>
+									<div class="tabpanel3-cardtypediv1">
+										手机号码
+									</div>
+									<div class="tabpanel3-cardtypediv2">
+										<input type="number" placeholder="请输入此卡办理人手机号" v-model="tabthree_shouji">
+									</div>
+								</li>
+								<li>
+									<div class="tabpanel3-cardtypediv1">
+										所在地区
+									</div>
+									<div class="tabpanel3-cardtypediv2" style="display:none;">
+										<div class="tabpanel3-cardtypediv2po">
+											<span>{{ citylocationa }}</span>
+											<img src="./../public/img/OilCard_position.png">
+										</div>
+									</div>
+								</li>
+								<li v-if="!YourselfOrOthers" style="border: none;line-height: 0;height: .5rem;" @click="tabthree_xuanzeshouhuo">
+									<div style="width: 100%;color:#757575;height: 100%;line-height: 100%;">{{ tabthree_xuanzeshouhuodizhi }}</div>
+								</li>
+								<li v-if="YourselfOrOthers" style="border: none;line-height: 0;height: .5rem;">
+									<input type="text" placeholder="请填写此卡办理人详细地址" style="width: 100%;" v-model="tabthree_xuanzeshouhuodizhione">
+								</li>
+							</ul>
+							<div class="IDphoto" v-show="YourselfOrOthers">
+								<div class="IDphoto1">
+									此卡办理人身份证照片
+								</div>
+								<div class="IDphoto2">
+									<img :src="IDphoto2img1" class="IDphoto2img_">
+									<input id="IDphoto2input1" type="file" class="IDphoto2in1" accept="image/*" />
+								</div>
+								<div class="IDphoto3">
+									<img :src="IDphoto2img2" class="IDphoto2img_">
+									<input id="IDphoto2input2" type="file" class="IDphoto2in1" accept="image/*" />
+								</div>
+							</div>
+							<div class="IDphoto" v-show="YourselfOrOthers">
+								<div class="IDphoto1">
+									此卡办理人行驶证照片
+								</div>
+								<div class="IDphoto2">
+									<img :src="IDphoto2img3" class="IDphoto2img_">
+									<input id="IDphoto2input3" type="file" class="IDphoto2in1" accept="image/*" />
+								</div>
+								<div class="IDphoto3">
+									<img :src="IDphoto2img4" class="IDphoto2img_">
+									<input id="IDphoto2input4" type="file" class="IDphoto2in1" accept="image/*" />
+								</div>
+							</div>
+						</div>
+						<div class="Separator" style="margin-top: .3rem;"></div>
+						<!-- 与底部 去支付 齐高 -->
+						<div style="width: 100%;height: 1.868rem;"></div>
+					</div>
+					<!-- 选项卡 第三页 End-->
+
+					<!-- 选项卡 第四页 Start-->
+					<div class="tab-panel-item">
+						<div class="tab-panel3-top">
+							<div @click="tabpanel4_ziji" class="tab-panel3topl" :class="{'tab-panel3topcolor1':tabpanel4topcolorl,'tab-panel3topcolor2':!tabpanel4topcolorl}"
+							 style="width:100%;">
+								充值记录
+							</div>
+							<!--<div @click="tabpanel4_taren" class="tab-panel3topr" :class="{'tab-panel3topcolor1':!tabpanel4topcolorr,'tab-panel3topcolor2':tabpanel4topcolorr}">-->
+							<!--消费记录-->
+							<!--</div>-->
+						</div>
+						<!-- 第四页 没有记录 Start-->
+						<div class="tab-panel4-nolist" v-if="tabpanel4nolist">
+							<div>
+								<img src="./../public/img/OilCard_nolist.png" alt="">
+								<p>您还没有消费记录</p>
+							</div>
+						</div>
+						<!-- 第四页 没有记录 End-->
+						<!-- 第四页 充值记录 Start-->
+						<div class="tab-panel4_Recharge" v-show="tabpanel4topcolorl">
+							<ul v-if="items2.length=='0'">
+								<li style="text-align: center;line-height: 3.3rem;">暂无记录</li>
+							</ul>
+							<ul v-if="items2.length!=='0'">
+								<li v-for="(item,index) in items2">
+									<div class="tab-panel4_Rechargetopf">
+										<div class="tab-panel4_Rechargetop">
+											<span class="tab-panel4_Rechargetopspan1">充值单号：</span>
+											<span class="tab-panel4_Rechargetopspan2">{{ item.ORDERNO }}</span>
+											<span class="tab-panel4_Rechargetopspan3" v-if="item.ORDSTATUS=='01'">成功</span>
+											<span class="tab-panel4_Rechargetopspan3" style="color:#FF7D82" v-if="item.ORDSTATUS=='00'">失败</span>
+										</div>
+										<div class="tab-panel4_Rechargetopborder"></div>
+										<div class="tab-panel4_Rechargecontent">
+											<div class="tab-panel4_Rechargecontentl">
+												<div class="tab-panel4_Rechargecontentlf tab-panel4_Rechargecontentlm">
+													<span class="tab-panel4_Rechargecontentspan1">订单状态：</span>
+													<span class="tab-panel4_Rechargecontentspan2" v-if="item.ORD_STATUS == '0'" style="color:yellowgreen">未处理</span>
+													<span class="tab-panel4_Rechargecontentspan2" v-if="item.ORD_STATUS == '1'" style="color:deepskyblue">处理中</span>
+													<span class="tab-panel4_Rechargecontentspan2" v-if="item.ORD_STATUS == '2'" style="color:#51A999">完成</span>
+													<span class="tab-panel4_Rechargecontentspan2" v-if="item.ORD_STATUS == '3'" style="color:red">失败</span>
+												</div>
+												<div class="tab-panel4_Rechargecontentlf tab-panel4_Rechargecontentlm">
+													<span class="tab-panel4_Rechargecontentspan1">充值卡号：</span>
+													<span class="tab-panel4_Rechargecontentspan2">{{ item.OILCARD_NO }}</span>
+												</div>
+												<div class="tab-panel4_Rechargecontentlf tab-panel4_Rechargecontentlm">
+													<span class="tab-panel4_Rechargecontentspan1">联系人：</span>
+													<span class="tab-panel4_Rechargecontentspan2">{{ item.PHONE }}</span>
+													<span class="tab-panel4_Rechargecontentspan3">{{ item.CUST_NAME }}</span>
+												</div>
+											</div>
+											<div class="tab-panel4_Rechargecontentr">
+												<img v-if="item.OILCARD_TYPE=='中石化'" src="./../public/img/ChinaPetrochemical.png" alt="">
+												<img v-if="item.OILCARD_TYPE=='中石油'" src='../public/img/zsy@2x.png' alt="">
+											</div>
+										</div>
+										<div class="tab-panel4_Rechargecontent" style="line-height: .64rem;">
+											<div class="tab-panel4_Rechargebottoml">&yen;{{ (item.TXNAMT-0)/100 }}元</div>
+											<div class="tab-panel4_Rechargebottomr">{{ item.TXDATE }}</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<p class="tab-panel4_prompt">充值记录每月更新一次</p>
+							<!--<div class="tab-panel4_btn">手工添加</div>-->
+						</div>
+						<!-- 第四页 充值记录 End-->
+						<!-- 第四页 消费记录 Start-->
+						<div class="tab-panel4_consumption" v-show="!tabpanel4topcolorr">
+							<div class="tab-padding">
+								<ul>
+									<li :class="{'tab-panel4_consumptionheight':zhankai}" style="text-align: center;line-height: 2.6rem;">
+										暂无记录
+									</li>
+									<!--<li :class="{'tab-panel4_consumptionheight':zhankai}">-->
+									<!--<div class="tab-panel4_consumptiontop">-->
+									<!--<span class="tab-panel4_consumptionspan1">充值单号：</span>-->
+									<!--<span class="tab-panel4_consumptionspan2">46546444646549456465</span>-->
+									<!--<span class="tab-panel4_consumptionspan3">成功</span>-->
+									<!--</div>-->
+									<!--<div class="tab-panel4_consumptionborder"></div>-->
+									<!--<div class="tab-panel4_Rechargecontent">-->
+									<!--<div class="tab-panel4_Rechargecontentl">-->
+									<!--<div class="tab-panel4_Rechargecontentlf tab-panel4_Rechargecontentlm">-->
+									<!--<span class="tab-panel4_Rechargecontentspan1">充值卡号：</span>-->
+									<!--<span class="tab-panel4_Rechargecontentspan2">-->
+									<!--1000113300015259667-->
+									<!--</span>-->
+									<!--</div>-->
+									<!--<div class="tab-panel4_Rechargecontentlf tab-panel4_Rechargecontentlm">-->
+									<!--<span class="tab-panel4_Rechargecontentspan1">-->
+									<!--联系人：-->
+									<!--</span>-->
+									<!--<span class="tab-panel4_Rechargecontentspan2">-->
+									<!--130******170-->
+									<!--</span>-->
+									<!--<span class="tab-panel4_Rechargecontentspan3">-->
+									<!--*贝贝-->
+									<!--</span>-->
+									<!--</div>-->
+									<!--</div>-->
+									<!--<div class="tab-panel4_Rechargecontentr">-->
+									<!--<img src="./../public/img/ChinaPetrochemical.png" alt="">-->
+									<!--</div>-->
+									<!--</div>-->
+									<!--<div class="tab-panel4_Rechargecontent" style="line-height: 0.64rem;">-->
+									<!--<div class="tab-panel4_Rechargebottoml">¥200元</div>-->
+									<!--<div class="tab-panel4_Rechargebottomr">2018-11-11 11:11:11</div>-->
+									<!--</div>-->
+									<!--<div class="tab-panel4_consumptionborder"></div>-->
+									<!--<div class="tab-panel4_consumptionextend">-->
+									<!--<div class="tab-panel4_consumptionextendl">加油油品</div>-->
+									<!--<div class="tab-panel4_consumptionextendl tab-panel4_consumptionextendlc">加油数量</div>-->
+									<!--<div class="tab-panel4_consumptionextendl tab-panel4_consumptionextendlr">油品单价</div>-->
+									<!--<div class="tab-panel4_consumptionextendl">90#汽油</div>-->
+									<!--<div class="tab-panel4_consumptionextendl tab-panel4_consumptionextendlc">50升</div>-->
+									<!--<div class="tab-panel4_consumptionextendl tab-panel4_consumptionextendlr">4元/升</div>-->
+									<!--</div>-->
+									<!--<div class="tab-panel4_consumptionborder"></div>-->
+									<!--<div>-->
+									<!--<div>-->
+									<!--<div class="tab-panel4_consumptionextend">-->
+									<!--<div class="tab-panel4_consumptionextendl">加油地点：</div>-->
+									<!--<div class="tab-panel4_consumptionextendl tab-panel4_consumptionextendlc">华东45416</div>-->
+									<!--</div>-->
+									<!--</div>-->
+									<!--<div>-->
+									<!--<div class="tab-panel4_consumptionextend">-->
+									<!--<div class="tab-panel4_consumptionextendl">卡内余额：</div>-->
+									<!--<div class="tab-panel4_consumptionextendl tab-panel4_consumptionextendlc">500元</div>-->
+									<!--</div>-->
+									<!--</div>-->
+									<!--</div>-->
+									<!--<div class="zhankaibtn" :class="{'zhankaiedg':zhankai}" @click="tabpanel4zhankaibei($event)">-->
+									<!--<img src="./../public/img/OilCard_s.png" alt="">-->
+									<!--</div>-->
+									<!--</li>-->
+								</ul>
+							</div>
+							<!--<div class="tab-panel4_btn">手工添加</div>-->
+						</div>
+						<!-- 第四页 消费记录 End-->
+					</div>
+					<!-- 选项卡 第四页 End-->
+
+				</div>
+			</div>
+		</div>
+		<!-- 第一页 页面 支付 Start-->
+		<div class="tab-panel-item1Gotopay" v-show="item1Gotopay1">
+			<div class="tab-panel-item1Gotopaybor">
+				<div class="tab-padding">
+					<div class="tab-panel-item1Gotopay-top" @click="ticket">
+						<div class="ServiceAgreement_spanleft">
+							<img class="tab-panel-item1Gotopayimg" src="./../public/img/OilCard_youhui.png" alt="">
+							<span style="padding-left: 5px;">优惠券</span>
+						</div>
+						<div class="ServiceAgreement_spanright">
+							<span id="discount" >减免<font color="#02AD9A" style="padding: 0 .06rem;">0</font>元</span>
+							<span>&gt;</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="tab-padding" style="padding-right: 0;">
+					<div class="tab-panel-item1Gotopay-bottom">
+						<div class="ServiceAgreement_spanleft">
+							<span style="font-size: .34rem;">应付款</span>
+							<span style="color: #02AD9A;font-size: .34rem;" id="sjMoney" >&yen;{{ Payable }}</span>
+							<span class="tab-panel-item1Gotopay-bottomspan3">(售价
+								<span style="color: #02AD9A;">&yen;{{ Payable }}</span>)</span>
+
+						</div>
+						<div class="ServiceAgreement_spanright">
+							<div class="tab-panel-item1Gotopay-bottombtn">
+								<div class="tab-panel-item1Gotopay-bottombtn1" :class="{'tab-panel-item1Gotopay-bottombtn1status':che}">
+									<div class="tab-panel-item1Gotopay-bottombtn1back1" @click="goPaymentno">去支付</div>
+									<div class="tab-panel-item1Gotopay-bottombtn1back2" @click="tabonetaoqian">去支付</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 第一页 页面 支付 End-->
+		<!-- 第二页 支付Start-->
+		<div class="tab-panel-item2Gotopay" v-show="item1Gotopay2">
+			<div class="tab-pane2-item1Gotopaybor">
+				<div class="tab-padding">
+					<span @click="clickagree2">
+						<input class="ServiceAgreementcheckbox2" type="checkbox" :checked="che2"> 点我同意
+					</span>
+					<a href="javascript:;" @click="getAgreement">
+						<font color="#02AD9A">&lt;油卡服务协议&gt;</font>
+					</a>
+				</div>
+			</div>
+			<div>
+				<div class="tab-padding" style="padding-right: 0;">
+					<div class="tab-panel-item1Gotopay-bottom2">
+						<div class="ServiceAgreement_spanleft2">
+							<span style="font-size: .34rem;">应付款</span>
+							<span style="color: #02AD9A;font-size: .34rem;">&yen;{{ (Refuelingamount-0) * (monthMonth-0)}}</span>
+							<span class="tab-panel-item2Gotopay-bottomspan3">(卡内不包含油费)</span>
+
+						</div>
+						<div class="ServiceAgreement_spanright">
+							<div class="tab-panel-item1Gotopay-bottombtn2">
+								<div class="tab-panel-item1Gotopay-bottombtn3" :class="{'tab-panel-item1Gotopay-bottombtn1status':che2}">
+									<div class="tab-panel-item1Gotopay-bottombtn1back3" @click="goPaymentno2">去支付</div>
+									<div class="tab-panel-item1Gotopay-bottombtn1back4">去支付</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 第二页支付End-->
+		<!-- 第三页 支付Start-->
+		<div class="tab-panel-item2Gotopay" v-show="item1Gotopay3">
+			<div class="tab-pane2-item1Gotopaybor">
+				<div class="tab-padding">
+					<span @click="clickagree3">
+						<input class="ServiceAgreementcheckbox2" type="checkbox" :checked="che3"> 点我同意
+					</span>
+					<a href="javascript:;" @click="getAgreement">
+						<font color="#02AD9A">&lt;油卡服务协议&gt;</font>
+					</a>
+				</div>
+			</div>
+			<div>
+				<div class="tab-padding" style="padding-right: 0;">
+					<div class="tab-panel-item1Gotopay-bottom2">
+						<div class="ServiceAgreement_spanleft2">
+							<span style="font-size: .34rem;">应付款</span>
+							<span style="color: #02AD9A;font-size: .34rem;">&yen;25</span>
+							<span class="tab-panel-item2Gotopay-bottomspan3">(卡内不包含邮费)</span>
+
+						</div>
+						<div class="ServiceAgreement_spanright">
+							<div class="tab-panel-item1Gotopay-bottombtn2">
+								<div class="tab-panel-item1Gotopay-bottombtn3" :class="{'tab-panel-item1Gotopay-bottombtn1status':che3}">
+									<div class="tab-panel-item1Gotopay-bottombtn1back3" @click="goPaymentno3">去支付</div>
+									<div class="tab-panel-item1Gotopay-bottombtn1back4" @click="tabthreetaoqian">去支付</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 第三页支付End-->
+		<div id="allmap" style="width: 0;height: 0;"></div>
+
+
+		<div id="zfb_zf" style="display: none;"></div>
+
+		<canvas id="ImasesCompressionO" style="display:none;"></canvas>
+		<canvas id="ImasesCompressionT" style="display:none;"></canvas>
+		<canvas id="ImasesCompressionTT" style="display:none;"></canvas>
+		<canvas id="ImasesCompressionF" style="display:none;"></canvas>
+	</section>
+
+	<script type="text/javascript" charset="utf-8" src="./../public/js/vue2-5-16.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.flexible.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/ydui.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/echarts.js"></script>
+	<script type="text/javascript" charset="utf-8" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/HttpServer.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./OilCard.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./../public/js/layer.js"></script>
+	
+</body>
+
+</html>
